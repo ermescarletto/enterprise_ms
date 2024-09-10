@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     #'cms',
     'cadastros',
     'documentos',
-    'users'
+    'users',
+    'atendimento'
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -107,10 +108,10 @@ DATABASES = {
         # Tenant Engine
         'ENGINE': 'django.db.backends.postgresql',
         # set database name
-        'NAME': 'enterprise',
+        'NAME': 'enterprise_ms',
         # set your user details
-        'USER': 'postgres',
-        'PASSWORD': 'ecju2403=',
+        'USER': 'ermescarletto',
+        'PASSWORD': 'Leon2022@',
         #'PASSWORD': 'Tme2daqFvCEh',
         'HOST': 'localhost',
         'POST': '5432'

@@ -158,6 +158,7 @@ class Empresa(models.Model):
 
 class Departamento(models.Model):
     nome = models.CharField(max_length=255)
+
     def __str__(self):
         return self.nome
 
@@ -169,7 +170,6 @@ class Unidade(models.Model):
 
     def __str__(self):
         return self.nome
-
 
 class Cargo(models.Model):
     descricao = models.CharField(max_length=255)
