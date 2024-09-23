@@ -1,0 +1,340 @@
+[
+  {
+    "model": "cadastros.Cidade",
+    "pk": 1,
+    "fields": {
+      "nome": "São Paulo",
+      "estado": "SP"
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 2,
+    "fields": {
+      "nome": "Rio de Janeiro",
+      "estado": "RJ"
+    }
+  },
+  {
+    "model": "cadastros.Bairro",
+    "pk": 1,
+    "fields": {
+      "nome": "Centro",
+      "cidade": 1
+    }
+  },
+  {
+    "model": "cadastros.Bairro",
+    "pk": 2,
+    "fields": {
+      "nome": "Copacabana",
+      "cidade": 2
+    }
+  },
+  {
+    "model": "cadastros.Logradouro",
+    "pk": 1,
+    "fields": {
+      "nome": "Rua das Flores",
+      "bairro": 1,
+      "cidade": 1
+    }
+  },
+  {
+    "model": "cadastros.Logradouro",
+    "pk": 2,
+    "fields": {
+      "nome": "Avenida Atlântica",
+      "bairro": 2,
+      "cidade": 2
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 1,
+    "fields": {
+      "nome": "João da Silva",
+      "data_nascimento": "1990-05-15",
+      "cpf": "12345678901",
+      "sexo": "M",
+      "email": "joao.silva@example.com",
+      "telefone": "11999999999"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 2,
+    "fields": {
+      "nome": "Maria Oliveira",
+      "data_nascimento": "1985-03-22",
+      "cpf": "23456789012",
+      "sexo": "F",
+      "email": "maria.oliveira@example.com",
+      "telefone": "21988888888"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 3,
+    "fields": {
+      "nome": "Carlos Pereira",
+      "data_nascimento": "1988-10-05",
+      "cpf": "34567890123",
+      "sexo": "M",
+      "email": "carlos.pereira@example.com",
+      "telefone": "11977777777"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 4,
+    "fields": {
+      "nome": "Ana Souza",
+      "data_nascimento": "1992-12-11",
+      "cpf": "45678901234",
+      "sexo": "F",
+      "email": "ana.souza@example.com",
+      "telefone": "21966666666"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 5,
+    "fields": {
+      "nome": "Pedro Santos",
+      "data_nascimento": "1981-09-17",
+      "cpf": "56789012345",
+      "sexo": "M",
+      "email": "pedro.santos@example.com",
+      "telefone": "31955555555"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 6,
+    "fields": {
+      "nome": "Luana Mendes",
+      "data_nascimento": "1986-07-25",
+      "cpf": "67890123456",
+      "sexo": "F",
+      "email": "luana.mendes@example.com",
+      "telefone": "21944444444"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 7,
+    "fields": {
+      "nome": "Rafael Gonçalves",
+      "data_nascimento": "1991-04-20",
+      "cpf": "78901234567",
+      "sexo": "M",
+      "email": "rafael.goncalves@example.com",
+      "telefone": "21933333333"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 8,
+    "fields": {
+      "nome": "Fernanda Ribeiro",
+      "data_nascimento": "1989-11-30",
+      "cpf": "89012345678",
+      "sexo": "F",
+      "email": "fernanda.ribeiro@example.com",
+      "telefone": "31922222222"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 9,
+    "fields": {
+      "nome": "Lucas Lima",
+      "data_nascimento": "1987-06-12",
+      "cpf": "90123456789",
+      "sexo": "M",
+      "email": "lucas.lima@example.com",
+      "telefone": "11911111111"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 10,
+    "fields": {
+      "nome": "Juliana Fernandes",
+      "data_nascimento": "1995-08-18",
+      "cpf": "01234567890",
+      "sexo": "F",
+      "email": "juliana.fernandes@example.com",
+      "telefone": "21900000000"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 11,
+    "fields": {
+      "nome": "Marcelo Costa",
+      "data_nascimento": "1984-02-28",
+      "cpf": "12345678912",
+      "sexo": "M",
+      "email": "marcelo.costa@example.com",
+      "telefone": "21999991234"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 12,
+    "fields": {
+      "nome": "Bianca Nogueira",
+      "data_nascimento": "1990-11-10",
+      "cpf": "23456789123",
+      "sexo": "F",
+      "email": "bianca.nogueira@example.com",
+      "telefone": "21988881234"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 13,
+    "fields": {
+      "nome": "Felipe Machado",
+      "data_nascimento": "1983-07-03",
+      "cpf": "34567891234",
+      "sexo": "M",
+      "email": "felipe.machado@example.com",
+      "telefone": "21977771234"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 14,
+    "fields": {
+      "nome": "Larissa Alves",
+      "data_nascimento": "1985-04-15",
+      "cpf": "45678912345",
+      "sexo": "F",
+      "email": "larissa.alves@example.com",
+      "telefone": "21966661234"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 15,
+    "fields": {
+      "nome": "Rodrigo Teixeira",
+      "data_nascimento": "1992-03-19",
+      "cpf": "56789123456",
+      "sexo": "M",
+      "email": "rodrigo.teixeira@example.com",
+      "telefone": "21955551234"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 16,
+    "fields": {
+      "nome": "Camila Silva",
+      "data_nascimento": "1996-01-25",
+      "cpf": "67891234567",
+      "sexo": "F",
+      "email": "camila.silva@example.com",
+      "telefone": "21944441234"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 17,
+    "fields": {
+      "nome": "Vinícius Barbosa",
+      "data_nascimento": "1988-09-10",
+      "cpf": "78912345678",
+      "sexo": "M",
+      "email": "vinicius.barbosa@example.com",
+      "telefone": "21933331234"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 18,
+    "fields": {
+      "nome": "Paula Martins",
+      "data_nascimento": "1993-10-01",
+      "cpf": "89012345679",
+      "sexo": "F",
+      "email": "paula.martins@example.com",
+      "telefone": "21922221234"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 19,
+    "fields": {
+      "nome": "André Cardoso",
+      "data_nascimento": "1987-06-21",
+      "cpf": "90123456790",
+      "sexo": "M",
+      "email": "andre.cardoso@example.com",
+      "telefone": "21911111234"
+    }
+  },
+  {
+    "model": "cadastros.PessoaFisica",
+    "pk": 20,
+    "fields": {
+      "nome": "Gabriela Rocha",
+      "data_nascimento": "1994-12-02",
+      "cpf": "01234567891",
+      "sexo": "F",
+      "email": "gabriela.rocha@example.com",
+      "telefone": "21900001234"
+    }
+  },
+  {
+    "model": "cadastros.EnderecoPessoaFisica",
+    "pk": 1,
+    "fields": {
+      "principal": true,
+      "pessoa": 1,
+      "cidade": 1,
+      "bairro": 1,
+      "logradouro": 1,
+      "tipo_endereco": "R",
+      "numero": 100,
+      "cep": "01001000"
+    }
+  },
+  {
+    "model": "cadastros.EnderecoPessoaFisica",
+    "pk": 2,
+    "fields": {
+      "principal": true,
+      "pessoa": 2,
+      "cidade": 2,
+      "bairro": 2,
+      "logradouro": 2,
+      "tipo_endereco": "R",
+      "numero": 200,
+      "cep": "22011000"
+    }
+  },
+  {
+    "model": "cadastros.ContatoPessoaFisica",
+    "pk": 1,
+    "fields": {
+      "principal": true,
+      "pessoa": 1,
+      "tipo_contato": "C",
+      "contato": "11999999999"
+    }
+  },
+  {
+    "model": "cadastros.ContatoPessoaFisica",
+    "pk": 2,
+    "fields": {
+      "principal": true,
+      "pessoa": 2,
+      "tipo_contato": "C",
+      "contato": "21988888888"
+    }
+  }
+]

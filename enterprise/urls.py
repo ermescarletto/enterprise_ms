@@ -19,6 +19,9 @@ from django.urls import path, include
 
 urlpatterns = [
     #path("cms/", include("cms.urls"),name='cms'),
-    path("users/", include("users.urls"), name='users'),
+    path("auth/", include("users.urls"), name='users'),
     path("cadastros/", include("cadastros.urls"), name='cadastros'),
+    path("documentos/", include("documentos.urls"), name='documentos'),
+    path("atendimento/", include("atendimento.urls"), name='atendimento'),
+
 ]
