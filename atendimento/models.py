@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class Equipe(models.Model):
     nome = models.CharField(max_length=100)
-    usuarios = models.ManyToManyField(User, related_name='equipes')
+    usuarios = models.ManyToManyField(User, related_name='usuarios')
     codigo = models.CharField(max_length=5)
     def __str__(self):
         return self.nome
@@ -22,6 +22,9 @@ class TipoAtendimento(models.Model):
 
     def calcular_sla_vencido(self, chamado):
         """Verifica se o SLA foi violado para um chamado específico."""
+        #VER QUE HORAS FOI PAUSADO
+        #CALCULAR APENAS APÓS RETOMAR
+
         tempo_passado = timezone.now() - chamado.criado_em
         return tempo_passado > self.sla
 
@@ -32,10 +35,14 @@ class TipoAtendimento(models.Model):
 
 
 class Chamado(models.Model):
+
+    #AO ALTERAR O STATUS DEVE OBRIGATORIAMENTE GERAR UM COMENTÁRIO
     STATUS = (
         ('NO', 'NOVO'),
         ('AB', 'AGUARDANDO ATENDIMENTO'),
         ('AT', 'EM ATENDIMENTO'),
+        ('PA', 'PAUSADO'),
+        #PAUSADO TEM QUE PARAR A SLO / SLA
         ('FE', 'FECHADO'),
         ('CA', 'CANCELADO'),
     )

@@ -3,6 +3,6 @@ from .views import *
 
 app_name = 'atendimento'
 urlpatterns = [
-    #path('api/cidades/', CidadeList.as_view(), name='cidade_list_create'),
+    path('api/equipe/', EquipeListCreate.as_view(), name='cidade_list_create'),
 
 ]

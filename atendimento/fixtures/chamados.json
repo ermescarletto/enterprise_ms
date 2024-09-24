@@ -1,0 +1,177 @@
+[
+  {
+    "model": "atendimento.Equipe",
+    "pk": 1,
+    "fields": {
+      "nome": "Suporte Técnico",
+      "codigo": "ST001",
+      "usuarios": [1,3]
+    }
+  },
+  {
+    "model": "atendimento.Equipe",
+    "pk": 2,
+    "fields": {
+      "nome": "Desenvolvimento",
+      "codigo": "DEV02",
+      "usuarios": [1,3]
+    }
+  },
+  {
+    "model": "atendimento.Equipe",
+    "pk": 3,
+    "fields": {
+      "nome": "Infraestrutura",
+      "codigo": "INF03",
+      "usuarios": [1,3]
+    }
+  },
+  {
+    "model": "atendimento.Equipe",
+    "pk": 4,
+    "fields": {
+      "nome": "Financeiro",
+      "codigo": "FIN04",
+      "usuarios": [1,3]
+    }
+  },
+  {
+    "model": "atendimento.Equipe",
+    "pk": 5,
+    "fields": {
+      "nome": "RH",
+      "codigo": "RH05",
+      "usuarios": [1,3]
+    }
+  },
+  {
+    "model": "atendimento.TipoAtendimento",
+    "pk": 1,
+    "fields": {
+      "nome": "Suporte de Software",
+      "descricao": "Atendimento para problemas relacionados a software.",
+      "slo": "02:00:00",
+      "sla": "04:00:00",
+      "equipe": 1
+    }
+  },
+  {
+    "model": "atendimento.TipoAtendimento",
+    "pk": 2,
+    "fields": {
+      "nome": "Desenvolvimento de Funcionalidades",
+      "descricao": "Atendimento para novas funcionalidades de software.",
+      "slo": "05:00:00",
+      "sla": "10:00:00",
+      "equipe": 2
+    }
+  },
+  {
+    "model": "atendimento.TipoAtendimento",
+    "pk": 3,
+    "fields": {
+      "nome": "Manutenção de Servidores",
+      "descricao": "Atendimento para manutenção de servidores de infraestrutura.",
+      "slo": "03:00:00",
+      "sla": "06:00:00",
+      "equipe": 3
+    }
+  },
+  {
+    "model": "atendimento.TipoAtendimento",
+    "pk": 4,
+    "fields": {
+      "nome": "Suporte Financeiro",
+      "descricao": "Atendimento para problemas relacionados a financeiro.",
+      "slo": "01:00:00",
+      "sla": "02:00:00",
+      "equipe": 4
+    }
+  },
+  {
+    "model": "atendimento.TipoAtendimento",
+    "pk": 5,
+    "fields": {
+      "nome": "Atendimento de Recursos Humanos",
+      "descricao": "Atendimento para questões relacionadas a RH.",
+      "slo": "04:00:00",
+      "sla": "08:00:00",
+      "equipe": 5
+    }
+  },
+  {
+    "model": "atendimento.Chamado",
+    "pk": 1,
+    "fields": {
+      "codigo": "CH001",
+      "tipo_atendimento": 1,
+      "resumo": "Erro no sistema de login",
+      "descricao": "Usuário não consegue acessar o sistema de login.",
+      "criado_em": "2024-09-23T10:00:00Z",
+      "atualizado_em": "2024-09-23T10:05:00Z",
+      "status": "NO",
+      "usuario_criador": 1,
+      "equipe_atendente": 1
+    }
+  },
+  {
+    "model": "atendimento.Chamado",
+    "pk": 2,
+    "fields": {
+      "codigo": "CH002",
+      "tipo_atendimento": 2,
+      "resumo": "Nova funcionalidade de relatório",
+      "descricao": "Solicitação de nova funcionalidade para geração de relatórios avançados.",
+      "criado_em": "2024-09-23T11:00:00Z",
+      "atualizado_em": "2024-09-23T11:10:00Z",
+      "status": "NO",
+      "usuario_criador": 3,
+      "equipe_atendente": 2
+    }
+  },
+  {
+    "model": "atendimento.Chamado",
+    "pk": 3,
+    "fields": {
+      "codigo": "CH003",
+      "tipo_atendimento": 3,
+      "resumo": "Servidor fora do ar",
+      "descricao": "O servidor de produção está fora do ar e precisa de manutenção urgente.",
+      "criado_em": "2024-09-23T12:00:00Z",
+      "atualizado_em": "2024-09-23T12:15:00Z",
+      "status": "NO",
+      "usuario_criador": 3,
+      "equipe_atendente": 3
+    }
+  },
+  {
+    "model": "atendimento.Chamado",
+    "pk": 4,
+    "fields": {
+      "codigo": "CH004",
+      "tipo_atendimento": 4,
+      "resumo": "Erro em relatório financeiro",
+      "descricao": "O relatório financeiro mensal está com erro de cálculo.",
+      "criado_em": "2024-09-23T13:00:00Z",
+      "atualizado_em": "2024-09-23T13:10:00Z",
+      "status": "NO",
+      "usuario_criador": 3,
+      "equipe_atendente": 4
+    }
+  },
+  {
+    "model": "atendimento.Chamado",
+    "pk": 5,
+    "fields": {
+      "codigo": "CH005",
+      "tipo_atendimento": 5,
+      "resumo": "Dúvida sobre férias",
+      "descricao": "Funcionário com dúvida sobre cálculo de férias.",
+      "criado_em": "2024-09-23T14:00:00Z",
+      "atualizado_em": "2024-09-23T14:05:00Z",
+      "status": "NO",
+      "usuario_criador": 1,
+      "equipe_atendente": 5
+    }
+  }
+]

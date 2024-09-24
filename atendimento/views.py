@@ -1,14 +1,32 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from .models import Equipe, TipoAtendimento, Chamado
 from .serializers import EquipeSerializer, TipoAtendimentoSerializer, ChamadoSerializer
+
+
+
+
+
+
+class EquipeListCreate(generics.ListCreateAPIView):
+    queryset = Equipe.objects.all()
+    serializer_class = EquipeSerializer
+    permission_classes = [IsAuthenticated,DjangoModelPermissions]
+
+class EquipeCRUD(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Equipe.objects.all()
+    serializer_class = EquipeSerializer
+    permission_classes = [IsAuthenticated,DjangoModelPermissions]
+
 
 class EquipeViewSet(viewsets.ModelViewSet):
     queryset = Equipe.objects.all()
     serializer_class = EquipeSerializer
     permission_classes = [IsAuthenticated]
+
+
 
 class TipoAtendimentoViewSet(viewsets.ModelViewSet):
     queryset = TipoAtendimento.objects.all()

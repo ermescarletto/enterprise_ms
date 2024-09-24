@@ -77,7 +77,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost:8080",
 ]
 
 ROOT_URLCONF = 'enterprise.urls'
@@ -108,10 +108,10 @@ DATABASES = {
         # Tenant Engine
         'ENGINE': 'django.db.backends.postgresql',
         # set database name
-        'NAME': 'enterprise_ms',
+        'NAME': 'enterprise',
         # set your user details
-        'USER': 'ermescarletto',
-        'PASSWORD': 'Leon2022@',
+        'USER': 'postgres',
+        'PASSWORD': 'ecju2403=',
         #'PASSWORD': 'Tme2daqFvCEh',
         'HOST': 'localhost',
         'POST': '5432'
