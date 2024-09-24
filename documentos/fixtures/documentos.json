@@ -1,0 +1,84 @@
+[
+  {
+    "model": "documentos.politica",
+    "pk": 1,
+    "fields": {
+      "empresa": 1,
+      "departamento": 1,
+      "codigo_politica": "POL001",
+      "titulo_politica": "Política de Segurança",
+      "texto_politica": "Texto completo da política de segurança.",
+      "criado_em": "2024-09-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "documentos.politica",
+    "pk": 2,
+    "fields": {
+      "empresa": 2,
+      "departamento": 2,
+      "codigo_politica": "POL002",
+      "titulo_politica": "Política de Privacidade",
+      "texto_politica": "Texto completo da política de privacidade.",
+      "criado_em": "2024-09-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "documentos.anexospolitica",
+    "pk": 1,
+    "fields": {
+      "politica": 1,
+      "anexo": "politicas/anexos/placeholder.png",
+      "comentario": "Anexo sobre medidas de segurança.",
+      "criado_em": "2024-09-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "documentos.anexospolitica",
+    "pk": 2,
+    "fields": {
+      "politica": 2,
+      "anexo": "politicas/anexos/placeholder.png",
+      "comentario": "Anexo sobre termos de privacidade.",
+      "criado_em": "2024-09-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "documentos.procedimentopadrao",
+    "pk": 1,
+    "fields": {
+      "politica": 1,
+      "titulo_procedimento": "Procedimento de Auditoria",
+      "texto_procedimento": "Descrição detalhada do procedimento de auditoria.",
+      "anexo": "politicas/anexos/placeholder.png"
+    }
+  },
+  {
+    "model": "documentos.procedimentopadrao",
+    "pk": 2,
+    "fields": {
+      "politica": 2,
+      "titulo_procedimento": "Procedimento de Conformidade",
+      "texto_procedimento": "Descrição detalhada do procedimento de conformidade.",
+      "anexo": "politicas/anexos/placeholder.png"
+    }
+  },
+  {
+    "model": "documentos.fluxogramas",
+    "pk": 1,
+    "fields": {
+      "procedimento_padrao": 1,
+      "titulo_fluxograma": "Fluxograma de Auditoria",
+      "anexo": "politicas/anexos/placeholder.png"
+    }
+  },
+  {
+    "model": "documentos.fluxogramas",
+    "pk": 2,
+    "fields": {
+      "procedimento_padrao": 2,
+      "titulo_fluxograma": "Fluxograma de Conformidade",
+      "anexo": "politicas/anexos/placeholder.png"
+    }
+  }
+]

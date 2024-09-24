@@ -1,0 +1,181 @@
+[
+  {
+    "model": "cadastros.PessoaJuridica",
+    "pk": 1,
+    "fields": {
+      "nome_fantasia": "Tech Solutions",
+      "razao_social": "Tech Solutions LTDA",
+      "cnpj": "12345678000190",
+      "inscricao_estadual": "123456789",
+      "inscricao_municipal": "987654321",
+      "email": "contato@techsolutions.com",
+      "telefone": "1132223344"
+    }
+  },
+  {
+    "model": "cadastros.PessoaJuridica",
+    "pk": 2,
+    "fields": {
+      "nome_fantasia": "Market Experts",
+      "razao_social": "Market Experts S.A.",
+      "cnpj": "22345678000190",
+      "inscricao_estadual": "223456789",
+      "inscricao_municipal": "987654322",
+      "email": "info@marketexperts.com",
+      "telefone": "2133345566"
+    }
+  },
+  {
+    "model": "cadastros.PessoaJuridica",
+    "pk": 3,
+    "fields": {
+      "nome_fantasia": "Green Energy",
+      "razao_social": "Green Energy Corp",
+      "cnpj": "32345678000190",
+      "inscricao_estadual": "323456789",
+      "inscricao_municipal": "987654323",
+      "email": "contact@greenenergy.com",
+      "telefone": "1133345566"
+    }
+  },
+  {
+    "model": "cadastros.PessoaJuridica",
+    "pk": 4,
+    "fields": {
+      "nome_fantasia": "Future Technologies",
+      "razao_social": "Future Technologies Ltd",
+      "cnpj": "42345678000190",
+      "inscricao_estadual": "423456789",
+      "inscricao_municipal": "987654324",
+      "email": "sales@futuretech.com",
+      "telefone": "11988991122"
+    }
+  },
+  {
+    "model": "cadastros.PessoaJuridica",
+    "pk": 5,
+    "fields": {
+      "nome_fantasia": "Blue Sky Corp",
+      "razao_social": "Blue Sky Corporation",
+      "cnpj": "52345678000190",
+      "inscricao_estadual": "523456789",
+      "inscricao_municipal": "987654325",
+      "email": "blue@skycop.com",
+      "telefone": "1155667788"
+    }
+  },
+  {
+    "model": "cadastros.EnderecoPessoaJuridica",
+    "pk": 1,
+    "fields": {
+      "principal": true,
+      "pessoa_juridica": 1,
+      "cidade": 1,
+      "bairro": 1,
+      "logradouro": 1,
+      "tipo_endereco": "C",
+      "numero": 100,
+      "cep": "01001000"
+    }
+  },
+  {
+    "model": "cadastros.EnderecoPessoaJuridica",
+    "pk": 2,
+    "fields": {
+      "principal": true,
+      "pessoa_juridica": 2,
+      "cidade": 2,
+      "bairro": 2,
+      "logradouro": 2,
+      "tipo_endereco": "C",
+      "numero": 200,
+      "cep": "22011000"
+    }
+  },
+  {
+    "model": "cadastros.ContatoPessoaJuridica",
+    "pk": 1,
+    "fields": {
+      "principal": true,
+      "pessoa_juridica": 1,
+      "tipo_contato": "C",
+      "contato": "1132223344"
+    }
+  },
+  {
+    "model": "cadastros.ContatoPessoaJuridica",
+    "pk": 2,
+    "fields": {
+      "principal": true,
+      "pessoa_juridica": 2,
+      "tipo_contato": "T",
+      "contato": "2133345566"
+    }
+  },
+  {
+    "model": "cadastros.Empresa",
+    "pk": 1,
+    "fields": {
+      "nome": "Tech Solutions Group",
+      "pessoa_juridica": 1
+    }
+  },
+  {
+    "model": "cadastros.Empresa",
+    "pk": 2,
+    "fields": {
+      "nome": "Market Experts Global",
+      "pessoa_juridica": 2
+    }
+  },
+  {
+    "model": "cadastros.Departamento",
+    "pk": 1,
+    "fields": {
+      "nome": "Desenvolvimento"
+    }
+  },
+  {
+    "model": "cadastros.Departamento",
+    "pk": 2,
+    "fields": {
+      "nome": "Marketing"
+    }
+  },
+  {
+    "model": "cadastros.Unidade",
+    "pk": 1,
+    "fields": {
+      "nome": "Sede São Paulo",
+      "cnpj": "98765432000190",
+      "empresa": 1,
+      "ativo": true
+    }
+  },
+  {
+    "model": "cadastros.Unidade",
+    "pk": 2,
+    "fields": {
+      "nome": "Filial Rio de Janeiro",
+      "cnpj": "87654321000190",
+      "empresa": 2,
+      "ativo": true
+    }
+  },
+  {
+    "model": "cadastros.Cargo",
+    "pk": 1,
+    "fields": {
+      "descricao": "Engenheiro de Software",
+      "dia_festivo": "2024-12-10"
+    }
+  },
+  {
+    "model": "cadastros.Cargo",
+    "pk": 2,
+    "fields": {
+      "descricao": "Gerente de Marketing",
+      "dia_festivo": "2024-11-15"
+    }
+  }
+]

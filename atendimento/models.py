@@ -7,8 +7,7 @@ from django.utils import timezone
 class Equipe(models.Model):
     nome = models.CharField(max_length=100)
     usuarios = models.ManyToManyField(User, related_name='equipes')
-
-
+    codigo = models.CharField(max_length=5)
     def __str__(self):
         return self.nome
 
@@ -40,7 +39,7 @@ class Chamado(models.Model):
         ('FE', 'FECHADO'),
         ('CA', 'CANCELADO'),
     )
-
+    codigo = models.CharField(max_length=255)
     tipo_atendimento = models.ForeignKey(TipoAtendimento, on_delete=models.CASCADE)
     resumo = models.CharField(max_length=255)
     descricao = models.TextField()
