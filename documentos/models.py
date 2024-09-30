@@ -3,7 +3,7 @@ from django.db import models
 class Politica(models.Model):
     empresa = models.ForeignKey('cadastros.Empresa', on_delete=models.PROTECT)
     departamento = models.ForeignKey( 'cadastros.Departamento', on_delete=models.PROTECT)
-    codigo_politica = models.CharField(max_length=15)
+    codigo_politica = models.CharField(max_length=15,unique=True)
     titulo_politica = models.CharField(max_length=255)
     texto_politica = models.TextField()
     criado_em = models.DateTimeField(auto_now=True, auto_created=True)
