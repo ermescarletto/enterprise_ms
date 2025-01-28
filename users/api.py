@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.schemas import ManualSchema
 from rest_framework.schemas import coreapi as coreapi_schema
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAdminUser
 from .models import *
 
 
@@ -80,15 +81,19 @@ class UserListViewAPI(generics.ListCreateAPIView):
 
 
 class UserCRUDViewAPI(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = IsAdminUser
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
 
 
 class UserCreateView(generics.CreateAPIView):
+    permission_classes = IsAdminUser
     queryset = User.objects.all()
     serializer_class = CreateUserSerializer
 
+
 class ManageUserPerms(APIView):
+    permission_classes = IsAdminUser
     queryset = User.objects.all()
 
     def post(self, request):

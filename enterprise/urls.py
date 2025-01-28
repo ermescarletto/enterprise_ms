@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    #path("cms/", include("cms.urls"),name='cms'),
+    path("", include("cms.urls"),name='cms'),
     path("auth/", include("users.urls"), name='users'),
     path("cadastros/", include("cadastros.urls"), name='cadastros'),
     path("documentos/", include("documentos.urls"), name='documentos'),

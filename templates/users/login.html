@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+MS Enterprise - Login
+{% endblock %}
+
+
+{% block content %}
+
+  <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-header text-center bg-primary text-white">
+                        <h4>Login</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'users:login' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input
+                                    type="email"
+                                    name="username"
+                                    class="form-control"
+                                    id="email"
+                                    required
+                                    placeholder="E-mail">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Senha</label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    id="password"
+                                    required
+                                    placeholder="Senha">
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                        <div class="mt-3 text-center">
+                            <p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+
+{% endblock %}

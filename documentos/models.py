@@ -14,6 +14,8 @@ class AnexosPolitica(models.Model):
     comentario = models.CharField(max_length=255, null=True, blank=True)
     criado_em = models.DateTimeField(auto_now=True, auto_created=True)
 
+
+
 class ProcedimentoPadrao(models.Model):
     politica = models.ForeignKey(Politica, on_delete=models.CASCADE)
     titulo_procedimento = models.CharField(max_length=255)

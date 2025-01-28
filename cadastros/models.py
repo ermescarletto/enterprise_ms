@@ -1,5 +1,6 @@
 
 from django.db import models
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 
@@ -19,7 +20,8 @@ STATE_CHOICES = (
 class Cidade(models.Model):
     nome = models.CharField(max_length=60)
     estado = models.CharField(max_length=2, choices=STATE_CHOICES)
-
+    cep_de = models.IntegerField()
+    cep_ate = models.IntegerField()
     def __unicode__(self):
         return self.nome
 
@@ -170,6 +172,26 @@ class Unidade(models.Model):
 
     def __str__(self):
         return self.nome
+
+
+class Gerente(models.Model):
+    usuario = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    unidade = models.ForeignKey(Unidade, on_delete=models.CASCADE)
+    ativo = models.BooleanField(default=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['usuario', 'unidade'], name='unique_gerente_por_unidade')
+        ]
+
+    def __str__(self):
+        return f"{self.usuario.nome} - {self.unidade.nome}"
+    def save(self, *args, **kwargs):
+        # Validação adicional (opcional)
+        if not self.ativo and not Gerente.objects.filter(empresa=self.empresa, unidade=self.unidade, ativo=True).exists():
+            raise ValidationError("Cada unidade deve ter pelo menos um gerente ativo.")
+        super().save(*args, **kwargs)
+
 
 class Cargo(models.Model):
     descricao = models.CharField(max_length=255)
