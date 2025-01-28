@@ -1,0 +1,52 @@
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height:200px; /* Centraliza verticalmente */
+
+    }
+
+    .logo-container img {
+      max-width: 350px;
+      max-height: 3.4rem;
+      width: 100%; /* Garante que a logo seja responsiva */
+    }
+
+    .bg-yellow {
+        background-color: #f7ae31;
+
+    }
+
+       #sidebar {
+      padding-top: 50px;
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      background-color: #397b46 !important;
+      transition: all 0.3s;
+    }
+
+    #sidebar.show {
+      left: 0;
+    }
+
+    #sidebar a {
+      color: white;
+      text-decoration: none;
+    }
+
+     #sidebar .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .brand {
+      max-height: 1.4rem;
+    }

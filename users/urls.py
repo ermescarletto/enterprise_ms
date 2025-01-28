@@ -7,10 +7,16 @@ app_name = 'users'
 
 urlpatterns = [
 #api_desativada    path("login/", obtain_auth_token, name='login'),
+    #path("list/", user_list, name='user_list'),
+    #path("create/", user_create, name='user_create'),
+    #path("manage/<int:pk>/",user_crud,name="user_crud"),
+    #path("perms/",manage_perms, name='manage_perms'),
     path("login/", CustomLoginView.as_view(), name='login'),
-    path("list/", user_list, name='user_list'),
-    path("create/", user_create, name='user_create'),
-    path("manage/<int:pk>/",user_crud,name="user_crud"),
-    path("perms/",manage_perms, name='manage_perms'),
+    path('logout/', logout_view, name='logout'),
+    path('users/', UserListView.as_view(), name='list'),
+    path('users/create/', UserCreateView.as_view(), name='create'),
+    path('users/<int:pk>/edit/', UserUpdateView.as_view(), name='edit'),
+    path('users/<int:pk>/delete/', UserDeleteView.as_view(), name='delete'),
+    path('users/<int:user_id>/toggle_active/', ToggleActiveStatusView.as_view(), name='toggle_active'),
 ]
 

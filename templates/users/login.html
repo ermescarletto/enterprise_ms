@@ -1,5 +1,6 @@
-{% extends "base.html" %}
 
+{% extends "base.html" %}
+{% load static %}
 {% block title %}
 MS Enterprise - Login
 {% endblock %}
@@ -11,8 +12,9 @@ MS Enterprise - Login
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-lg">
-                    <div class="card-header text-center bg-primary text-white">
-                        <h4>Login</h4>
+                    <div class="card-header text-center bg-success text-white logo-container">
+                        <img src="{% static 'img/enterprise.png' %}">
+
                     </div>
                     <div class="card-body">
                         <form method="post" action="{% url 'users:login' %}">
@@ -38,7 +40,7 @@ MS Enterprise - Login
                                     placeholder="Senha">
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-success">
                                     Login
                                 </button>
                             </div>

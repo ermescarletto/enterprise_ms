@@ -1,0 +1,124 @@
+{% extends "index.html" %}
+{% block title %}
+MS Enterprise - Usuários
+{% endblock %}
+{% block main %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-success btn-sm" id="createUserBtn">+ Usuário</button>
+        </div>
+    </div>
+    <table id="userTable" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>CPF</th>
+                <th>Ativo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div id="createUserModal" class="modal d-none" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Criar Usuário</h5>
+                <button type="button" class="close" id="closeCreateUserModal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createUserForm" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="firstName" name="first_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Sobrenome</label>
+                        <input type="text" class="form-control" id="lastName" name="last_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Criar</button>
+                    <button type="button" class="btn btn-secondary" id="cancelCreateUserModal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        const createModal = $('#createUserModal');
+
+        // Exibir modal ao clicar no botão "Criar Usuário"
+        $('#createUserBtn').on('click', function () {
+            createModal.removeClass('d-none').modal('show');
+        });
+
+        // Fechar modal ao clicar no botão "Cancelar" ou no ícone de fechar
+        $('#cancelCreateUserModal, #closeCreateUserModal').on('click', function () {
+            createModal.addClass('d-none').modal('hide');
+        });
+
+        // Processar o formulário via AJAX
+        $('#createUserForm').on('submit', function (e) {
+            e.preventDefault();
+
+            const formData = $(this).serialize();
+
+            $.ajax({
+                url: 'create/', // Endpoint de criação de usuários
+                type: 'POST',
+                data: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                success: function (response) {
+                    alert('Usuário criado com sucesso!');
+                    location.reload(); // Recarregar página para atualizar tabela
+                },
+                error: function (response) {
+                    alert('Erro ao criar o usuário. Verifique os dados e tente novamente.');
+                },
+            });
+        });
+
+        // Configuração da tabela DataTable
+        $('#userTable').DataTable({
+            "ajax": {
+                "url": "/auth/users/",
+                "type": "POST",
+                "headers": {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }
+            },
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json"
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "nome" },
+                { "data": "email" },
+                { "data": "cpf" },
+                { "data": "ativo" },
+                { "data": "acoes" },
+            ]
+        });
+    });
+</script>
+{% endblock %}
