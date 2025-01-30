@@ -16,9 +16,16 @@
         href="{% static 'css/enterprise.css' %}" rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css" />
-
+    <style>
+        .bg-ms {
+         background: url("{% static 'img/background.png'%}") no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-ms">
 
 
         {% block content %}
