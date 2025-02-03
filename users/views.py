@@ -10,7 +10,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
-
+from django.views.generic import CreateView, UpdateView
+from django.urls import reverse_lazy
+from .forms import UserForm  # Crie um formulário customizado
 User = get_user_model()
 
 def logout_view(request):
@@ -57,13 +59,10 @@ class UserListView(View):
             })
         return JsonResponse({"data": data})
 
-from django.views.generic import CreateView, UpdateView
-from django.urls import reverse_lazy
-from .forms import UserForm  # Crie um formulário customizado
 
 class UserCreateView(CreateView):
     model = User
-    template_name = 'users/user_form.html'
+    template_name = 'users/form_generic.html'
     form_class = UserForm
     success_url = reverse_lazy('users:list')
 

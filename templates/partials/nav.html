@@ -11,7 +11,8 @@
                             <a class="nav-link" href="#">Bem vindo, {{ user.username }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'users:logout' %}"><i class="bi bi-lock-fill"></i></a>
+                            <button class="btn bg-danger btn-sm" id="logoutBtn"><i class="bi bi-lock-fill "></i></button>
+
                         </li>
                     {% else %}
                         <li class="nav-item">
@@ -22,3 +23,21 @@
             </div>
         </div>
     </nav>
+
+    <div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1050;">
+        <div id="logoutToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Confirmação</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Você está saindo do sistema, deseja confirmar?
+                <div class="mt-2 pt-2 border-top">
+                    <button type="button" class="btn btn-danger btn-sm" id="confirmLogout">Sim</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
