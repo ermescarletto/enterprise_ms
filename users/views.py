@@ -5,14 +5,18 @@ from django.urls import reverse_lazy
 from django.contrib.auth import logout
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from django.views.generic import View
+from django.views.generic import View, CreateView, UpdateView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
-from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
-from .forms import UserForm, UserModalForm
+from .forms import *
+from django.contrib.auth.models import Group
+from django.contrib.auth.mixins import LoginRequiredMixin
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView
+
+
 User = get_user_model()
 
 def logout_view(request):
@@ -29,8 +33,7 @@ class CustomLoginView(LoginView):
 
 
 
-@method_decorator(login_required, name='dispatch')
-class UserListView(View):
+class UserListView(LoginRequiredMixin,View):
     template_name = 'users/user_list.html'
 
     def get(self, request):
@@ -59,19 +62,53 @@ class UserListView(View):
             })
         return JsonResponse({"data": data})
 
-from bootstrap_modal_forms.generic import BSModalCreateView
+
+class GroupListView(LoginRequiredMixin,View):
+    template_name = 'groups/group_list.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        # DataTables processa os dados no backend
+        groups = Group.objects.all()
+        data = []
+        for group in groups:
+            data.append({
+                "id": group.id,
+                "nome": group.name,
+            })
+        return JsonResponse({"data": data})
+
 
 class UserCreateView(BSModalCreateView):
-    template_name = 'users/form_generic.html'
+    template_name = 'users/user_form.html'
     form_class = UserModalForm
     success_message = 'Usuário criado com sucesso'
     success_url = reverse_lazy('users:list')
 
+
+
+class GroupCreateView(BSModalCreateView):
+    template_name = 'groups/group_form.html'
+    form_class = GroupModalForm
+    success_message = 'Grupo criado com sucesso'
+    success_url = reverse_lazy('users:groups')
+
 class UserUpdateView(UpdateView):
     model = User
-    template_name = 'users/user_form.html'
+    template_name = 'users/group_form.html'
     form_class = UserForm
     success_url = reverse_lazy('users:list')
+
+
+
+class GroupEditView(BSModalUpdateView):
+    model = Group
+    template_name = 'groups/group_form.html'
+    form_class = GroupEditForm
+    success_url = reverse_lazy('users:groups')
+
 
 from django.views.generic import DeleteView
 
@@ -79,6 +116,10 @@ class UserDeleteView(DeleteView):
     model = User
     template_name = 'users/user_confirm_delete.html'
     success_url = reverse_lazy('users:list')
+class GroupDeleteView(DeleteView):
+    model = Group
+    template_name = 'groups/group_confirm_delete.html'
+    success_url = reverse_lazy('users:groups')
 
 
 from django.views import View

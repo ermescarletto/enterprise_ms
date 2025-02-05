@@ -5,8 +5,7 @@ from .api import *
 app_name = 'dashboards'
 urlpatterns = [
 
-
-    path('api/dashboards/', DashboardList.as_view(), name='dashboard_list'),
-    path('api/meusdashboards/<int:id>', MyDashboards.as_view(), name='my_dashboards'),
+    path('', Dashboards.as_view(), name='dashboards'),
+    #path('api/meusdashboards/<int:id>', MyDashboards.as_view(), name='my_dashboards'),
 
 ]

@@ -2,9 +2,34 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                    <img class="brand" src="{% static 'img/logo_maissabor.png' %}">
+                </button>
             <button class="btn btn-outlined" id="toggleSidebar">☰ <img class="brand" src="{% static 'img/logo_maissabor.png' %}"></button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navBar">
+                <ul class="navbar-nav">
+                    <li>
+                        <a class="nav-link" href="{% url 'cms:index' %}">Início</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{% url 'dashboards:dashboards' %}">Dashboards</a>
+                    </li>
+                    {% if user.is_superuser %}
+                    <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Configurações
+                          </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'users:list' %}">Usuários</a></li>
+                            <li><a class="dropdown-item" href="{% url 'users:groups' %}">Grupos de Usuários</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Configurações Gerais</a></li>
+                          </ul>
+                        </li>
+                    {% endif %}
+                </ul>
                 <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item">

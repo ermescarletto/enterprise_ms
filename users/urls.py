@@ -18,5 +18,9 @@ urlpatterns = [
     path('users/<int:pk>/edit/', UserUpdateView.as_view(), name='edit'),
     path('users/<int:pk>/delete/', UserDeleteView.as_view(), name='delete'),
     path('users/<int:user_id>/toggle_active/', ToggleActiveStatusView.as_view(), name='toggle_active'),
+    path('groups/', GroupListView.as_view(), name='groups'),
+    path('groups/create/' , GroupCreateView.as_view(), name='create_group'),
+    path('groups/<int:pk>/edit/', GroupEditView.as_view(), name='edit_groups'),
+    path('groups/<int:pk>/delete/', GroupDeleteView.as_view(), name='edit_groups'),
 ]
 

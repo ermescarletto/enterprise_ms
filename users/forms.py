@@ -1,33 +1,14 @@
 from django import forms
 from django.contrib.auth import get_user_model
 import re
-
+from enterprise.forms.custom_fields import *
+from bootstrap_datepicker_plus.widgets import DatePickerInput
+from bootstrap_modal_forms.forms import BSModalModelForm
+from django.contrib.auth.models import Group
 
 User = get_user_model()
 
-
-class CPFField(forms.CharField):
-
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault("max_length", 14)  # Formato: 000.000.000-00
-        kwargs.setdefault("widget", forms.TextInput(attrs={
-            "class": "form-control",
-            "placeholder": "000.000.000-00"
-        }))
-        super().__init__(*args, **kwargs)
-
-    def clean(self, value):
-        value = super().clean(value)
-        if not value:
-            return value
-
-        # Remove pontos e traço
-        cpf = re.sub(r"[^0-9]", "", value)
-
-        if len(cpf) != 11 or not cpf.isdigit():
-            raise forms.ValidationError("CPF inválido. Insira um CPF válido no formato 000.000.000-00.")
-
-        return cpf  # Retorna apenas os números do CPF para salvar no banco
+  # Retorna apenas os números do CPF para salvar no banco
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -37,13 +18,24 @@ class UserForm(forms.ModelForm):
         }
 
 
+class GroupModalForm(BSModalModelForm):
 
-from bootstrap_modal_forms.forms import BSModalModelForm
+    class Meta:
+        model = Group
+        fields = ['name']
 
+class GroupEditForm(BSModalModelForm):
+
+    class Meta:
+        model = Group
+        fields = ['name', 'permissions']
 
 class UserModalForm(BSModalModelForm):
 
     cpf = CPFField()
+    telefone = PhoneNumberField()
+    data_nascimento = forms.DateField(widget=DatePickerInput(options={"format": "MM/DD/YYYY"}))
+
     class Meta:
         model = User
         fields = [

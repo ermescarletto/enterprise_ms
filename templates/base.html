@@ -1,4 +1,6 @@
 {% load static %}
+{% load bootstrap5 %}
+
 <!DOCTYPE html>
 
 <html lang="pt-br">
@@ -6,10 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} MS - Enterprise {% endblock %}</title>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    />
+{% bootstrap_css %}
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <link
@@ -24,25 +24,71 @@
     height: 100vh;
     width: 100vw;
         }
+
+  /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        #preloader.hidden {
+            transform: translateY(-100%);
+        }
     </style>
 </head>
 <body class="bg-ms">
-
+ <div id="preloader">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+    </div>
 
         {% block content %}
         {% endblock %}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-        <script
+{% bootstrap_javascript %}
+{% if messages %}
+<div aria-live="polite" aria-atomic="true" class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
+    {% for message in messages %}
+    <div class="toast align-items-center text-white bg-{% if message.tags %}{{ message.tags }}{% else %}primary{% endif %} border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ message }}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+
+    <script src="{% static 'js/enterprise.js' %}"></script>
+
+         <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
   crossorigin="anonymous"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-
-    <script src="{% static 'js/enterprise.js' %}"></script>
-
 <script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script>
+
+           <script>
+        window.addEventListener("load", function() {
+            setTimeout(() => {
+                document.getElementById("preloader").classList.add("hidden");
+                setTimeout(() => {
+                    document.getElementById("preloader").style.display = "none";
+                }, 800);
+            }, 500);
+        });
+    </script>
 {% block extra_js %}
 {% endblock %}
 </body>

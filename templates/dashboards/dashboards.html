@@ -1,0 +1,41 @@
+{% extends 'index.html'%}
+{% block main %}
+<div class="container-fluid m-0">
+
+<div id="sidebar" class="bg-dark">
+    <ul class="nav flex-column p-3">
+        <li class="nav-item">
+            <a class="nav-link text-white" href="#">
+                <i class="bi bi-house-door"></i> <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" href="#submenu1" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="submenu1">
+                <i class="bi bi-person"></i> <span>Meu Perfil</span>
+            </a>
+            <ul class="collapse list-unstyled ps-4" id="submenu1">
+                <li><a class="nav-link text-white" href="#">Ver perfil</a></li>
+                <li><a class="nav-link text-white" href="#">Editar perfil</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" href="#submenu2" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="submenu2">
+                <i class="bi bi-gear"></i> <span>Configurações</span>
+            </a>
+            <ul class="collapse list-unstyled ps-4" id="submenu2">
+                <li><a class="nav-link text-white" href="{% url 'users:list'%}">Usuários</a></li>
+                <li><a class="nav-link text-white" href="#">Grupos de Usuários</a></li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-white" href="#">
+                <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+            </a>
+        </li>
+    </ul>
+    <button class="close-btn" id="closeSidebar">&times;</button>
+
+  </div>
+</div>
+
+{% endblock %}
