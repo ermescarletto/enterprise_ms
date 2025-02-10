@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'ajax_datatable',
+    'bootstrap_modal_forms',
+    'bootstrap_datepicker_plus',
     #main
     #'cms',
     'cadastros',
@@ -122,6 +124,17 @@ DATABASES = {
     }
 }
 
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'email-ssl.com.br'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'no-reply@msservice.srv.br'
+EMAIL_HOST_PASSWORD = 'MAIL@mss3223'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = 'no-reply@msservice.srv.br'
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

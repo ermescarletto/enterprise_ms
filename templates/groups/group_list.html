@@ -28,7 +28,7 @@ MS Enterprise - Grupos de Usuários
     </div>
   </div>
 </div>
-<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="modal"  >
   <div class="modal-dialog" role="document">
     <div class="modal-content"></div>
   </div>
@@ -45,8 +45,6 @@ MS Enterprise - Grupos de Usuários
       })
     });
     $(document).ready(function() {
-
-
 
         // Configuração da tabela DataTable
         $('#userTable').DataTable({
@@ -66,6 +64,10 @@ MS Enterprise - Grupos de Usuários
                 { "data" : "acoes" }
             ]
         });
+
+    $(".edit").each(function () {
+        $(this).modalForm({formURL: $(this).data("form-url")});
+    });
     });
 </script>
 {% endblock %}

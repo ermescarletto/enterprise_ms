@@ -23,12 +23,40 @@ class GroupModalForm(BSModalModelForm):
     class Meta:
         model = Group
         fields = ['name']
-
+        labels =    {
+            'name' : 'Nome do grupo'
+        }
+        widgets = {
+            'name' : forms.TextInput(attrs={
+                'class': 'form-control text-sm',
+                'placeholder' : 'Grupo',
+                'label' : 'Nome'
+            }),
+        }
+from django.contrib.auth.models import Permission
+from .widgets import DualListWidget
 class GroupEditForm(BSModalModelForm):
-
+    permissions = forms.ModelMultipleChoiceField(
+        queryset=Permission.objects.all(),
+        widget=DualListWidget(),
+        required=False,
+    )
     class Meta:
         model = Group
         fields = ['name', 'permissions']
+        labels = {
+            'name' : 'Nome do grupo',
+            'permissions' : 'Permissões'
+        }
+        widgets = {
+            'name' : forms.TextInput(
+                attrs={
+                    'class': 'form-control text-sm',
+
+                }
+            )
+        }
+
 
 class UserModalForm(BSModalModelForm):
 
@@ -76,3 +104,5 @@ class UserModalForm(BSModalModelForm):
             'username' : 'Nome de Usuário',
         }
 
+from django.contrib.auth.models import Permission
+from .widgets import DualListWidget

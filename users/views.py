@@ -31,8 +31,6 @@ class CustomLoginView(LoginView):
     def get_success_url(self):
         return reverse_lazy('cms:index')  # Replace 'home' with your app's home view name
 
-
-
 class UserListView(LoginRequiredMixin,View):
     template_name = 'users/user_list.html'
 
@@ -56,8 +54,8 @@ class UserListView(LoginRequiredMixin,View):
                 "cpf": user.cpf,
                 "ativo": ativo,
                 "acoes": f"""
-                <a href='/users/{user.id}/edit/' class='btn btn-primary btn-sm'><i class='bi bi-pen'></i></a>
-                <a href='/users/{user.id}/delete/' class='btn btn-danger btn-sm'><i class='bi bi-trash'></i></a>
+                <a href='{user.id}/edit/' class='btn btn-primary btn-sm'><i class='bi bi-pen edit'></i></a>
+                <a href='{user.id}/delete/' class='btn btn-danger btn-sm'><i class='bi bi-trash'></i></a>
                 """
             })
         return JsonResponse({"data": data})
@@ -77,6 +75,19 @@ class GroupListView(LoginRequiredMixin,View):
             data.append({
                 "id": group.id,
                 "nome": group.name,
+                "acoes" :  f"""
+                <button 
+                    type="button" 
+                    class="edit bs-modal btn btn-sm btn-secondary"     
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modal"  
+                    data-form-url='groups/{group.id}/edit/'
+                >
+                <span class="bi bi-pen"></span>
+                </button>               
+                <a href='{group.id}/edit/' class='btn btn-primary btn-sm'><i class='bi bi-pen'></i></a>
+                <a href='{group.id}/delete/' class='btn btn-danger btn-sm'><i class='bi bi-trash'></i></a>
+                """
             })
         return JsonResponse({"data": data})
 
@@ -105,7 +116,7 @@ class UserUpdateView(UpdateView):
 
 class GroupEditView(BSModalUpdateView):
     model = Group
-    template_name = 'groups/group_form.html'
+    template_name = 'groups/group_edit.html'
     form_class = GroupEditForm
     success_url = reverse_lazy('users:groups')
 

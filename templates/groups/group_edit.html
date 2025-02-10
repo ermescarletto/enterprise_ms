@@ -1,19 +1,22 @@
+{% extends 'index.html' %}
+{% block title %} MS Enterprise - Editar Grupo {% endblock %}
 
+{% block main %}
 
 
 <div class="container mt-4">
-
-
+<div class="card">
+    
 <form id="formCadastro" method="post" action="">
   {% csrf_token %}
 
- <div class="modal-header">
-    <h5 class="modal-title">Novo Grupo</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar">
+ <div class="card-header">
+    <h5 class="card-title">Editar Grupo</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="card" aria-label="Fechar">
     </button>
   </div>
 
-  <div class="modal-body">
+  <div class="card-body">
     {% for field in form %}
       <div class="form-group{% if field.errors %} invalid{% endif %}">
         <label for="{{ field.id_for_label }}">{{ field.label }}</label>
@@ -25,10 +28,12 @@
     {% endfor %}
   </div>
 
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancelar</button>
+  <div class="card-footer">
+    <button type="button" class="btn btn-default" data-bs-dismiss="card">Cancelar</button>
     <button type="submit" class="btn btn-primary">Salvar</button>
   </div>
 
 </form>
 </div>
+
+{% endblock %}

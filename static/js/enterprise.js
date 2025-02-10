@@ -1,15 +1,14 @@
-    document.addEventListener("DOMContentLoaded", function () {
-        var toastElements = document.querySelectorAll(".toast");
+document.addEventListener("DOMContentLoaded", function () {
+        var toastElements = document.querySelectorAll(".messages");
         toastElements.forEach(function (toastEl) {
             var toast = new bootstrap.Toast(toastEl);
             toast.show();
         });
+
     });
 
-
-
+//modais
     //FUNCOES DO CPF
-
 
 function aplicarMascaraCPF(campo) {
     campo.addEventListener("input", function() {
