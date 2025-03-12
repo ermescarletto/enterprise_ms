@@ -4,6 +4,38 @@ from django.core.exceptions import ValidationError
 
 # Create your models here.
 
+
+class BaseModelCadastro(models.Model):
+
+    def get_fields(self):
+        fields = []
+
+        for field in self._meta.get_fields():
+            if isinstance(field, (models.ManyToOneRel, models.ManyToManyRel)):
+                continue
+
+            field_name = field.verbose_name if hasattr(field, 'verbose_name') else field.name
+            field_value = getattr(self, field.name, None)
+
+            if isinstance(field_value, bool):
+                field_value = "Sim" if field_value else "Não"
+            elif isinstance(field, models.ManyToManyField):
+                field_value = ', '.join([str(obj) for obj in field_value.all()])
+            else:
+                field_value = str(field_value) if field_value else '-'
+
+            fields.append((field_name, field_value))
+
+        return fields
+
+    def get_model_name(self):
+        return self._meta.verbose_name.title()
+
+    class Meta:
+        abstract = True
+
+
+
 STATE_CHOICES = (
     ('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'),
     ('AM', 'Amazonas'), ('BA', 'Bahia'), ('CE', 'Ceará'),
@@ -28,6 +60,9 @@ class Cidade(models.Model):
     def __str__(self):
         return f'{self.nome} - {self.estado}'
 
+    class Meta:
+        verbose_name = 'Cadastro de Cidades'
+        verbose_name_plural = 'Cidades'
 
 class Bairro(models.Model):
     nome = models.CharField(max_length=60)
@@ -45,7 +80,7 @@ class Logradouro(models.Model):
     nome = models.CharField(max_length=60)
     bairro = models.ForeignKey(Bairro, on_delete=models.CASCADE)
     cidade = models.ForeignKey(Cidade, on_delete=models.CASCADE)
-
+    cep = models.IntegerField()
     class Meta:
         unique_together = ['nome', 'bairro', 'cidade']
         ordering = ['cidade']
@@ -151,7 +186,7 @@ class ContatoPessoaJuridica(models.Model):
         unique_together = ['pessoa_juridica', 'principal']
 
 
-class Empresa(models.Model):
+class Empresa(BaseModelCadastro):
     nome = models.CharField(max_length=255)
     pessoa_juridica = models.ForeignKey(PessoaJuridica, on_delete=models.PROTECT)
 
@@ -164,7 +199,8 @@ class Departamento(models.Model):
     def __str__(self):
         return self.nome
 
-class Unidade(models.Model):
+class Unidade(BaseModelCadastro):
+    codigo = models.IntegerField() #codigo sistema teknisa
     nome = models.CharField(max_length=255)
     cnpj = models.CharField(max_length=14)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
@@ -174,23 +210,14 @@ class Unidade(models.Model):
         return self.nome
 
 
-class Gerente(models.Model):
+class Gerente(BaseModelCadastro):
     usuario = models.ForeignKey('users.User', on_delete=models.CASCADE)
-    unidade = models.ForeignKey(Unidade, on_delete=models.CASCADE)
+    unidades = models.ManyToManyField(Unidade)
     ativo = models.BooleanField(default=True)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['usuario', 'unidade'], name='unique_gerente_por_unidade')
-        ]
 
     def __str__(self):
-        return f"{self.usuario.nome} - {self.unidade.nome}"
-    def save(self, *args, **kwargs):
-        # Validação adicional (opcional)
-        if not self.ativo and not Gerente.objects.filter(empresa=self.empresa, unidade=self.unidade, ativo=True).exists():
-            raise ValidationError("Cada unidade deve ter pelo menos um gerente ativo.")
-        super().save(*args, **kwargs)
+        return f"{self.usuario.nome}"
 
 
 class Cargo(models.Model):

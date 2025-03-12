@@ -7,17 +7,17 @@ class DualListWidget(forms.Widget):
 
     def render(self, name, value, attrs=None, renderer=None):
         value = value or []
-        selected_permissions = set(value) if isinstance(value, list) else set(value or [])
+        selected = set(value) if isinstance(value, list) else set(value or [])
 
         # Criando as opções de permissão
-        all_permissions = self.choices
-        available_permissions = [perm for perm in all_permissions if perm[0] not in selected_permissions]
-        selected_permissions_list = [perm for perm in all_permissions if perm[0] in selected_permissions]
+        all = self.choices
+        available = [perm for perm in all if perm[0] not in selected]
+        selected = [perm for perm in all if perm[0] in selected]
 
         context = {
             "name": name,
-            "available_permissions": available_permissions,
-            "selected_permissions_list": selected_permissions_list,
+            "available": available,
+            "selected": selected,
         }
 
         return render_to_string(self.template_name, context)

@@ -8,6 +8,7 @@ urlpatterns = [
     #path('api/cidades/', CidadeList.as_view(), name='cidade_list_create'),
     path('api/pessoasfisicas/', PessoaFisicaList.as_view(), name='pessoas_fisicas'),
     path('api/pessoasfisicas/<int:id>', PessoaFisicaList.as_view(), name='pessoas_fisicas'),
-    path('api/cidades/', CidadeList.as_view(), name='cidades')
+    path('api/cidades/', CidadeList.as_view(), name='cidades-api'),
+    path('cidades/',CidadeList.as_view(),name='cidades-list')
 
 ]

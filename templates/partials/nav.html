@@ -1,68 +1,75 @@
 {% load static %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                    <img class="brand" src="{% static 'img/logo_maissabor.png' %}">
-                </button>
-            <button class="btn btn-outlined" id="toggleSidebar">☰ <img class="brand" src="{% static 'img/logo_maissabor.png' %}"></button>
+    <div class="container-fluid">
+        <button class="navbar-toggler btn" type="button" data-bs-toggle="collapse" data-bs-target="#navBar" aria-controls="navBar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            <img class="brand" src="{% static 'img/logo_maissabor.png' %}">
+        </button>
 
-            <div class="collapse navbar-collapse" id="navBar">
-                <ul class="navbar-nav">
-                    <li>
-                        <a class="nav-link" href="{% url 'cms:index' %}">Início</a>
+        <div class="collapse navbar-collapse" id="navBar">
+            <ul class="navbar-nav">
+                <li>
+                    <a class="nav-link" href="{% url 'cms:index' %}">Início</a>
+                </li>
+                <li>
+                    <a class="nav-link" href="{% url 'dashboards:dashboards' %}">Dashboards</a>
+                </li>
+                {% if user.is_superuser %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Cadastros
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'cadastros:cidades-list' %}">Cidades</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:list' %}">Empresa</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:groups' %}">Unidade</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:groups' %}">Gerentes</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Configurações
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'users:list' %}">Usuários</a></li>
+                        <li><a class="dropdown-item" href="{% url 'users:groups' %}">Grupos de Usuários</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Configurações Gerais</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Bem vindo, {{ user.username }}</a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="{% url 'dashboards:dashboards' %}">Dashboards</a>
+                    <li class="nav-item">
+                        <button class="btn bg-danger btn-sm" id="logoutBtn"><i class="bi bi-lock-fill "></i></button>
                     </li>
-                    {% if user.is_superuser %}
-                    <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Configurações
-                          </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{% url 'users:list' %}">Usuários</a></li>
-                            <li><a class="dropdown-item" href="{% url 'users:groups' %}">Grupos de Usuários</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Configurações Gerais</a></li>
-                          </ul>
-                        </li>
-                    {% endif %}
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Bem vindo, {{ user.username }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <button class="btn bg-danger btn-sm" id="logoutBtn"><i class="bi bi-lock-fill "></i></button>
-
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'users:login' %}">Login</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:login' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1050;">
-        <div id="logoutToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Confirmação</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-                Você está saindo do sistema, deseja confirmar?
-                <div class="mt-2 pt-2 border-top">
-                    <button type="button" class="btn btn-danger btn-sm" id="confirmLogout">Sim</button>
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Não</button>
-                </div>
+<div class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1050;">
+    <div id="logoutToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="me-auto">Confirmação</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+            Você está saindo do sistema, deseja confirmar?
+            <div class="mt-2 pt-2 border-top">
+                <button type="button" class="btn btn-danger btn-sm" id="confirmLogout">Sim</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Não</button>
             </div>
         </div>
     </div>
-
-
+</div>

@@ -1,7 +1,6 @@
-{% load bootstrap5 %}
 
 {% block main %}
-
+{% load widget_tweaks %}
 <div class="modal-header">
     <h2 class="modal-title">{{ form.instance.pk|yesno:"Editar Usuário,Criar Usuário" }}</h2>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -9,9 +8,24 @@
 
 <div class="modal-body">
     {{ form.media }}
-    <form method="post" novalidate>
+    <form method="post" id="create-form" novalidate>
         {% csrf_token %}
-        {% bootstrap_form form %}
+           <div class="{% if form.non_field_errors %}invalid{% endif %} mb-2">
+         {% for error in form.non_field_errors %}
+           {{ error }}
+         {% endfor %}
+       </div>
+       {% for field in form %}
+         <div class="form-group">
+           <strong><label for="{{ field.id_for_label }}">{{ field.label }}</label></strong>
+           {% render_field field %}
+           <div class="{% if field.errors %} invalid{% endif %}">
+             {% for error in field.errors %}
+               <p class="help-block">{{ error }}</p>
+             {% endfor %}
+           </div>
+         </div>
+       {% endfor %}
         <button type="submit" class="btn btn-success">Salvar</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
     </form>

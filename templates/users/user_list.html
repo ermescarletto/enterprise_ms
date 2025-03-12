@@ -3,16 +3,16 @@
 MS Enterprise - Usuários
 {% endblock %}
 {% block main %}
+
 <div class="container mt-2">
     <div class="row">
         <div class="col-sm-12">
-            <button class="btn btn-success btn-sm" id="createUser">+ Usuário</button>
+            <button class="btn btn-success btn-sm" id="create">+ Usuário</button>
         </div>
     </div>
 
 
 </div>
-
 <div class="container content mt-2">
     <table id="userTable" class="display">
         <thead>
@@ -30,9 +30,7 @@ MS Enterprise - Usuários
 <div class="modal fade" tabindex="-1" role="dialog" id="modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-
         {% include 'users/form_generic.html' %}
-
     </div>
   </div>
 </div>
@@ -41,22 +39,17 @@ MS Enterprise - Usuários
 
 {% block extra_js %}
 <script>
-
-
     document.addEventListener('DOMContentLoaded', (e) => {
-      modalForm(document.getElementById('createUser'), {
+      modalForm(document.getElementById('create'), {
         formURL: "{% url 'users:create' %}"
       })
     });
     $(document).ready(function() {
-
-
-
         // Configuração da tabela DataTable
         $('#userTable').DataTable({
             "ajax": {
-                "url": "/auth/users/",
-                "type": "POST",
+                "url": "/auth/users/list/",
+                "type": "GET",
                 "headers": {
                     "X-CSRFToken": "{{ csrf_token }}"
                 }
@@ -74,5 +67,30 @@ MS Enterprise - Usuários
             ]
         });
     });
+
+$('#create-form').on('submit', function(event) {
+    event.preventDefault(); // Impede o envio padrão do formulário
+
+    // Pega os dados e converte em JSON
+    const formData = {};
+    $.each($(this).serializeArray(), function() {
+        formData[this.name] = this.value;
+    });
+    const jsonData = JSON.stringify(formData);
+    // Envia via AJAX
+    $.ajax({
+        url: '/sua-url',
+        type: 'POST',
+        contentType: 'application/json',
+        data: jsonData,
+        success: function(data) {
+            console.log('Sucesso:', data);
+            $('#seuModal').modal('hide'); // Fecha o modal, se desejar
+        },
+        error: function(error) {
+            console.error('Erro:', error);
+        }
+    });
+});
 </script>
 {% endblock %}

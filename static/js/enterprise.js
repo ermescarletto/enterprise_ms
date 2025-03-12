@@ -4,8 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var toast = new bootstrap.Toast(toastEl);
             toast.show();
         });
-
-    });
+ });
 
 //modais
     //FUNCOES DO CPF
@@ -55,4 +54,54 @@ function validarCPF(cpf) {
     }
 
     return true;
-}
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const modal = document.getElementById("modal"); // Substitua pelo ID real do seu modal
+    modal.addEventListener("shown.bs.modal", function () {
+
+        const addBtn = document.getElementById("add");
+        const removeBtn = document.getElementById("remove");
+        const available_options = document.getElementById("available");
+        const selected_options = document.getElementById("selected");
+        const selectAllLeft = document.getElementById("select-all-left");
+        const selectAllRight = document.getElementById("select-all-right");
+
+        addBtn?.addEventListener("click", function () {
+            moveSelectedOptions(available_options, selected_options);
+            console.log('addBtn');
+        });
+
+        removeBtn?.addEventListener("click", function () {
+            moveSelectedOptions(selected_options, available_options);
+            console.log('removeBtn');
+        });
+
+        selectAllLeft?.addEventListener("click", function () {
+            toggleAllOptions(available_options, selectAllLeft.checked);
+            console.log('SABtn');
+        });
+
+        selectAllRight?.addEventListener("click", function () {
+            toggleAllOptions(selected_options, selectAllRight.checked);
+            console.log('RABtn');
+        });
+
+        function moveSelectedOptions(from, to) {
+            console.log('moveSelected');
+            [...from.selectedOptions].forEach(option => {
+                option.selected = to === selected; // Ajusta a seleção ao mover
+                to.appendChild(option);
+            });
+
+        }
+
+        function toggleAllOptions(selectElement, checked) {
+            console.log('toggleAll');
+            for (let option of selectElement.options) {
+                option.selected = checked;
+            }
+        }
+    });
+});
