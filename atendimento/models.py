@@ -2,8 +2,6 @@ from django.db import models
 from users.models import User
 from django.utils import timezone
 
-
-
 class Equipe(models.Model):
     nome = models.CharField(max_length=100)
     usuarios = models.ManyToManyField(User, related_name='usuarios')

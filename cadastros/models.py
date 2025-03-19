@@ -137,8 +137,6 @@ class ContatoPessoaFisica(models.Model):
     class Meta:
         unique_together = ['pessoa', 'principal']
 
-
-
 class PessoaJuridica(models.Model):
     nome_fantasia = models.CharField(max_length=255)
     razao_social = models.CharField(max_length=255)
@@ -186,13 +184,6 @@ class ContatoPessoaJuridica(models.Model):
         unique_together = ['pessoa_juridica', 'principal']
 
 
-class Empresa(BaseModelCadastro):
-    nome = models.CharField(max_length=255)
-    pessoa_juridica = models.ForeignKey(PessoaJuridica, on_delete=models.PROTECT)
-
-    def __str__(self):
-        return self.nome
-
 class Departamento(models.Model):
     nome = models.CharField(max_length=255)
 
@@ -203,7 +194,7 @@ class Unidade(BaseModelCadastro):
     codigo = models.IntegerField() #codigo sistema teknisa
     nome = models.CharField(max_length=255)
     cnpj = models.CharField(max_length=14)
-    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(PessoaJuridica, on_delete=models.CASCADE)
     ativo = models.BooleanField(default=True)
 
     def __str__(self):
@@ -214,7 +205,6 @@ class Gerente(BaseModelCadastro):
     usuario = models.ForeignKey('users.User', on_delete=models.CASCADE)
     unidades = models.ManyToManyField(Unidade)
     ativo = models.BooleanField(default=True)
-
 
     def __str__(self):
         return f"{self.usuario.nome}"

@@ -1,0 +1,202 @@
+[
+  {
+    "model": "cadastros.Cidade",
+    "pk": 1,
+    "fields": {
+      "nome": "São Paulo",
+      "estado": "SP",
+      "cep_de": 1000000,
+      "cep_ate": 5999999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 2,
+    "fields": {
+      "nome": "Rio de Janeiro",
+      "estado": "RJ",
+      "cep_de": 2000000,
+      "cep_ate": 2899999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 3,
+    "fields": {
+      "nome": "Belo Horizonte",
+      "estado": "MG",
+      "cep_de": 3000000,
+      "cep_ate": 3199999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 4,
+    "fields": {
+      "nome": "Salvador",
+      "estado": "BA",
+      "cep_de": 4000000,
+      "cep_ate": 4384999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 5,
+    "fields": {
+      "nome": "Curitiba",
+      "estado": "PR",
+      "cep_de": 8000000,
+      "cep_ate": 8299999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 6,
+    "fields": {
+      "nome": "Porto Alegre",
+      "estado": "RS",
+      "cep_de": 9000000,
+      "cep_ate": 9199999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 7,
+    "fields": {
+      "nome": "Brasília",
+      "estado": "DF",
+      "cep_de": 7000000,
+      "cep_ate": 7299999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 8,
+    "fields": {
+      "nome": "Fortaleza",
+      "estado": "CE",
+      "cep_de": 6000000,
+      "cep_ate": 6099999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 9,
+    "fields": {
+      "nome": "Manaus",
+      "estado": "AM",
+      "cep_de": 6900000,
+      "cep_ate": 6999999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 10,
+    "fields": {
+      "nome": "Recife",
+      "estado": "PE",
+      "cep_de": 5000000,
+      "cep_ate": 5299999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 11,
+    "fields": {
+      "nome": "Goiânia",
+      "estado": "GO",
+      "cep_de": 7400000,
+      "cep_ate": 7499999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 12,
+    "fields": {
+      "nome": "Belém",
+      "estado": "PA",
+      "cep_de": 6600000,
+      "cep_ate": 6699999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 13,
+    "fields": {
+      "nome": "São Luís",
+      "estado": "MA",
+      "cep_de": 6500000,
+      "cep_ate": 6599999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 14,
+    "fields": {
+      "nome": "Maceió",
+      "estado": "AL",
+      "cep_de": 5700000,
+      "cep_ate": 5799999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 15,
+    "fields": {
+      "nome": "Natal",
+      "estado": "RN",
+      "cep_de": 5900000,
+      "cep_ate": 5999999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 16,
+    "fields": {
+      "nome": "Campo Grande",
+      "estado": "MS",
+      "cep_de": 7900000,
+      "cep_ate": 7999999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 17,
+    "fields": {
+      "nome": "João Pessoa",
+      "estado": "PB",
+      "cep_de": 5800000,
+      "cep_ate": 5899999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 18,
+    "fields": {
+      "nome": "Teresina",
+      "estado": "PI",
+      "cep_de": 6400000,
+      "cep_ate": 6499999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 19,
+    "fields": {
+      "nome": "Florianópolis",
+      "estado": "SC",
+      "cep_de": 8800000,
+      "cep_ate": 8899999
+    }
+  },
+  {
+    "model": "cadastros.Cidade",
+    "pk": 20,
+    "fields": {
+      "nome": "Aracaju",
+      "estado": "SE",
+      "cep_de": 4900000,
+      "cep_ate": 4999999
+    }
+  }
+]

@@ -13,6 +13,7 @@ from .models import *
 from .serializers import *
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
+from django.http import JsonResponse
 
 class BaseListView(LoginRequiredMixin, View):
     login_url = '/user/login/'
@@ -37,101 +38,117 @@ class BaseCreateView(LoginRequiredMixin, BSModalCreateView):
 
 #### VIEWS DO CADASTRO DE CIDADES #### 26/02/2025
 #### TRILHA SONORA "LAS TUMBAS - ISRAEL RIVERA" #####
+#### REFATORADO EM 18/03 PARA ATENDER O TEMPLATE DO DJANGO ####
 
+class CidadeListView(LoginRequiredMixin,View):
+    template_name = 'cidades/cidade_list.html'
 
-class CidadeListView(BaseListView):
     def get(self, request):
-        user_perms = self.has_model_permission(Cidade)
-        context = {
-            'page_title': Cidade.get_model_name(Cidade),
-            'url_create': 'cadastros:create-cidade',
-            'url_view': 'cadastros:view-cidade',
-            'url_edit': 'cadastros:edit-cidade',
-            'url_delete': 'cadastros:delete-cidade',
-            'user_perms': user_perms
-        }
-        return render(request, "generics/list.html", context=context)
-
-
-
-#### VIES DO CADASTRO DE EMPRESAS #####
-
-class Empresa(BaseCreateView):
-    form_class = FormEmpresa
-    success_message = 'Empresa criada com sucesso.'
-    error_message = 'Não foi possível cadastrar.'
-    success_url = reverse_lazy('cadastros:empresa')
-
-
-class EmpresaDetail(LoginRequiredMixin, BSModalReadView):
-    template_name = 'generics/detail.html'
-    model = Empresa
-
-
-class EmpresaEditView(LoginRequiredMixin, BSModalUpdateView):
-    model = Empresa
-    template_name = 'generics/edit.html'
-    form_class = FormEmpresa
-    success_message = 'Empresa editada com sucesso'
-    success_url = reverse_lazy('cadastros:empresa')
-
-
-class EmpresaDeleteView(LoginRequiredMixin, BSModalDeleteView):
-    model = Empresa
-    template_name = 'generics/delete.html'
-    success_message = 'Empresa removida com sucesso.'
-    success_url = reverse_lazy('cadastros:empresa')
-    error_url = reverse_lazy('cadastros:empresa')
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        success_url = self.get_success_url()
-        try:
-            self.object.delete()
-        except ProtectedError:
-            messages.error(request, "Não foi possível excluir o registro.")
-        finally:
-            return HttpResponseRedirect(success_url)
-
-
-class Empresa(BaseListView):
+        return render(request, self.template_name)
+class GetCidadesListView(LoginRequiredMixin,View):
     def get(self, request):
-        user_perms = self.has_model_permission(Empresa)
-        objects = Empresa.objects.all().order_by('id')
-        context = {
-            'objects': objects,
-            'page_title': Empresa.get_model_name(Empresa),
-            'url_create': 'frotas:create_transportador',
-            'url_view': 'frotas:view_transportador',
-            'url_edit': 'frotas:edit_transportador',
-            'url_delete': 'frotas:delete_transportador',
-            'user_perms': user_perms
-        }
-        return render(request, "generics/list.html", context=context)
-
-
-class EmpresaListView(LoginRequiredMixin,View):
-    template_name = 'groups/empresa_list.html'
-    def get(self, request):
-        # DataTables processa os dados no backend
-        groups = Empresa.objects.all()
+        cidades = Cidade.objects.all()
         data = []
-        for group in groups:
+        for cidade in cidades:
             data.append({
-                "id": empresa.id,
-                "nome": group.name,
-                "acoes" :  f"""
-                <button 
-                    type="button" 
-                    class="edit bs-modal btn btn-sm btn-secondary"     
-                    data-bs-toggle="modal" 
-                    data-bs-target="#modal"  
-                    data-form-url='groups/{group.id}/edit/'
-                >
-                <span class="bi bi-pen"></span>
-                </button>               
-                <a href='{group.id}/edit/' class='btn btn-primary btn-sm'><i class='bi bi-pen'></i></a>
-                <a href='{group.id}/delete/' class='btn btn-danger btn-sm'><i class='bi bi-trash'></i></a>
+                "id": cidade.id,
+                "nome": cidade.nome,
+                "estado": cidade.estado,
+                "cep_de": cidade.cep_de,
+                "cep_ate": cidade.cep_ate,
+                "acoes": f"""
+                <a href='{cidade.id}/edit/' class='btn btn-primary btn-sm'><i class='bi bi-pen edit'></i></a>
+                <a href='{cidade.id}/delete/' class='btn btn-danger btn-sm'><i class='bi bi-trash'></i></a>
+                """
+            })
+        return JsonResponse({"data": data})
+
+####### VIEWS DE PESSOA JURIDICA ######
+#### 18/03/2025 - Rumo ao Caiaque ######
+
+
+class PessoaJuridicaListView(LoginRequiredMixin,View):
+    template_name = 'pessoajuridica/pessoa_juridica_list.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+class GetPessoaJuridicaListView(LoginRequiredMixin,View):
+    def get(self, request):
+        pessoajuridicas = PessoaJuridica.objects.all()
+        data = []
+        for pessoa in pessoajuridicas:
+            data.append({
+                "id": pessoa.id,
+                "nome_fantasia": pessoa.nome_fantasia,
+                "razao_social": pessoa.razao_social,
+                "cnpj" : pessoa.cnpj,
+                "inscricao_estadual" : pessoa.inscricao_estadual,
+                "inscricao_municipal" : pessoa.inscricao_municipal,
+                "email" : pessoa.email,
+                "telefone" : pessoa.telefone,
+                "acoes": f"""
+                <a href='{pessoa.id}/edit/' class='btn btn-primary btn-sm'><i class='bi bi-pen edit'></i></a>
+                <a href='{pessoa.id}/delete/' class='btn btn-danger btn-sm'><i class='bi bi-trash'></i></a>
+                """
+            })
+        return JsonResponse({"data": data})
+
+
+
+####### VIEWS DE UNIDADE ######
+#### 18/03/2025 - Continua rumo ao caiaque ######
+
+
+class UnidadeListView(LoginRequiredMixin,View):
+    template_name = 'unidade/unidade_list.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+class GetUnidadesListView(LoginRequiredMixin,View):
+    def get(self, request):
+        unidades = Unidade.objects.all()
+        data = []
+        for unidade in unidades:
+            data.append({
+                "id": unidade.id,
+                "codigo": unidade.codigo,
+                "nome": unidade.nome,
+                "cnpj" : unidade.cnpj,
+                "empresa" : unidade.empresa.razao_social,
+                "ativo" : unidade.ativo,
+                "acoes": f"""
+                <a href='{unidade.id}/edit/' class='btn btn-primary btn-sm'><i class='bi bi-pen edit'></i></a>
+                <a href='{unidade.id}/delete/' class='btn btn-danger btn-sm'><i class='bi bi-trash'></i></a>
+                """
+            })
+        return JsonResponse({"data": data})
+
+
+
+###### VIEWS DO CADASTRO DE GERENTE ########
+###### I NEED MONEY ##### LETS CODE ######
+###### NO IA NEEDED IN THIS SHIT ###########
+
+
+
+class GerenteListView(LoginRequiredMixin,View):
+    template_name = 'gerente/gerente_list.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+class GetGerentesListView(LoginRequiredMixin,View):
+    def get(self, request):
+        gerentes = Gerente.objects.all()
+        data = []
+        for gerente in gerentes:
+            data.append({
+                "id": gerente.id,
+                "usuario": '{} {}'.format(gerente.usuario.first_name,gerente.usuario.last_name),
+                "unidades": gerente.unidades.nome,
+                "ativo" : gerente.ativo,
+                "acoes": f"""
+                <a href='{gerente.id}/edit/' class='btn btn-primary btn-sm'><i class='bi bi-pen edit'></i></a>
+                <a href='{gerente.id}/delete/' class='btn btn-danger btn-sm'><i class='bi bi-trash'></i></a>
                 """
             })
         return JsonResponse({"data": data})

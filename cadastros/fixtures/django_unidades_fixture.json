@@ -1,0 +1,1234 @@
+[
+    {
+        "model": "cadastros.unidade",
+        "pk": 1,
+        "fields": {
+            "codigo": 1,
+            "nome": "CSA - COZINHA SABOR & ART",
+            "cnpj": "01564322000126",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 2,
+        "fields": {
+            "codigo": 2,
+            "nome": "CPB - COZINHA PEDRA BRANCA",
+            "cnpj": "25993854001119",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 3,
+        "fields": {
+            "codigo": 3,
+            "nome": "COZ - HOSPITAL REGIONAL",
+            "cnpj": "03160100000173",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 4,
+        "fields": {
+            "codigo": 4,
+            "nome": "CAVG  VISCONDE DA GRACA",
+            "cnpj": "30480315000144",
+            "empresa": 4,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 5,
+        "fields": {
+            "codigo": 5,
+            "nome": "HUP - UNIMED - PELOTAS",
+            "cnpj": "38141957000201",
+            "empresa": 5,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 6,
+        "fields": {
+            "codigo": 6,
+            "nome": "ADM - MS SERVIÇOS",
+            "cnpj": "52098336000132",
+            "empresa": 6,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 7,
+        "fields": {
+            "codigo": 7,
+            "nome": "ADM - VERSE SOLUTIONS LTDA",
+            "cnpj": "50009506000130",
+            "empresa": 7,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 8,
+        "fields": {
+            "codigo": 8,
+            "nome": "LHC - HOSPITAL CARIDADE",
+            "cnpj": "31913953000174",
+            "empresa": 8,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 9,
+        "fields": {
+            "codigo": 9,
+            "nome": "CJB - COZINHA MINAS GERAIS",
+            "cnpj": "01564322000479",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 10,
+        "fields": {
+            "codigo": 10,
+            "nome": "CPT - COZINHA PATROCINIO",
+            "cnpj": "01564322001017",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 11,
+        "fields": {
+            "codigo": 11,
+            "nome": "CCT - COZINHA CONTAGEM",
+            "cnpj": "01564322001106",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 12,
+        "fields": {
+            "codigo": 12,
+            "nome": "CCP - CARMO DO PARANAIBA",
+            "cnpj": "01564322000711",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 13,
+        "fields": {
+            "codigo": 13,
+            "nome": "HCR - GOIANIA",
+            "cnpj": "03160100000769",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 14,
+        "fields": {
+            "codigo": 14,
+            "nome": "HCG - UFG",
+            "cnpj": "03160100003008",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 15,
+        "fields": {
+            "codigo": 15,
+            "nome": "HUM - HOSP UNIVERSITARIO",
+            "cnpj": "03160100002621",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 16,
+        "fields": {
+            "codigo": 16,
+            "nome": "HTG - HOSPITAL TIBAGI",
+            "cnpj": "01564322000126",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 17,
+        "fields": {
+            "codigo": 17,
+            "nome": "HSJ - HOSP EST DE SÃO JOSE",
+            "cnpj": "03160100002974",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 18,
+        "fields": {
+            "codigo": 18,
+            "nome": "HGJ - UNI ESTL INTEGRADA GERON",
+            "cnpj": "03160100002974",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 19,
+        "fields": {
+            "codigo": 19,
+            "nome": "HPA - CAPAAC CACHOEIRO",
+            "cnpj": "03160100002974",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 20,
+        "fields": {
+            "codigo": 20,
+            "nome": "HEA - HOSP EST ATENÇÃO CLÍNICA",
+            "cnpj": "03160100002974",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 21,
+        "fields": {
+            "codigo": 21,
+            "nome": "HRC - CREFES",
+            "cnpj": "03160100002974",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 22,
+        "fields": {
+            "codigo": 22,
+            "nome": "HPF - HOSP EST PEDRO FONTES",
+            "cnpj": "03160100002974",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 23,
+        "fields": {
+            "codigo": 23,
+            "nome": "HIA - HOSP INDIGENA ARAGUAINA",
+            "cnpj": "03160100002893",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 24,
+        "fields": {
+            "codigo": 24,
+            "nome": "HVV - HOSP ESTADUAL VILA VELHA",
+            "cnpj": "03160100002974",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 25,
+        "fields": {
+            "codigo": 25,
+            "nome": "HTI - HOSPITAL TIMON",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 26,
+        "fields": {
+            "codigo": 26,
+            "nome": "HMC - HOSPITAL COROATÁ",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 27,
+        "fields": {
+            "codigo": 27,
+            "nome": "HAA - HOSPITAL ALTO ALEGRE",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 28,
+        "fields": {
+            "codigo": 28,
+            "nome": "HGP - HOSPITAL PERITORO",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 29,
+        "fields": {
+            "codigo": 29,
+            "nome": "HCX - HOSPITAL DE CAXIAS",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 30,
+        "fields": {
+            "codigo": 30,
+            "nome": "HGE - HOSPITAL GERAL",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 31,
+        "fields": {
+            "codigo": 31,
+            "nome": "SLZ - ADM - MARANHÃO",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 32,
+        "fields": {
+            "codigo": 32,
+            "nome": "HPE - HOSPITAL PEDREIRAS",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 33,
+        "fields": {
+            "codigo": 33,
+            "nome": "HGR - HOSP REGIONAL DE GRAJAU",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 34,
+        "fields": {
+            "codigo": 34,
+            "nome": "HSL - HOS STA LUZIA DO PARUA",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 35,
+        "fields": {
+            "codigo": 35,
+            "nome": "HDI - HOSPITAL DA ILHA",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 36,
+        "fields": {
+            "codigo": 36,
+            "nome": "HPV - HOSP PRESIDENTE VARGAS",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 37,
+        "fields": {
+            "codigo": 37,
+            "nome": "HBC - HOSP REG BARRA DO CORDA",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 38,
+        "fields": {
+            "codigo": 38,
+            "nome": "PMA - PADARIA MARANHÃO",
+            "cnpj": "03160100000335",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 39,
+        "fields": {
+            "codigo": 39,
+            "nome": "HBL - HOSPITAL BENEDITO LEITE",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 40,
+        "fields": {
+            "codigo": 40,
+            "nome": "HJM - HOSPITAL JUVENCIO MATOS",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 41,
+        "fields": {
+            "codigo": 41,
+            "nome": "HMS - HOSPITAL MARLY SARNEY",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 42,
+        "fields": {
+            "codigo": 42,
+            "nome": "SLZ - ADM - M.S. GESTAO",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 43,
+        "fields": {
+            "codigo": 43,
+            "nome": "HCO - HOSPITAL COLINAS",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 44,
+        "fields": {
+            "codigo": 44,
+            "nome": "HPD - HOSPITAL PRESIDENTE DUTR",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 45,
+        "fields": {
+            "codigo": 45,
+            "nome": "HPL - MATERNIDADE PAÇO LUMIAR",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 46,
+        "fields": {
+            "codigo": 46,
+            "nome": "HPM - HOSP PRESIDENTE MEDICE",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 47,
+        "fields": {
+            "codigo": 47,
+            "nome": "HSM - HOSPITAL SAO MATEUS",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 48,
+        "fields": {
+            "codigo": 48,
+            "nome": "HAC - HOSPITAL AÇAILANDIA",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 49,
+        "fields": {
+            "codigo": 49,
+            "nome": "HSC - HOSPITAL SOCORRAO I",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 50,
+        "fields": {
+            "codigo": 50,
+            "nome": "HCM - H CLEM MOURA SOCORRAO II",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 51,
+        "fields": {
+            "codigo": 51,
+            "nome": "CMA - COZINHA MARANHÃO",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 52,
+        "fields": {
+            "codigo": 52,
+            "nome": "CBA - COZINHA BALSAS",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 53,
+        "fields": {
+            "codigo": 53,
+            "nome": "HAU - HOS DE AUGUSTINOPOLIS",
+            "cnpj": "25993854000732",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 54,
+        "fields": {
+            "codigo": 54,
+            "nome": "HXA - HOSPITAL XAMBIOA",
+            "cnpj": "25993854000651",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 55,
+        "fields": {
+            "codigo": 55,
+            "nome": "HRP - HOSPITAL ARAPOEMA",
+            "cnpj": "25993854000813",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 56,
+        "fields": {
+            "codigo": 56,
+            "nome": "HRA - HOSPI REGIONAL ARAGUAINA",
+            "cnpj": "25993854000902",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 57,
+        "fields": {
+            "codigo": 57,
+            "nome": "HTO - ADMINISTRATIVO TOCANTINS",
+            "cnpj": "25993854000570",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 58,
+        "fields": {
+            "codigo": 58,
+            "nome": "HPS - HOSPITAL PRONTO SOCORRO",
+            "cnpj": "25993854001380",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 59,
+        "fields": {
+            "codigo": 59,
+            "nome": "CAR - COZINHA ARCOS",
+            "cnpj": "01564322000550",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 60,
+        "fields": {
+            "codigo": 60,
+            "nome": "ADM - SABOR & ART - SC",
+            "cnpj": "01564322000630",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 61,
+        "fields": {
+            "codigo": 61,
+            "nome": "ADM - MATRIZ M.S SERVICE",
+            "cnpj": "31913953000255",
+            "empresa": 8,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 62,
+        "fields": {
+            "codigo": 62,
+            "nome": "LSL - HOSP C INTEN DE SAO LUIS",
+            "cnpj": "31913953000840",
+            "empresa": 8,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 63,
+        "fields": {
+            "codigo": 63,
+            "nome": "CZA - ZAELI UMUARAMA",
+            "cnpj": "01564322000126",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 64,
+        "fields": {
+            "codigo": 64,
+            "nome": "RPA - RESTAURANTE PALMAS",
+            "cnpj": "03160100003350",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 65,
+        "fields": {
+            "codigo": 65,
+            "nome": "ADM - MS GESTAO",
+            "cnpj": "25993854000147",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 66,
+        "fields": {
+            "codigo": 66,
+            "nome": "CCI - CAMA INBOX",
+            "cnpj": "01564322000126",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 67,
+        "fields": {
+            "codigo": 67,
+            "nome": "CPR - PRIVADAS TRANSPORTADA",
+            "cnpj": "03160100002621",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 68,
+        "fields": {
+            "codigo": 68,
+            "nome": "PPR - PADARIA PARANA",
+            "cnpj": "01564322001360",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 69,
+        "fields": {
+            "codigo": 69,
+            "nome": "MS SERVIÇOS - PADARIA MARINGA",
+            "cnpj": "52098336000213",
+            "empresa": 6,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 70,
+        "fields": {
+            "codigo": 70,
+            "nome": "LHF - LIM I HORÁCIO FIGUEIREDO",
+            "cnpj": "52098336000132",
+            "empresa": 6,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 71,
+        "fields": {
+            "codigo": 71,
+            "nome": "LBA - LIMPEZA BEATA ALBERTINA",
+            "cnpj": "52098336000132",
+            "empresa": 6,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 72,
+        "fields": {
+            "codigo": 72,
+            "nome": "LIJ - LIMP INSTI JOINVILENSE",
+            "cnpj": "52098336000132",
+            "empresa": 6,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 73,
+        "fields": {
+            "codigo": 73,
+            "nome": "CVD - COZINHA VIDEIRA",
+            "cnpj": "52938558000116",
+            "empresa": 9,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 74,
+        "fields": {
+            "codigo": 74,
+            "nome": "DSC - DEPOSITO SANTA CATARINA",
+            "cnpj": "03160100000416",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 75,
+        "fields": {
+            "codigo": 75,
+            "nome": "CLO - COZINHA EXTERNA LOANDA",
+            "cnpj": "01564322000126",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 76,
+        "fields": {
+            "codigo": 76,
+            "nome": "CEL ELLO FLEX EMPRESA PRIVADA",
+            "cnpj": "03160100004080",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 77,
+        "fields": {
+            "codigo": 77,
+            "nome": "CPE - CADEIAS EXTERNAS",
+            "cnpj": "01564322000126",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 78,
+        "fields": {
+            "codigo": 78,
+            "nome": "CIV - COMERCIAL IVAIPORÃ",
+            "cnpj": "01564322000126",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 79,
+        "fields": {
+            "codigo": 79,
+            "nome": "CAL - ALISUL EMPRESA PRIVADA",
+            "cnpj": "03160100002621",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 80,
+        "fields": {
+            "codigo": 80,
+            "nome": "CFR - COZINHA FRIGODASKO",
+            "cnpj": "03160100003784",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 81,
+        "fields": {
+            "codigo": 81,
+            "nome": "ADM - SABOR & ART MARINGA",
+            "cnpj": "01564322000630",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 82,
+        "fields": {
+            "codigo": 82,
+            "nome": "HJA - HOSPITAL JATAI",
+            "cnpj": "03160100003431",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 83,
+        "fields": {
+            "codigo": 83,
+            "nome": "CCO - COZINHA CONCREVALI",
+            "cnpj": "52098336000302",
+            "empresa": 6,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 84,
+        "fields": {
+            "codigo": 84,
+            "nome": "CCG - COZINHA CIDADE GAUCHA",
+            "cnpj": "03160100004241",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 85,
+        "fields": {
+            "codigo": 85,
+            "nome": "CIN - COZINHA INDIANÓPOLIS",
+            "cnpj": "03160100004322",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 86,
+        "fields": {
+            "codigo": 86,
+            "nome": "CPF - COZINHA PASSO FUNDO",
+            "cnpj": "52938558000205",
+            "empresa": 9,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 87,
+        "fields": {
+            "codigo": 87,
+            "nome": "LBR - LIMPEZA BARREIRINHAS",
+            "cnpj": "31913953000840",
+            "empresa": 8,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 88,
+        "fields": {
+            "codigo": 88,
+            "nome": "LPD - LIMPEZA PRESIDENTE DUTRA",
+            "cnpj": "31913953000417",
+            "empresa": 8,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 89,
+        "fields": {
+            "codigo": 89,
+            "nome": "LST - LIMPEZA SANTA CATARINA",
+            "cnpj": "52098336000132",
+            "empresa": 6,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 90,
+        "fields": {
+            "codigo": 90,
+            "nome": "ADM MAIS SABOR - SC",
+            "cnpj": "03160100000416",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 91,
+        "fields": {
+            "codigo": 91,
+            "nome": "CGO - COZINHA EXTERNA GOIANIA",
+            "cnpj": "25993854001461",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 92,
+        "fields": {
+            "codigo": 92,
+            "nome": "ADM - PAN NUTRI",
+            "cnpj": "30480315000144",
+            "empresa": 4,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 93,
+        "fields": {
+            "codigo": 93,
+            "nome": "VEN - COMERCIAL PRIVADO",
+            "cnpj": "03160100000416",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 95,
+        "fields": {
+            "codigo": 95,
+            "nome": "HES -ADM - ESPIRITO SANTO",
+            "cnpj": "03160100002974",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 96,
+        "fields": {
+            "codigo": 96,
+            "nome": "CPC - COZINHA PESCADOS CASCAVE",
+            "cnpj": "01564322000126",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 97,
+        "fields": {
+            "codigo": 97,
+            "nome": "MS SERVICE SERVIÇOS",
+            "cnpj": "31913953000840",
+            "empresa": 8,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 98,
+        "fields": {
+            "codigo": 98,
+            "nome": "MS SERVICE SERVICOS LTDA",
+            "cnpj": "52098336000132",
+            "empresa": 6,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 99,
+        "fields": {
+            "codigo": 99,
+            "nome": "ADM - GOIAS",
+            "cnpj": "03160100000769",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 100,
+        "fields": {
+            "codigo": 100,
+            "nome": "ADM - MINAS GERAIS",
+            "cnpj": "01564322000479",
+            "empresa": 1,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 101,
+        "fields": {
+            "codigo": 101,
+            "nome": "CCM – COZINHA COMMANDERS",
+            "cnpj": "03160100004160",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 102,
+        "fields": {
+            "codigo": 102,
+            "nome": "CPB- MATRIZ",
+            "cnpj": "25993854000147",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 103,
+        "fields": {
+            "codigo": 103,
+            "nome": "HXA - MS GESTAO - FL 09",
+            "cnpj": "25993854000902",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 104,
+        "fields": {
+            "codigo": 104,
+            "nome": "HRP - MS GESTAO - FL 09",
+            "cnpj": "25993854000902",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 105,
+        "fields": {
+            "codigo": 105,
+            "nome": "HAU - MS GESTAO - FL 09",
+            "cnpj": "25993854000902",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 106,
+        "fields": {
+            "codigo": 106,
+            "nome": "HGR - MS GESTAO",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 107,
+        "fields": {
+            "codigo": 107,
+            "nome": "HPS - MS GESTAO",
+            "cnpj": "25993854001380",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 108,
+        "fields": {
+            "codigo": 108,
+            "nome": "HRP - MS GESTAO",
+            "cnpj": "25993854000228",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 109,
+        "fields": {
+            "codigo": 109,
+            "nome": "HMU - HOSPITAL DA MULHER",
+            "cnpj": "25993854001380",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 110,
+        "fields": {
+            "codigo": 110,
+            "nome": "CMS - MAXIPLAST MAIS SABOR",
+            "cnpj": "03160100003865",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 111,
+        "fields": {
+            "codigo": 111,
+            "nome": "MS GESTAO - CGO 001119",
+            "cnpj": "25993854001119",
+            "empresa": 2,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 112,
+        "fields": {
+            "codigo": 112,
+            "nome": "CD - MARINGA",
+            "cnpj": "03160100004403",
+            "empresa": 3,
+            "ativo": true
+        }
+    },
+    {
+        "model": "cadastros.unidade",
+        "pk": 113,
+        "fields": {
+            "codigo": 113,
+            "nome": "CNU - COZINHA NUTRIMILHO",
+            "cnpj": "03160100003946",
+            "empresa": 3,
+            "ativo": true
+        }
+    }
+]

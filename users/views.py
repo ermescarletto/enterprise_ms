@@ -37,29 +37,6 @@ class UserListView(LoginRequiredMixin,View):
     def get(self, request):
         return render(request, self.template_name)
 
-    def post(self, request):
-        # DataTables processa os dados no backend
-        users = User.objects.all()
-        data = []
-        for user in users:
-            ativo = ''
-            if user.is_active:
-                ativo = "<i class='bi bi-check-circle'></i>"
-            else:
-                ativo = "<i class='bi bi-dash-circle'></i>"
-            data.append({
-                "id": user.id,
-                "nome": user.first_name,
-                "email": user.email,
-                "cpf": user.cpf,
-                "ativo": ativo,
-                "acoes": f"""
-                <a href='{user.id}/edit/' class='btn btn-primary btn-sm'><i class='bi bi-pen edit'></i></a>
-                <a href='{user.id}/delete/' class='btn btn-danger btn-sm'><i class='bi bi-trash'></i></a>
-                """
-            })
-        return JsonResponse({"data": data})
-
 
 class GetUsersView(LoginRequiredMixin,View):
     def get(self, request):
@@ -86,7 +63,7 @@ class GetUsersView(LoginRequiredMixin,View):
 
 
 class GroupListView(LoginRequiredMixin,View):
-    template_name = 'groups/empresa_list.html'
+    template_name = 'groups/group_list.html'
 
     def get(self, request):
         return render(request, self.template_name)
@@ -116,6 +93,8 @@ class GroupListView(LoginRequiredMixin,View):
         return JsonResponse({"data": data})
 
 
+from enterprise.utils import is_ajax
+
 class UserCreateView(BSModalCreateView):
     template_name = 'users/user_form.html'
     form_class = UserModalForm
@@ -124,7 +103,7 @@ class UserCreateView(BSModalCreateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-        if self.request.is_ajax():
+        if is_ajax(self.request):
             return JsonResponse({
                 'success': True,
                 'message': self.success_message,
@@ -134,7 +113,7 @@ class UserCreateView(BSModalCreateView):
 
     def form_invalid(self, form):
         response = super().form_invalid(form)
-        if self.request.is_ajax():
+        if is_ajax(self.request):
             return JsonResponse({
                 'success': False,
                 'errors': form.errors
@@ -143,7 +122,7 @@ class UserCreateView(BSModalCreateView):
 
 
 class GroupCreateView(BSModalCreateView):
-    template_name = 'groups/empresa_form.html'
+    template_name = 'groups/group_form.html'
     form_class = GroupModalForm
     success_message = 'Grupo criado com sucesso'
     success_url = reverse_lazy('users:groups')

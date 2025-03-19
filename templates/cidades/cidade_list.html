@@ -1,0 +1,72 @@
+{% extends "index.html" %}
+{% block title %}
+MS Enterprise - Cidades
+{% endblock %}
+{% block main %}
+
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-success btn-sm" id="create">+ Cidades</button>
+        </div>
+    </div>
+
+
+</div>
+<div class="container content mt-2">
+    <table id="listTable" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Estado</th>
+                <th>CEP Inicial</th>
+                <th>CEP Final</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        {% include 'users/form_generic.html' %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', (e) => {
+      modalForm(document.getElementById('create'), {
+        formURL: "{% url 'cadastros:cidades-create' %}"
+      })
+    });
+    $(document).ready(function() {
+        // Configuração da tabela DataTable
+        console.log('ajax');
+        $('#listTable').DataTable({
+            "ajax": {
+                "url": "{% url 'cadastros:cidades-list' %}",
+                "type": "GET",
+                "headers": {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                }
+            },
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.12.1/i18n/pt-BR.json"
+            },
+            "columns": [
+                { "data": "id" },
+                { "data": "nome" },
+                { "data": "estado" },
+                { "data": "cep_de" },
+                { "data": "cep_ate" },
+                { "data": "acoes" },
+            ]
+        });
+    });
+</script>
+{% endblock %}

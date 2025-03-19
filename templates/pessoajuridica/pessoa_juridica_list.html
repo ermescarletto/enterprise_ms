@@ -1,36 +1,38 @@
 {% extends "index.html" %}
 {% block title %}
-MS Enterprise - Grupos de Usuários
+MS Enterprise - Pessoa Jurídica
 {% endblock %}
 {% block main %}
+
 <div class="container mt-2">
     <div class="row">
         <div class="col-sm-12">
-            <button class="btn btn-success btn-sm" id="createUser">+ Grupos</button>
+            <button class="btn btn-success btn-sm" id="create">+ Pessoa Jurídica</button>
         </div>
     </div>
-</div>
 
+
+</div>
 <div class="container content mt-2">
-    <table id="userTable" class="display">
+    <table id="listTable" class="display">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nome</th>
+                <th>Nome Fantasia</th>
+                <th>Razão Social</th>
+                <th>CNPJ</th>
+                <th>E-mail</th>
+                <th>Telefone</th>
                 <th>Ações</th>
             </tr>
         </thead>
     </table>
 </div>
-<div class="modal fade" tabindex="-1" role="dialog" id="create-modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+        {% include 'pessoajuridica/form_generic.html' %}
     </div>
-  </div>
-</div>
-<div class="modal fade" tabindex="-1" role="dialog" id="modal"  >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content"></div>
   </div>
 </div>
 
@@ -38,19 +40,17 @@ MS Enterprise - Grupos de Usuários
 
 {% block extra_js %}
 <script>
-
     document.addEventListener('DOMContentLoaded', (e) => {
-      modalForm(document.getElementById('createUser'), {
-        formURL: "{% url 'users:create_group' %}"
+      modalForm(document.getElementById('create'), {
+        formURL: "{% url 'cadastros:pessoa-juridica-create' %}"
       })
     });
     $(document).ready(function() {
-
         // Configuração da tabela DataTable
-        $('#userTable').DataTable({
+        $('#listTable').DataTable({
             "ajax": {
-                "url": "/auth/groups/",
-                "type": "POST",
+                "url": "{% url 'cadastros:pessoa-juridica-list' %}",
+                "type": "GET",
                 "headers": {
                     "X-CSRFToken": "{{ csrf_token }}"
                 }
@@ -60,14 +60,14 @@ MS Enterprise - Grupos de Usuários
             },
             "columns": [
                 { "data": "id" },
-                { "data": "nome" },
-                { "data" : "acoes" }
+                { "data": "nome_fantasia" },
+                { "data": "razao_social" },
+                { "data": "cnpj" },
+                { "data": "email" },
+                { "data": "telefone" },
+                { "data": "acoes" },
             ]
         });
-
-    $(".edit").each(function () {
-        $(this).modalForm({formURL: $(this).data("form-url")});
-    });
     });
 </script>
 {% endblock %}

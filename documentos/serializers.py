@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
 from .models import Politica, ProcedimentoPadrao, Fluxogramas, AnexosPolitica
-from cadastros.models import Empresa, Departamento
+from cadastros.models import  Departamento
 
 class FluxogramaSerializer(serializers.ModelSerializer):
     key = serializers.SerializerMethodField()
@@ -64,12 +64,6 @@ class DocumentosSerializer(serializers.ModelSerializer):
         }
 
 
-class EmpresaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Empresa
-        fields = ['id', 'nome', 'pessoa_juridica']
-
-
 # Serializer for Departamento
 class DepartamentoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -79,7 +73,6 @@ class DepartamentoSerializer(serializers.ModelSerializer):
 
 # Serializer for Politica
 class PoliticaListSerializer(serializers.ModelSerializer):
-    empresa = EmpresaSerializer()  # Nested Empresa serializer
     departamento = DepartamentoSerializer()  # Nested Departamento serializer
 
     class Meta:

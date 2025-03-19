@@ -4,11 +4,37 @@ from .api import *
 
 app_name = 'cadastros'
 urlpatterns = [
-
     #path('api/cidades/', CidadeList.as_view(), name='cidade_list_create'),
     path('api/pessoasfisicas/', PessoaFisicaList.as_view(), name='pessoas_fisicas'),
     path('api/pessoasfisicas/<int:id>', PessoaFisicaList.as_view(), name='pessoas_fisicas'),
-    path('api/cidades/', CidadeList.as_view(), name='cidades-api'),
-    path('cidades/',CidadeList.as_view(),name='cidades-list')
+    #path('api/cidades/', CidadeList.as_view(), name='cidades-api'),
+    #cidades
+    path('cidades/list/',GetCidadesListView.as_view(),name='cidades-list'),
+    path('cidades/',CidadeListView.as_view(), name='cidades'),
+    path('cidades/create/', CidadeListView.as_view(), name='cidades-create'),
+
+    #################### PESSOA JURIDICA ##################
+
+    path('pessoajuridica/list/', GetPessoaJuridicaListView.as_view(), name='pessoa-juridica-list'),
+    path('pessoajuridica/', PessoaJuridicaListView.as_view(), name='pessoa-juridica'),
+    path('pessoajuridica/create/', CidadeListView.as_view(), name='pessoa-juridica-create'),
+
+    #################### UNIDADE ##################
+
+    path('unidade/list/', GetUnidadesListView.as_view(), name='unidade-list'),
+    path('unidade/', UnidadeListView.as_view(), name='unidade'),
+    path('unidade/create/', CidadeListView.as_view(), name='unidade-create'),
+
+    #################### UNIDADE ##################
+
+    path('gerente/list/', GetGerentesListView.as_view(), name='gerente-list'),
+
+    path('gerente/', GerenteListView.as_view(), name='gerente'),
+
+    path('gerente/create/', CidadeListView.as_view(), name='gerente-create'),
+
+    path('gerente/<int:id>/edit/', CidadeListView.as_view(), name='unidade-create'),
+
+    path('gerente/<int:id>/delete/', CidadeListView.as_view(), name='unidade-create'),
 
 ]

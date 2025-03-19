@@ -13,6 +13,9 @@ class Index(LoginRequiredMixin, TemplateView):
     login_url = 'auth/login/'  # Defina a URL para onde os usuários não autenticados serão redirecionados
 
 
+
+
+
 def process_json(request):
     if request.method == "POST":
         form = UploadJSONForm(request.POST, request.FILES)

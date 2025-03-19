@@ -70,3 +70,16 @@
     .brand {
       max-height: 1.4rem;
     }
+
+
+    .birthday-container {
+        /*aqui vai o container de aniversário.*/
+    }
+
+
+    .birthday-cards {
+        margin: 10px;
+        margin-bottom: 10px;
+    }
+        /*aqui vai o container de aniversário.
+    }
