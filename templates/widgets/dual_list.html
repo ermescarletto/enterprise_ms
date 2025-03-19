@@ -1,26 +1,26 @@
-<div class="container dual-list-widget">
+<div class="container dual-list-widget" data-widget-name="{{ name }}">
     <div class="row">
         <div class="col-md-5">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="select-all-left_{{name}}">
-                <label class="form-check-label" for="select-all-left">Selecionar todas</label>
+                <input class="form-check-input select-all-left" type="checkbox">
+                <label class="form-check-label">Selecionar todas</label>
             </div>
-            <select id="available_{{name}}" multiple class="form-select" size="10">
+            <select multiple class="form-select available-list" size="10">
                 {% for item in available %}
                     <option value="{{ item.0 }}">{{ item.1 }}</option>
                 {% endfor %}
             </select>
         </div>
         <div class="col-md-2 d-flex flex-column justify-content-center align-items-center">
-            <button type="button" class="btn btn-primary my-2" id="add">→</button>
-            <button type="button" class="btn btn-danger my-2" id="remove">←</button>
+            <button type="button" class="btn btn-primary my-2 move-right">→</button>
+            <button type="button" class="btn btn-danger my-2 move-left">←</button>
         </div>
         <div class="col-md-5">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="select-all-right_{{name}}">
-                <label class="form-check-label" for="select-all-right">Selecionar todas</label>
+                <input class="form-check-input select-all-right" type="checkbox">
+                <label class="form-check-label">Selecionar todas</label>
             </div>
-            <select id="selected_{{name}}" multiple class="form-select" size="10" name="{{ name }}" required>
+            <select multiple class="form-select selected-list" size="10" name="{{ name }}" required>
                 {% for item in selected %}
                     <option value="{{ item.0 }}" selected>{{ item.1 }}</option>
                 {% endfor %}

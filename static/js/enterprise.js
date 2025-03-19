@@ -60,48 +60,105 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const modal = document.getElementById("modal"); // Substitua pelo ID real do seu modal
     modal.addEventListener("shown.bs.modal", function () {
+       const widgets = document.querySelectorAll(".dual-list-widget");
 
-        const addBtn = document.getElementById("add");
-        const removeBtn = document.getElementById("remove");
-        const available_options = document.getElementById("available");
-        const selected_options = document.getElementById("selected");
-        const selectAllLeft = document.getElementById("select-all-left");
-        const selectAllRight = document.getElementById("select-all-right");
+            widgets.forEach(widget => {
+                const availableList = widget.querySelector(".available-list");
+                const selectedList = widget.querySelector(".selected-list");
+                const addBtn = widget.querySelector(".move-right");
+                const removeBtn = widget.querySelector(".move-left");
+                const selectAllLeft = widget.querySelector(".select-all-left");
+                const selectAllRight = widget.querySelector(".select-all-right");
 
-        addBtn?.addEventListener("click", function () {
-            moveSelectedOptions(available_options, selected_options);
-            console.log('addBtn');
-        });
+                addBtn.addEventListener("click", () => {
+                    moveSelectedOptions(availableList, selectedList);
+                });
 
-        removeBtn?.addEventListener("click", function () {
-            moveSelectedOptions(selected_options, available_options);
-            console.log('removeBtn');
-        });
+                removeBtn.addEventListener("click", () => {
+                    moveSelectedOptions(selectedList, availableList);
+                });
 
-        selectAllLeft?.addEventListener("click", function () {
-            toggleAllOptions(available_options, selectAllLeft.checked);
-            console.log('SABtn');
-        });
+                selectAllLeft.addEventListener("change", () => {
+                    toggleAllOptions(availableList, selectAllLeft.checked);
+                });
 
-        selectAllRight?.addEventListener("click", function () {
-            toggleAllOptions(selected_options, selectAllRight.checked);
-            console.log('RABtn');
-        });
+                selectAllRight.addEventListener("change", () => {
+                    toggleAllOptions(selectedList, selectAllRight.checked);
+                });
 
-        function moveSelectedOptions(from, to) {
-            console.log('moveSelected');
-            [...from.selectedOptions].forEach(option => {
-                option.selected = to === selected; // Ajusta a seleção ao mover
-                to.appendChild(option);
+                function moveSelectedOptions(from, to) {
+                    Array.from(from.selectedOptions).forEach(option => {
+                        to.appendChild(option);
+                    });
+                }
+
+                function toggleAllOptions(selectElement, checked) {
+                    Array.from(selectElement.options).forEach(option => {
+                        option.selected = checked;
+                    });
+                }
             });
 
-        }
+            document.getElementById('create-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Impede o comportamento padrão de submissão
 
-        function toggleAllOptions(selectElement, checked) {
-            console.log('toggleAll');
-            for (let option of selectElement.options) {
-                option.selected = checked;
-            }
+    // Exibe o spinner
+    document.querySelector('.spinner-overlay').style.display = 'flex';
+
+    // Coleta os dados do formulário
+    const formData = new FormData(this);
+
+    // Envia a requisição AJAX
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest' // Identifica como requisição AJAX
         }
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json(); // Converte a resposta para JSON
+        } else {
+            throw new Error('Erro na requisição');
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            // Sucesso: redireciona para a listagem
+            window.location.href = data.redirect_url;
+        } else {
+            // Erro: exibe os erros de validação no formulário
+            displayErrors(data.errors);
+        }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+        alert('Ocorreu um erro ao processar o formulário. Tente novamente.');
+    })
+    .finally(() => {
+        // Esconde o spinner, independentemente do resultado
+        document.querySelector('.spinner-overlay').style.display = 'none';
     });
 });
+
+// Função para exibir os erros de validação
+function displayErrors(errors) {
+    // Remove erros anteriores
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+
+    // Adiciona os novos erros abaixo dos campos correspondentes
+    for (const [field, messages] of Object.entries(errors)) {
+        const input = document.getElementById(`id_${field}`);
+        if (input) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message text-danger';
+            errorDiv.innerText = messages.join(', ');
+            input.parentNode.appendChild(errorDiv);
+        }
+    }
+}
+
+    });
+});
+
