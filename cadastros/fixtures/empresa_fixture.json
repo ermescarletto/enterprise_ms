@@ -1,0 +1,119 @@
+[
+    {
+        "model": "cadastros.PessoaJuridica",
+        "pk": 1,
+        "fields": {
+            "cnpj": "01564322000126",
+            "inscricao_estadual": "",
+            "inscricao_municipal": "",
+            "razao_social": "SABOR & ART COZINHA INDUSTRIAL LTDA",
+            "nome_fantasia": "",
+            "email": "",
+            "telefone": ""
+        }
+    },
+    {
+        "model": "cadastros.PessoaJuridica",
+        "pk": 2,
+        "fields": {
+            "cnpj": "25993854000147",
+            "inscricao_estadual": 258159740,
+            "inscricao_municipal": "",
+            "razao_social": "M.S. GESTAO EM ALIMENTACAO LTDA",
+            "nome_fantasia": "",
+            "email": "",
+            "telefone": ""
+        }
+    },
+    {
+        "model": "cadastros.PessoaJuridica",
+        "pk": 3,
+        "fields": {
+            "cnpj": "03160100000173",
+            "inscricao_estadual": 256824789,
+            "inscricao_municipal": "",
+            "razao_social": "MAIS SABOR GESTAO EM ALIMENTACAO LTDA",
+            "nome_fantasia": "",
+            "email": "",
+            "telefone": ""
+        }
+    },
+    {
+        "model": "cadastros.PessoaJuridica",
+        "pk": 4,
+        "fields": {
+            "cnpj": "30480315000144",
+            "inscricao_estadual": "0930501454",
+            "inscricao_municipal": "",
+            "razao_social": "PAN NUTRI REFEICOES LTDA",
+            "nome_fantasia": "",
+            "email": "",
+            "telefone": ""
+        }
+    },
+    {
+        "model": "cadastros.PessoaJuridica",
+        "pk": 5,
+        "fields": {
+            "cnpj": "38141957000120",
+            "inscricao_estadual": 9085948277,
+            "inscricao_municipal": "",
+            "razao_social": "VLP ALIMENTAÇÃO LTDA",
+            "nome_fantasia": "",
+            "email": "",
+            "telefone": ""
+        }
+    },
+    {
+        "model": "cadastros.PessoaJuridica",
+        "pk": 6,
+        "fields": {
+            "cnpj": "52098336000132",
+            "inscricao_estadual": "ISENTO",
+            "inscricao_municipal": "",
+            "razao_social": "MS SERVIÇOS GERAIS LTDA",
+            "nome_fantasia": "",
+            "email": "",
+            "telefone": ""
+        }
+    },
+    {
+        "model": "cadastros.PessoaJuridica",
+        "pk": 7,
+        "fields": {
+            "cnpj": "50009506000130",
+            "inscricao_estadual": "ISENTO",
+            "inscricao_municipal": "",
+            "razao_social": "VERSE SOLUTIONS LTDA",
+            "nome_fantasia": "",
+            "email": "",
+            "telefone": ""
+        }
+    },
+    {
+        "model": "cadastros.PessoaJuridica",
+        "pk": 8,
+        "fields": {
+            "cnpj": "31913953000174",
+            "inscricao_estadual": 258913355,
+            "inscricao_municipal": "",
+            "razao_social": "MS SERVICE SERVIÇOS GERAIS LTDA",
+            "nome_fantasia": "",
+            "email": "",
+            "telefone": ""
+        }
+    },
+    {
+        "model": "cadastros.PessoaJuridica",
+        "pk": 9,
+        "fields": {
+            "cnpj": "52938558000116",
+            "inscricao_estadual": 262640961,
+            "inscricao_municipal": "",
+            "razao_social": "M.S GROUP COZINHA INDUSTRIAL LTDA",
+            "nome_fantasia": "",
+            "email": "",
+            "telefone": ""
+        }
+    }
+]
