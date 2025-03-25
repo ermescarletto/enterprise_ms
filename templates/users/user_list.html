@@ -30,6 +30,11 @@ MS Enterprise - Usuários
 <div class="modal fade" tabindex="-1" role="dialog" id="modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+        <div class="spinner-overlay" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Carregando...</span>
+        </div>
+        </div>
         {% include 'users/form_generic.html' %}
     </div>
   </div>
@@ -41,7 +46,8 @@ MS Enterprise - Usuários
 <script>
     document.addEventListener('DOMContentLoaded', (e) => {
       modalForm(document.getElementById('create'), {
-        formURL: "{% url 'users:create' %}"
+        formURL: "{% url 'users:create' %}",
+
       })
     });
     $(document).ready(function() {
@@ -68,7 +74,7 @@ MS Enterprise - Usuários
         });
     });
 
-$('#create-form').on('submit', function(event) {
+$('#form-create').on('submit', function(event) {
     event.preventDefault(); // Impede o envio padrão do formulário
 
     // Pega os dados e converte em JSON
@@ -77,15 +83,16 @@ $('#create-form').on('submit', function(event) {
         formData[this.name] = this.value;
     });
     const jsonData = JSON.stringify(formData);
+    console.log(formData);
     // Envia via AJAX
     $.ajax({
-        url: '/sua-url',
+        url: '{% url 'users:create' %} ',
         type: 'POST',
         contentType: 'application/json',
         data: jsonData,
         success: function(data) {
             console.log('Sucesso:', data);
-            $('#seuModal').modal('hide'); // Fecha o modal, se desejar
+            $('#create').modal('hide'); // Fecha o modal, se desejar
         },
         error: function(error) {
             console.error('Erro:', error);

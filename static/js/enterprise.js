@@ -57,11 +57,9 @@ function validarCPF(cpf) {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-
     const modal = document.getElementById("modal"); // Substitua pelo ID real do seu modal
     modal.addEventListener("shown.bs.modal", function () {
        const widgets = document.querySelectorAll(".dual-list-widget");
-
             widgets.forEach(widget => {
                 const availableList = widget.querySelector(".available-list");
                 const selectedList = widget.querySelector(".selected-list");
@@ -98,67 +96,4 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 }
             });
-
-            document.getElementById('create-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Impede o comportamento padrão de submissão
-
-    // Exibe o spinner
-    document.querySelector('.spinner-overlay').style.display = 'flex';
-
-    // Coleta os dados do formulário
-    const formData = new FormData(this);
-
-    // Envia a requisição AJAX
-    fetch(this.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest' // Identifica como requisição AJAX
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            return response.json(); // Converte a resposta para JSON
-        } else {
-            throw new Error('Erro na requisição');
-        }
-    })
-    .then(data => {
-        if (data.success) {
-            // Sucesso: redireciona para a listagem
-            window.location.href = data.redirect_url;
-        } else {
-            // Erro: exibe os erros de validação no formulário
-            displayErrors(data.errors);
-        }
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        alert('Ocorreu um erro ao processar o formulário. Tente novamente.');
-    })
-    .finally(() => {
-        // Esconde o spinner, independentemente do resultado
-        document.querySelector('.spinner-overlay').style.display = 'none';
-    });
-});
-
-// Função para exibir os erros de validação
-function displayErrors(errors) {
-    // Remove erros anteriores
-    document.querySelectorAll('.error-message').forEach(el => el.remove());
-
-    // Adiciona os novos erros abaixo dos campos correspondentes
-    for (const [field, messages] of Object.entries(errors)) {
-        const input = document.getElementById(`id_${field}`);
-        if (input) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message text-danger';
-            errorDiv.innerText = messages.join(', ');
-            input.parentNode.appendChild(errorDiv);
-        }
-    }
-}
-
-    });
-});
 

@@ -80,6 +80,10 @@ class UserListViewAPI(generics.ListCreateAPIView):
     serializer_class = UserModelSerializer
 
 
+class UserListAPIGeneric(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
 class UserCRUDViewAPI(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = IsAdminUser
     queryset = User.objects.all()

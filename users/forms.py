@@ -112,7 +112,6 @@ class GroupEditForm(BSModalModelForm):
 
 
 class UserModalForm(BSModalModelForm):
-
     cpf = CPFField()
     telefone = PhoneNumberField()
 

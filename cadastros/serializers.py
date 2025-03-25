@@ -45,3 +45,26 @@ class ContatoPessoaFisicaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContatoPessoaFisica
         fields = ['__all__']
+
+
+
+class PessoaJuridicaSerializerCompleto(serializers.ModelSerializer):
+    class Meta:
+        model = PessoaJuridica
+        fields = '__all__'
+
+class UnidadeSerializerCompleto(serializers.ModelSerializer):
+    class Meta:
+        model = Unidade
+        fields = '__all__'
+
+
+
+
+from users.serializers import UserSerializer
+class GerenteSerializerCompleto(serializers.ModelSerializer):
+
+    usuario = UserSerializer()
+    class Meta:
+        model = Gerente
+        fields = '__all__'

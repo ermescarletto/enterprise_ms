@@ -27,7 +27,7 @@ DEBUG = True
 
 LOGIN_URL = 'auth/login/'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["http://localhost:8080","*"]
 
 
 # Application definition
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'ajax_datatable',
     'bootstrap_modal_forms',
-    'bootstrap_datepicker_plus',
+    'widget_tweaks',
+   # 'bootstrap_datepicker_plus',
     #main
     #'cms',
     'cadastros',
@@ -84,6 +85,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
+
 ]
 
 ROOT_URLCONF = 'enterprise.urls'
@@ -114,9 +116,9 @@ DATABASES = {
         # Tenant Engine
         'ENGINE': 'django.db.backends.postgresql',
         # set database name
-        'NAME': 'enterprise_ms',
+        'NAME': 'enterprise',
         # set your user details
-        'USER': 'ermescarletto',
+        'USER': 'postgres',
         'PASSWORD': 'ecju2403=',
         #'PASSWORD': 'Tme2daqFvCEh',
         'HOST': 'localhost',
@@ -127,14 +129,14 @@ DATABASES = {
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'email-ssl.com.br'
+EMAIL_HOST = 'smtp.dreamhost.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'no-reply@msservice.srv.br'
-EMAIL_HOST_PASSWORD = 'MAIL@mss3223'
+EMAIL_HOST_USER = 'integra@maissabor.ind.br'
+EMAIL_HOST_PASSWORD = 'MAIL@integ3223'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = 'no-reply@msservice.srv.br'
+DEFAULT_FROM_EMAIL = 'integra@maissabor.ind.br'
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 

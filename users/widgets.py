@@ -4,7 +4,6 @@ from django.template.loader import render_to_string
 
 class DualListWidget(forms.Widget):
     template_name = "widgets/dual_list.html"
-
     def render(self, name, value, attrs=None, renderer=None):
         value = value or []
         selected = set(value) if isinstance(value, list) else set(value or [])

@@ -1,21 +1,14 @@
-from django.shortcuts import render
 from django.contrib.auth.views import LoginView
-from django.urls import reverse_lazy
-# Create your views here.
 from django.contrib.auth import logout
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.views.generic import View, CreateView, UpdateView
-from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.contrib import messages
 from django.urls import reverse_lazy
 from .forms import *
 from django.contrib.auth.models import Group
 from django.contrib.auth.mixins import LoginRequiredMixin
-from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView
-from bootstrap_modal_forms.mixins import PassRequestMixin, CreateUpdateAjaxMixin
+from bootstrap_modal_forms.generic import BSModalCreateView, BSModalUpdateView, BSModalDeleteView, BSModalReadView
+
 
 User = get_user_model()
 
@@ -33,10 +26,8 @@ class CustomLoginView(LoginView):
 
 class UserListView(LoginRequiredMixin,View):
     template_name = 'users/user_list.html'
-
     def get(self, request):
         return render(request, self.template_name)
-
 
 class GetUsersView(LoginRequiredMixin,View):
     def get(self, request):
@@ -60,6 +51,22 @@ class GetUsersView(LoginRequiredMixin,View):
                 """
             })
         return JsonResponse({"data": data})
+
+
+class UserCreateView(BSModalCreateView):
+    template_name = 'users/user_form.html'
+    form_class = UserModalForm
+    success_message = 'Usuário criado com sucesso'
+    success_url = reverse_lazy('users:list')
+
+
+
+
+
+
+
+
+
 
 
 class GroupListView(LoginRequiredMixin,View):
@@ -93,34 +100,6 @@ class GroupListView(LoginRequiredMixin,View):
         return JsonResponse({"data": data})
 
 
-from enterprise.utils import is_ajax
-
-class UserCreateView(BSModalCreateView):
-    template_name = 'users/user_form.html'
-    form_class = UserModalForm
-    success_message = 'Usuário criado com sucesso'
-    success_url = reverse_lazy('users:list')
-
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        if is_ajax(self.request):
-            return JsonResponse({
-                'success': True,
-                'message': self.success_message,
-                'redirect_url': self.get_success_url()
-            })
-        return response
-
-    def form_invalid(self, form):
-        response = super().form_invalid(form)
-        if is_ajax(self.request):
-            return JsonResponse({
-                'success': False,
-                'errors': form.errors
-            }, status=400)
-        return response
-
-
 class GroupCreateView(BSModalCreateView):
     template_name = 'groups/group_form.html'
     form_class = GroupModalForm
@@ -129,7 +108,7 @@ class GroupCreateView(BSModalCreateView):
 
 class UserUpdateView(UpdateView):
     model = User
-    template_name = 'users/empresa_form.html'
+    template_name = 'users/user_form.html'
     form_class = UserForm
     success_url = reverse_lazy('users:list')
 
@@ -137,7 +116,7 @@ class UserUpdateView(UpdateView):
 
 class GroupEditView(BSModalUpdateView):
     model = Group
-    template_name = 'groups/empresa_edit.html'
+    template_name = 'groups/group_edit.html'
     form_class = GroupEditForm
     success_url = reverse_lazy('users:groups')
 

@@ -41,3 +41,39 @@ class PessoasCRUD(generics.RetrieveUpdateDestroyAPIView):
 class EnderecoPessoaFisicaList(generics.ListCreateAPIView):
     queryset = EnderecoPessoaFisica.objects.all()
     serializer_class = EnderecoPessoaFisicaSerializer
+
+
+
+#### API PESSOA JURIDICA PARA VUE ######
+
+
+class PessoaJuridicaListCreate(generics.ListCreateAPIView):
+    queryset = PessoaJuridica.objects.all()
+    serializer_class = PessoaJuridicaSerializerCompleto
+
+class PessoaJuridicaCRUD(generics.RetrieveUpdateDestroyAPIView):
+    queryset = PessoaFisica.objects.all()
+    serializer_class = PessoaJuridicaSerializerCompleto
+
+
+###### UNIDADE #######
+
+class UnidadeListCreate(generics.ListCreateAPIView):
+    queryset = Unidade.objects.all()
+    serializer_class = UnidadeSerializerCompleto
+
+class UnidadesCRUD(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Unidade.objects.all()
+    serializer_class = UnidadeSerializerCompleto
+
+
+##### GERENTE ####### DIA 1
+#### PERSEVERANÇA E FÉ ######
+
+class GerenteListCreate(generics.ListCreateAPIView):
+    queryset = Gerente.objects.all()
+    serializer_class = GerenteSerializerCompleto
+
+class GerenteCRUD(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Gerente.objects.all()
+    serializer_class = GerenteSerializerCompleto

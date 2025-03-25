@@ -202,7 +202,7 @@ class Unidade(BaseModelCadastro):
 
 
 class Gerente(BaseModelCadastro):
-    usuario = models.ForeignKey('users.User', on_delete=models.CASCADE)
+    usuario = models.ForeignKey('users.User', on_delete=models.CASCADE, unique=True)
     unidades = models.ManyToManyField(Unidade)
     ativo = models.BooleanField(default=True)
 

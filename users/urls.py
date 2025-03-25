@@ -6,11 +6,19 @@ from .views import *
 app_name = 'users'
 
 urlpatterns = [
-#api_desativada    path("login/", obtain_auth_token, name='login'),
-    #path("list/", user_list, name='user_list'),
+
+    ## AQUI SAO AS API PARA O VUE... FOCAR NISSO
+    path("auth-login/", obtain_auth_token, name='auth-login'),
+    path("api/list/", user_list, name='user_list'),
+    path("api/users/", UserListAPIGeneric.as_view(), name='users_list'),
+
     #path("create/", user_create, name='user_create'),
     #path("manage/<int:pk>/",user_crud,name="user_crud"),
     #path("perms/",manage_perms, name='manage_perms'),
+
+
+
+### DAQUI PRA BAIXO SAO AS DO DJANGO
     path("login/", CustomLoginView.as_view(), name='login'),
     path('logout/', logout_view, name='logout'),
     path('users/', UserListView.as_view(), name='list'),
