@@ -9,7 +9,7 @@ urlpatterns = [
 
     ## AQUI SAO AS API PARA O VUE... FOCAR NISSO
     path("auth-login/", obtain_auth_token, name='auth-login'),
-    path("api/list/", user_list, name='user_list'),
+    path("api/usuarios/", user_list, name='user_list'),
     path("api/users/", UserListAPIGeneric.as_view(), name='users_list'),
 
     #path("create/", user_create, name='user_create'),
