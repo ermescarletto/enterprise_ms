@@ -2,11 +2,12 @@ from celery import shared_task
 import requests
 import json
 import pandas as pd
-from django.core.mail import send_mail
 from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 from django.conf import settings
 from cadastros.models import Gerente
-from users.models import User
+import time
+import random
 
 
 @shared_task
@@ -17,58 +18,72 @@ def processar_dados(identificador):
     return resultado
 
 
-
 @shared_task
-def envia_email_estoque(identificador):
+def envia_email_estoque(identificador, filiais=None):
+    print('INICIO')
     url = "https://api-zmartbi.teknisa.com"
-    print('requisicao')
-
-    payload = {}
     headers = {
         'Webtoken': 'Njc5N2NmZThlYTJmMzg3ZDljN2RlNmRkXzQ4MjQ=',
         'Cookie': 'PHPSESSID=1eodhb8grn23us5tq9jkfegg8f'
     }
-    print('vai requisitar')
-    response = requests.request("GET", url, headers=headers, data=payload)
-    print(response)
-    print(response.text)
+
+    response = requests.get(url, headers=headers)
     data = json.loads(response.text)
     df = pd.DataFrame(data)
+    print(filiais)
+    print(identificador)
 
-    # Agrupar por CDFILIAL e NMSUBPRODNIVEL, somando VRESTOQDIA
+    # Converter CDFILIAL para inteiro para evitar problemas de tipo na filtragem
+    df["CDFILIAL"] = df["CDFILIAL"].astype(int)
+
+    # Agrupar por filial e nível de produto
     df_grouped = df.groupby(["CDFILIAL", "NMFILIAL", "NMSUBPRODNIVEL"], as_index=False)["VRESTOQDIA"].sum()
     print(df_grouped)
 
-    # Separar por filial e enviar o email para cada gerente
+    # Filtrar apenas as filiais desejadas, se especificadas
+    if filiais:
+        if isinstance(filiais, int):
+            filiais = [filiais]  # Converter para lista se for um único valor
+        else:
+            filiais = [int(f) for f in filiais]  # Garantir que todos os valores são inteiros
+
+        df_grouped = df_grouped[df_grouped["CDFILIAL"].isin(filiais)]
+        print('novo dataframe')
+        print(df_grouped)
+
+    # Separar por filial e enviar e-mail
     for filial_codigo, group in df_grouped.groupby("CDFILIAL"):
-        # Obter o gerente responsável pela filial
         try:
-            gerente = Gerente.objects.get(unidades__codigo=filial_codigo, ativo=True)
-            user_email = gerente.usuario.email
-            subject = f"Resumo de Estoque para a Filial {filial_codigo}"
-            message = "Prezado Gerente, segue o resumo de estoque da filial."
+            # Obter todos os gerentes para a filial
+            gerentes = Gerente.objects.filter(unidades__codigo=filial_codigo, ativo=True)
 
-            # Filtrar a tabela apenas para os dados da filial específica
-            filial_data = group[["NMFILIAL", "NMSUBPRODNIVEL", "VRESTOQDIA"]]
-            table_html = filial_data.to_html(index=False)
+            # Enviar o e-mail para cada gerente encontrado
+            for gerente in gerentes:
+                user_email = gerente.usuario.email
 
-            # Garantir que o HTML seja limpo e não tenha dados sobrepostos
-            table_html_cleaned = table_html.replace('<table border="1" class="dataframe">', '<table class="table">')
+                # Criar a tabela HTML
+                filial_data = group[["NMFILIAL", "NMSUBPRODNIVEL", "VRESTOQDIA"]]
+                tabela_html = filial_data.to_html(index=False, classes="table table-striped table-bordered")
 
-            # Enviar e-mail com o HTML no corpo
-            email = EmailMessage(
-                subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,  # Assumindo que você tem um e-mail configurado no Django settings
-                [user_email],
-            )
-            email.content_subtype = "html"  # Definir conteúdo como HTML
-            email.body = f"<html><head><title>Resumo de Estoque</title></head><body><h2>Resumo de Estoque</h2>{table_html_cleaned}</body></html>"
-            email.send()
-            print(f"E-mail enviado para {user_email}")
+                # Renderizar template com os dados
+                html_content = render_to_string("email/email.html", {
+                    "nm_filial": group["NMFILIAL"].iloc[0],  # Nome da filial
+                    "tabela_html": tabela_html
+                })
+
+                # Enviar e-mail
+                email = EmailMessage(
+                    subject=f"Resumo de Estoque para a Filial {filial_codigo}",
+                    body=html_content,
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    to=[user_email]
+                )
+                email.content_subtype = "html"
+                email.send()
+                print(f"E-mail enviado para {user_email}")
+
+
         except Gerente.DoesNotExist:
             print(f"Nenhum gerente encontrado para a filial {filial_codigo}")
 
-    # Simula um processamento de dados
-    resultado = {"status": "finalizado", "dados": response.text}
-    return resultado
+    return {"status": "finalizado", "dados": 'Executado com sucesso'}
