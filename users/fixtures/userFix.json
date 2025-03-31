@@ -1,0 +1,56 @@
+[
+  {
+    "model": "users.User",
+    "pk": 10,
+    "fields": {
+      "first_name": "Charles",
+      "last_name": "Betiato",
+      "username": "charles",
+      "email": "charles@maissabor.ind.br",
+      "cpf": "12345678901",
+      "telefone": "11987654321",
+      "data_nascimento": "1979-05-15",
+      "password_set": false,
+      "is_admin": true,
+      "is_staff": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+     {
+    "model": "users.User",
+    "pk": 11,
+    "fields": {
+      "first_name": "Ermes",
+      "last_name": "Carletto",
+      "username": "carletto",
+      "email": "carletto@versesolutions.net",
+      "cpf": "12345678901",
+      "telefone": "11987654321",
+      "data_nascimento": "1979-05-15",
+      "password_set": false,
+      "is_admin": true,
+      "is_staff": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+       {
+    "model": "users.User",
+    "pk": 12,
+    "fields": {
+      "first_name": "Camila",
+      "last_name": "Trajano",
+      "username": "camila",
+      "email": "camila@maissabor.ind.br",
+      "cpf": "12345678901",
+      "telefone": "11987654321",
+      "data_nascimento": "1979-05-15",
+      "password_set": false,
+      "is_admin": true,
+      "is_staff": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]

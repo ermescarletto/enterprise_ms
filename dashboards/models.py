@@ -28,6 +28,7 @@ class Automacao(models.Model):
     dt_criacao = models.DateField()
 
 class LogAutomacao(models.Model):
+    hash = models.CharField(max_length=255)
     automacao = models.ForeignKey(Automacao, on_delete=models.CASCADE)
     data_hora = models.DateTimeField()
     tipo_execucao = models.CharField(choices=TIPO_EXECUCAO)

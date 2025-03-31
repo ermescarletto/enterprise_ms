@@ -16,9 +16,8 @@ urlpatterns = [
     #path("manage/<int:pk>/",user_crud,name="user_crud"),
     #path("perms/",manage_perms, name='manage_perms'),
 
-
-
 ### DAQUI PRA BAIXO SAO AS DO DJANGO
+
     path("login/", CustomLoginView.as_view(), name='login'),
     path('logout/', logout_view, name='logout'),
     path('users/', UserListView.as_view(), name='list'),
