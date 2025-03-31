@@ -83,13 +83,13 @@
         <div class="header">
             <!-- Insira aqui a URL da sua logo -->
             <img src="https://maissabor.ind.br/wa_images/mais%20sabor%20logo.png" alt="Mais Sabor" class="logo">
-            <h2 class="title">Resumo de Estoque</h2>
+            <h2 class="title"> {{ email_title }}</h2>
 
         </div>
         <h4 class="title"><strong>{{ nm_filial }}</strong></h4>
 
-        <p> {{ texto_email }}</p>
-        {{ tabela_html|safe }}
+        <p> {{ email_text }}</p>
+        {{ html_table|safe }}
 
         <p class="footer">Este é um e-mail automático. Por favor, não responda.<br>
             Os dados são carregados diariamente às 06:00.

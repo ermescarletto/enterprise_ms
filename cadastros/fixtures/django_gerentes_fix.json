@@ -15,5 +15,14 @@
           "usuario" : 10,
           "unidades" : [1,6,7,8,9,10,11,12,13]
         }
+    },
+
+    {
+        "model": "cadastros.Gerente",
+        "pk": 3,
+        "fields": {
+          "usuario" : 11,
+          "unidades" : [1]
+        }
     }
   ]

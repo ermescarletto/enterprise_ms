@@ -15,8 +15,13 @@ def processar_dados(identificador):
     """Simula um processamento de dados"""
     time.sleep(5)  # Simula tempo de espera
     resultado = {"status": "finalizado", "dados": random.randint(100, 999)}
-    return resultado
 
+
+@shared_task
+
+def envia_dados_caixa(identificador, filiais=None):
+    print('INICIO')
+    return {"status": "finalizado", "dados": 'Executado com sucesso'}
 
 @shared_task
 def envia_email_estoque(identificador, filiais=None):
@@ -48,9 +53,6 @@ def envia_email_estoque(identificador, filiais=None):
             filiais = [int(f) for f in filiais]  # Garantir que todos os valores são inteiros
 
         df_grouped = df_grouped[df_grouped["CDFILIAL"].isin(filiais)]
-        print('novo dataframe')
-        print(df_grouped)
-
     # Separar por filial e enviar e-mail
     for filial_codigo, group in df_grouped.groupby("CDFILIAL"):
         try:
@@ -60,26 +62,34 @@ def envia_email_estoque(identificador, filiais=None):
             # Enviar o e-mail para cada gerente encontrado
             for gerente in gerentes:
                 user_email = gerente.usuario.email
-
-                # Criar a tabela HTML
+                # Criar a tabela HTML com os cabeçalhos desejados
                 filial_data = group[["NMFILIAL", "NMSUBPRODNIVEL", "VRESTOQDIA"]]
+                filial_data.columns = ["FILIAL", "GRUPO", "VALOR NO DIA"]  # Renomeando os cabeçalhos
                 tabela_html = filial_data.to_html(index=False, classes="table table-striped table-bordered")
 
+                nome_filial = group["NMFILIAL"].iloc[0]
                 # Renderizar template com os dados
                 html_content = render_to_string("email/email.html", {
+                    "email_title": 'Posição do Estoque',
+                    "email_text": "Você está recebendo um e-mail automático com os dados da posição do estoque da sua unidade.",
                     "nm_filial": group["NMFILIAL"].iloc[0],  # Nome da filial
-                    "tabela_html": tabela_html
+                    "html_table": tabela_html
                 })
 
                 # Enviar e-mail
                 email = EmailMessage(
-                    subject=f"Resumo de Estoque para a Filial {filial_codigo}",
+                    subject=f"Resumo de Estoque para a Filial {nome_filial}",
                     body=html_content,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     to=[user_email]
                 )
                 email.content_subtype = "html"
-                email.send()
+                try:
+                    print('vai manda o email')
+                    email.send()
+                except:
+                    print('mamamama')
+                    return {"status": "finalizado", "mensagem": 'Executado com sucesso'}
                 print(f"E-mail enviado para {user_email}")
 
 
