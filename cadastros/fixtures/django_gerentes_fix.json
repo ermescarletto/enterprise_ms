@@ -1,0 +1,19 @@
+[
+    {
+        "model": "cadastros.Gerente",
+        "pk": 1,
+        "fields": {
+          "usuario" : 12,
+          "unidades" : [2,3,4,5]
+        }
+    },
+
+    {
+        "model": "cadastros.Gerente",
+        "pk": 2,
+        "fields": {
+          "usuario" : 10,
+          "unidades" : [1,6,7,8,9,10,11,12,13]
+        }
+    }
+  ]
