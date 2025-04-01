@@ -13,7 +13,7 @@ class IniciarProcessoView(APIView):
     def post(self, request):
         identificador = str(uuid.uuid4())  # Gera um ID único
         try:
-            tarefa = envia_email_estoque.apply_async(args=[identificador])  # Dispara a tarefa
+            tarefa = gera_relatorio_pagamentos.apply_async(args=[identificador])  # Dispara a tarefa
         except Exception as e:
             print(f"Erro ao iniciar a tarefa: {e}")
             print(traceback.format_exc())

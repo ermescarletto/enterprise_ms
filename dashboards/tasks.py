@@ -8,6 +8,9 @@ from django.conf import settings
 from cadastros.models import Gerente
 import time
 import random
+from collections import defaultdict
+from datetime import datetime
+url = "https://api-zmartbi.teknisa.com"
 
 
 @shared_task
@@ -23,10 +26,135 @@ def envia_dados_caixa(identificador, filiais=None):
     print('INICIO')
     return {"status": "finalizado", "dados": 'Executado com sucesso'}
 
+
+
+@shared_task
+def envia_fluxo_caixa(identificador,filiais=None):
+    headers = {
+        'Webtoken': 'NjdlYmQ0YWIyYjhjNGE3ZGM2NTBkNWQ4XzQ4MjQ=',
+        'Cookie': 'PHPSESSID=1eodhb8grn23us5tq9jkfegg8f'
+    }
+    response = requests.get(url, headers=headers)
+    data = response.json() if response.status_code == 200 else []
+
+    # Empresas permitidas
+    empresas_permitidas = {"02", "05"}
+
+    # Estrutura de dados {empresa -> {dia -> valores}}
+    fluxo_agrupado = defaultdict(lambda: defaultdict(lambda: {"VRENTRADA": 0, "VRSAIDA": 0, "LANCAMENTOS": []}))
+
+    for item in data:
+        dt_mov = item["DTMOVFLUXO"]
+        cd_empresa = item["CDEMPRESA"]
+        nm_empresa = item["NMEMPRESA"]
+
+        # Filtrar apenas empresas desejadas
+        if cd_empresa not in empresas_permitidas:
+            continue
+
+        # Converter a data para o formato correto
+        data_mov = datetime.strptime(dt_mov, "%d/%m/%Y")
+
+        # Filtrar apenas o mês de março
+        if data_mov.month != 3:
+            continue
+
+        # Armazenar os dados agrupados por empresa e dia
+        dia = data_mov.strftime("%Y-%m-%d")
+        fluxo_agrupado[nm_empresa][dia]["VRENTRADA"] += item["VRENTRADA"]
+        fluxo_agrupado[nm_empresa][dia]["VRSAIDA"] += item["VRSAIDA"]
+        fluxo_agrupado[nm_empresa][dia]["LANCAMENTOS"].append(item)
+
+    # Ordenar empresas
+    empresas_ordenadas = sorted(fluxo_agrupado.keys())
+
+    html_content = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Fluxo de Caixa - Março</title>
+        <style>
+            table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+            th, td { border: 1px solid black; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            h2 { margin-top: 20px; }
+            .toggle { cursor: pointer; color: blue; text-decoration: underline; }
+            .hidden { display: none; }
+        </style>
+        <script>
+            function toggleDetails(id) {
+                var element = document.getElementById(id);
+                if (element.style.display === "none") {
+                    element.style.display = "table-row-group";
+                } else {
+                    element.style.display = "none";
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Relatório de Fluxo de Caixa - Março</h1>
+    """
+
+    for empresa in empresas_ordenadas:
+        html_content += f"<h2>{empresa}</h2>"
+        html_content += """
+        <table>
+            <tr>
+                <th>Data</th>
+                <th>Entrada (R$)</th>
+                <th>Saída (R$)</th>
+                <th>Detalhes</th>
+            </tr>
+        """
+
+        # Ordenar dias dentro de cada empresa
+        for dia in sorted(fluxo_agrupado[empresa].keys(), key=lambda x: datetime.strptime(x, "%Y-%m-%d")):
+            valores = fluxo_agrupado[empresa][dia]
+            id_lancamento = f"detalhes_{empresa}_{dia.replace('-', '')}"
+
+            # Linha principal com botão de expandir/recolher
+            html_content += f"""
+            <tr>
+                <td>{dia}</td>
+                <td>{valores['VRENTRADA']:.2f}</td>
+                <td>{valores['VRSAIDA']:.2f}</td>
+                <td><span class="toggle" onclick="toggleDetails('{id_lancamento}')">Ver detalhes</span></td>
+            </tr>
+            """
+
+            # Linhas ocultas com os lançamentos detalhados
+            html_content += f"""
+            <tbody id="{id_lancamento}" class="hidden">
+                <tr>
+                    <th colspan="4">Lançamentos no dia {dia}</th>
+                </tr>
+            """
+            for lancamento in valores["LANCAMENTOS"]:
+                html_content += f"""
+                <tr>
+                    <td colspan="2">{lancamento['DSCLASSFINA']}</td>
+                    <td>{lancamento['VRENTRADA']:.2f}</td>
+                    <td>{lancamento['VRSAIDA']:.2f}</td>
+                </tr>
+                """
+            html_content += "</tbody>"
+
+        html_content += "</table>"
+
+    html_content += """
+    </body>
+    </html>
+    """
+
+    with open("fluxo_caixa.html", "w", encoding="utf-8") as f:
+        f.write(html_content)
+
+    print("Arquivo 'fluxo_caixa.html' gerado com sucesso!")
+
+
 @shared_task
 def envia_email_estoque(identificador, filiais=None):
-    print('INICIO')
-    url = "https://api-zmartbi.teknisa.com"
     headers = {
         'Webtoken': 'Njc5N2NmZThlYTJmMzg3ZDljN2RlNmRkXzQ4MjQ=',
         'Cookie': 'PHPSESSID=1eodhb8grn23us5tq9jkfegg8f'
@@ -85,7 +213,6 @@ def envia_email_estoque(identificador, filiais=None):
                 )
                 email.content_subtype = "html"
                 try:
-                    print('vai manda o email')
                     email.send()
                 except:
                     print('mamamama')
@@ -97,3 +224,108 @@ def envia_email_estoque(identificador, filiais=None):
             print(f"Nenhum gerente encontrado para a filial {filial_codigo}")
 
     return {"status": "finalizado", "dados": 'Executado com sucesso'}
+
+
+@shared_task
+def gera_relatorio_pagamentos(identificador):
+    headers = {'Webtoken': 'NjdkODE4MDc2NDg2YzczNzI5M2Y2M2RiXzQ4MjQ='}
+    response = requests.get(url, headers=headers)
+    data = json.loads(response.text)
+
+    empresas_filtradas = {"02", "05"}
+    meses_filtrados = {"03", "04"}  # Março e Abril
+    fluxo_agrupado = defaultdict(lambda: defaultdict(lambda: {"VRPAGAR": 0, "VRRECEBER": 0, "LANCAMENTOS": []}))
+
+    for item in data:
+        cde_empresa = item["CDEMPRESA"]
+        tipo_operacao = item["TIPO_OPERACAO"]
+        nm_empresa = item["NMEMPRESA"]
+
+        if cde_empresa not in empresas_filtradas:
+            continue
+
+        if tipo_operacao == "01 - NF Compra":
+            data_venc = item["DTATUAVENPAG"]
+            valor_pagar = item["VRRATPAG"]
+            valor_receber = 0
+        elif tipo_operacao == "01 - NF Venda":
+            data_venc = item["DTATUAVENREC"]
+            valor_pagar = 0
+            valor_receber = item["VRATUAREC"]
+        else:
+            continue
+
+        data_venc = datetime.strptime(data_venc, "%d/%m/%Y")
+        mes_venc = data_venc.strftime("%m")
+        if mes_venc not in meses_filtrados:
+            continue
+
+        dia_venc = data_venc.strftime("%d/%m/%Y")
+        fluxo_agrupado[nm_empresa][dia_venc]["VRPAGAR"] += valor_pagar
+        fluxo_agrupado[nm_empresa][dia_venc]["VRRECEBER"] += valor_receber
+        fluxo_agrupado[nm_empresa][dia_venc]["LANCAMENTOS"].append(item)
+
+    html_content = """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Relatório de Pagamentos</title>
+            <style>
+                table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+                th, td { border: 1px solid black; padding: 8px; text-align: left; }
+                th { background-color: #f2f2f2; }
+                h2 { margin-top: 20px; }
+                .toggle { cursor: pointer; color: blue; text-decoration: underline; }
+                .hidden { display: none; }
+            </style>
+            <script>
+                function toggleDetails(id) {
+                    var element = document.getElementById(id);
+                    element.style.display = (element.style.display === "none" ? "table-row-group" : "none");
+                }
+            </script>
+        </head>
+        <body>
+            <h1>Relatório de Pagamentos - Março e Abril</h1>
+        """
+
+    for empresa, dias in fluxo_agrupado.items():
+        html_content += f"<h2>{empresa}</h2><table>"
+        html_content += """
+            <tr>
+                <th>Dia</th>
+                <th>Valor a Pagar (R$)</th>
+                <th>Valor a Receber (R$)</th>
+                <th>Detalhes</th>
+            </tr>
+            """
+        for dia, valores in sorted(dias.items(), key=lambda x: datetime.strptime(x[0], "%d/%m/%Y")):
+            id_lancamento = f"detalhes_{dia.replace('/', '')}_{empresa.replace(' ', '_')}"
+            html_content += f"""
+                <tr>
+                    <td>{dia}</td>
+                    <td>{valores['VRPAGAR']:.2f}</td>
+                    <td>{valores['VRRECEBER']:.2f}</td>
+                    <td><span class='toggle' onclick="toggleDetails('{id_lancamento}')">Ver detalhes</span></td>
+                </tr>
+                <tbody id="{id_lancamento}" class="hidden">
+                    <tr>
+                        <th colspan="4">Lançamentos do dia {dia}</th>
+                    </tr>
+                """
+            for lancamento in valores["LANCAMENTOS"]:
+                html_content += f"""
+                    <tr>
+                        <td colspan="2">{lancamento['DSCLASSFINA']}</td>
+                        <td colspan="2">{lancamento['TIPO_OPERACAO']}</td>
+                    </tr>
+                    """
+            html_content += "</tbody>"
+        html_content += "</table>"
+
+    html_content += "</body></html>"
+
+    with open("relatorio_pagamentos.html", "w", encoding="utf-8") as f:
+        f.write(html_content)
+
+    print("Arquivo 'relatorio_pagamentos.html' gerado com sucesso!")
