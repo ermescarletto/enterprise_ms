@@ -67,6 +67,7 @@
         }
         .title {
             color: green;
+            font-size: 14px;
         }
         a {
             color: green; /* Links em verde */
@@ -74,6 +75,12 @@
         }
         a:hover {
             text-decoration: underline;
+        }
+        .email_text {
+            font-size: 14px;
+        }
+        .table_text {
+            font-size: 12px;
         }
     </style>
 </head>
@@ -88,8 +95,11 @@
         </div>
         <h4 class="title"><strong>{{ nm_filial }}</strong></h4>
 
-        <p> {{ email_text }}</p>
+        <p class="email_text"> {{ email_text }}</p>
+        <div class="table_text">
         {{ html_table|safe }}
+        </div>
+
 
         <p class="footer">Este é um e-mail automático. Por favor, não responda.<br>
             Os dados são carregados diariamente às 06:00.

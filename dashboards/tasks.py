@@ -163,8 +163,6 @@ def envia_email_estoque(identificador, filiais=None):
     response = requests.get(url, headers=headers)
     data = json.loads(response.text)
     df = pd.DataFrame(data)
-    print(filiais)
-    print(identificador)
 
     # Converter CDFILIAL para inteiro para evitar problemas de tipo na filtragem
     df["CDFILIAL"] = df["CDFILIAL"].astype(int)
@@ -191,10 +189,24 @@ def envia_email_estoque(identificador, filiais=None):
             for gerente in gerentes:
                 user_email = gerente.usuario.email
                 # Criar a tabela HTML com os cabeçalhos desejados
-                filial_data = group[["NMFILIAL", "NMSUBPRODNIVEL", "VRESTOQDIA"]]
-                filial_data.columns = ["FILIAL", "GRUPO", "VALOR NO DIA"]  # Renomeando os cabeçalhos
-                tabela_html = filial_data.to_html(index=False, classes="table table-striped table-bordered")
+                # Criar uma cópia para evitar o aviso de "SettingWithCopyWarning"
+                filial_data = group[["NMFILIAL", "NMSUBPRODNIVEL", "VRESTOQDIA"]].copy()
 
+                # Renomear colunas
+                filial_data.columns = ["FILIAL", "GRUPO", "VALOR NO DIA"]
+
+                # Arredondar os valores e adicionar o símbolo R$
+                filial_data["VALOR NO DIA"] = filial_data["VALOR NO DIA"].round(2).apply(lambda x: f"R$ {x:.2f}")
+
+                # Calcular o total corretamente
+                total_estoque = group["VRESTOQDIA"].sum()
+
+                # Criar um DataFrame com a linha de total e concatenar com o original
+                total_row = pd.DataFrame([["", "TOTAL", f"R$ {total_estoque:.2f}"]], columns=filial_data.columns)
+                filial_data = pd.concat([filial_data, total_row], ignore_index=True)
+
+                # Criar a tabela HTML
+                tabela_html = filial_data.to_html(index=False, classes="table table-striped table-bordered")
                 nome_filial = group["NMFILIAL"].iloc[0]
                 # Renderizar template com os dados
                 html_content = render_to_string("email/email.html", {
@@ -203,21 +215,19 @@ def envia_email_estoque(identificador, filiais=None):
                     "nm_filial": group["NMFILIAL"].iloc[0],  # Nome da filial
                     "html_table": tabela_html
                 })
-
+                print('enviando e-mail {}'.format(nome_filial))
                 # Enviar e-mail
                 email = EmailMessage(
                     subject=f"Resumo de Estoque para a Filial {nome_filial}",
                     body=html_content,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    to=[user_email]
+                    to=['carletto@versesolutions.net']
                 )
                 email.content_subtype = "html"
                 try:
                     email.send()
-                except:
-                    print('mamamama')
-                    return {"status": "finalizado", "mensagem": 'Executado com sucesso'}
-                print(f"E-mail enviado para {user_email}")
+                except Exception as e:
+                        print(f"❌ Erro ao enviar e-mail para {user_email}: {str(e)}")
 
 
         except Gerente.DoesNotExist:
