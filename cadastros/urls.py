@@ -9,19 +9,21 @@ urlpatterns = [
     ### UNIDADE E GERENTE, TESTANDO O TIPO DE INCLUSÃO DA ROTA
 
     path('api/cidades/', CidadeList.as_view(), name='api-cidade-list'),
-    path('api/cidades/<int:id>/', CidadeCRUD.as_view(), name='api-cidade-crud'),
+    path('api/cidades/<int:pk>/', CidadeCRUD.as_view(), name='api-cidade-crud'),
     path('api/pessoasfisicas/', PessoaFisicaList.as_view(), name='pessoas_fisicas'),
-    path('api/pessoasfisicas/<int:id>', PessoaFisicaList.as_view(), name='pessoas-fisicas-crud'),
+    path('api/pessoasfisicas/<int:pk>', PessoaFisicaList.as_view(), name='pessoas-fisicas-crud'),
+
 #API PARA PJ
     path('api/pessoajuridica/', PessoaJuridicaListCreate.as_view(), name='pessoas-juridicas'),
-    path('api/pessoajuridica/<int:id>', PessoaJuridicaCRUD.as_view(), name='pessoas-fisicas-crud'),
+    path('api/pessoajuridica/<int:pk>', PessoaJuridicaCRUD.as_view(), name='pessoas-fisicas-crud'),
+
 #API PARA UNIDADE0
     path('api/unidade/', UnidadeListCreate.as_view(), name='pessoas-juridicas'),
-    path('api/unidade/<int:id>', UnidadesCRUD.as_view(), name='pessoas-fisicas-crud'),
+    path('api/unidade/<int:pk>', UnidadesCRUD.as_view(), name='pessoas-fisicas-crud'),
 
 #API PARA GERENTES
     path('api/gerente/', GerenteListCreate.as_view(), name='gerentes'),
-    path('api/gerente/<int:id>',GerenteCRUD.as_view(), name='gerentes-crud'),
+    path('api/gerente/<int:pk>',GerenteCRUD.as_view(), name='gerentes-crud'),
 
     #cidades
     path('cidades/list/',GetCidadesListView.as_view(),name='cidades-list'),
