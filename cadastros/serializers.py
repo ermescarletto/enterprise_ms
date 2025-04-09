@@ -63,7 +63,7 @@ class UnidadeSerializerCompleto(serializers.ModelSerializer):
 
 from users.serializers import UserSerializer
 class GerenteSerializerCompleto(serializers.ModelSerializer):
-    unidade = UnidadeSerializerCompleto()
+    unidades = UnidadeSerializerCompleto(many=True, read_only=True)
     usuario = UserSerializer()
     class Meta:
         model = Gerente
