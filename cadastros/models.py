@@ -207,7 +207,7 @@ class Gerente(BaseModelCadastro):
     ativo = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.usuario.nome}"
+        return f"{self.usuario.email}"
 
 
 class Cargo(models.Model):
