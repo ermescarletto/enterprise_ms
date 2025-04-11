@@ -13,3 +13,14 @@ class DashboardUnidade(serializers.ModelSerializer):
         model = DashboardUnidade
         fields = '__all__'
 
+
+class ImportacaoDadosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ImportacaoDados
+        fields = '__all__'
+
+
+class LinhaPlanilhaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LinhaPlanilha
+        fields = '__all__'

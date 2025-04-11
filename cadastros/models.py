@@ -1,6 +1,7 @@
 
 from django.db import models
 from django.core.exceptions import ValidationError
+import uuid
 
 # Create your models here.
 
@@ -199,7 +200,16 @@ class Unidade(BaseModelCadastro):
 
     def __str__(self):
         return self.nome
+    
+class CentroDeCusto(BaseModelCadastro):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    codigo = models.IntegerField(unique=True)
+    nome = models.CharField(max_length=255)
+    ativo = models.BooleanField(default=True)
 
+
+    def __str__(self):
+        return f"{self.codigo} - {self.nome}"
 
 class Gerente(BaseModelCadastro):
     usuario = models.ForeignKey('users.User', on_delete=models.CASCADE, unique=True)

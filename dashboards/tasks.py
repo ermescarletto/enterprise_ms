@@ -10,8 +10,52 @@ import time
 import random
 from collections import defaultdict
 from datetime import datetime
+from .models import *
+
 url = "https://api-zmartbi.teknisa.com"
 
+
+@shared_task(bind=True)
+def processar_planilha(self, importacao_id):
+    importacao = ImportacaoDados.objects.get(id=importacao_id)
+    importacao.status = 'processando'
+    importacao.save()
+
+    try:
+        ext = importacao.arquivo.name.split('.')[-1].lower()
+        if ext in ['xls', 'xlsx', 'ods']:
+            df = pd.read_excel(importacao.arquivo.path)
+        elif ext == 'csv':
+            df = pd.read_csv(importacao.arquivo.path)
+        else:
+            raise Exception("Formato não suportado")
+
+        total = len(df)
+        for index, row in df.iterrows():
+            LinhaPlanilha.objects.create(
+                importacao=importacao,
+                codigo_unidade=row['CODIGO DA UNIDADE'],
+                unidade=row['UNIDADE'],
+                codigo_centro_custo=row['CODIGO DO CENTRO DE CUSTO'],
+                centro_custo=row['CENTRO DE CUSTO'],
+                codigo_reduzido=row['CODIGO REDUSIDO'],
+                data=row['DATA'],
+                numero=row['NUMERO'],
+                conta=row['CONTA'],
+                historico=row['HISTÓRICO'],
+                debito=row['DÉBITO'],
+                credito=row['CRÉDITO'],
+                saldo=row['SALDO']
+            )
+            importacao.progresso = round((index + 1) / total * 100, 2)
+            importacao.save()
+
+        importacao.status = 'concluido'
+    except Exception as e:
+        importacao.status = 'erro'
+        print(f"[ERRO] {e}")
+    finally:
+        importacao.save()
 
 @shared_task
 def processar_dados(identificador):
@@ -221,7 +265,7 @@ def envia_email_estoque(identificador, filiais=None):
                     subject=f"Resumo de Estoque para a Filial {nome_filial}",
                     body=html_content,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    to=['carletto@versesolutions.net']
+                    to=[user_email]
                 )
                 email.content_subtype = "html"
                 try:
@@ -339,3 +383,7 @@ def gera_relatorio_pagamentos(identificador):
         f.write(html_content)
 
     print("Arquivo 'relatorio_pagamentos.html' gerado com sucesso!")
+
+
+
+
