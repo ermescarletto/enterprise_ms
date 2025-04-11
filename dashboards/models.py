@@ -62,9 +62,8 @@ class ImportacaoDados(models.Model):
         choices=[('pendente', 'Pendente'), ('processando', 'Processando'), ('concluido', 'Concluído'), ('erro', 'Erro')],
         default='pendente'
     )
-
     class Meta:
-        unique_together = ('empresa', 'competencia', 'versao')
+        unique_together = ( 'competencia', 'versao')
 
     def save(self, *args, **kwargs):
         if self.ativo:
