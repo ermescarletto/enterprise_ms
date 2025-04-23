@@ -24,3 +24,9 @@ class LinhaPlanilhaSerializer(serializers.ModelSerializer):
     class Meta:
         model = LinhaPlanilha
         fields = '__all__'
+
+
+class PosicaoEstoqueDiaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PosicaoEstoqueDia
+        fields = '__all__'

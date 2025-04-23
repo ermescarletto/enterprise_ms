@@ -90,3 +90,37 @@ class LinhaPlanilha(models.Model):
     credito = models.DecimalField(max_digits=15, decimal_places=2)
     saldo = models.DecimalField(max_digits=15, decimal_places=2)
 
+
+
+
+
+class PosicaoEstoqueDia(models.Model):
+    data_criacao = models.DateField(auto_created=True, auto_now=True)
+    id_teknisa = models.CharField(max_length=255)
+    nmorg = models.IntegerField()
+    nmorganizacao = models.CharField(max_length=255)
+    cdempresa = models.IntegerField()
+    nmfilial = models.CharField(max_length=255)
+    dtposiestq = models.DateField()
+    dtref = models.DateField()
+    dtimport = models.DateField()
+    nmgrupprodnivel = models.CharField(max_length=255)
+    nmsubprodnivel = models.CharField(max_length=255)
+    nrloteesto = models.CharField(max_length=255, null=True, blank=True)
+    cdlocalestoq = models.CharField(max_length=255, null=True, blank=True)
+    dslocalestoq = models.CharField(max_length=255, null=True, blank=True)
+    cdalmoxarife = models.CharField(max_length=255, null=True, blank=True)
+    dsalmoxarife = models.CharField(max_length=255, null=True, blank=True)
+    cdarvprod = models.CharField(max_length=255, null=True, blank=True)
+    nmprodnivel = models.CharField(max_length=255)
+    cdprodesto = models.CharField(max_length=255)
+    sgunidade = models.CharField(max_length=255)
+    qtestoquedia = models.DecimalField(max_digits=15, decimal_places=2)
+    vrmediobrut = models.DecimalField(max_digits=15, decimal_places=2)
+    vrestoqbrut = models.DecimalField(max_digits=15, decimal_places=2)
+    vrmedio = models.DecimalField(max_digits=15, decimal_places=2)
+    vrestoqdia = models.DecimalField(max_digits=15, decimal_places=2)
+    vrcustoprod = models.DecimalField(max_digits=15, decimal_places=2)
+    numdias = models.IntegerField()
+    
+

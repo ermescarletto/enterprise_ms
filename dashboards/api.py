@@ -124,3 +124,39 @@ class ImportacaoViewSet(viewsets.ModelViewSet):
 
         except Exception as e:
             return Response({'erro': str(e)}, status=400)
+        
+
+
+
+
+
+
+class ImportacaoViewSet(viewsets.ModelViewSet):
+    # ... código existente ...
+
+    @action(detail=False, methods=['get'])
+    def posicoes_estoque(self, request):
+        """
+        Retorna as posições do estoque filtrando por data de referência (DTREF).
+        """
+        data_referencia = request.query_params.get('data_referencia', None)
+
+        if not data_referencia:
+            return Response({'erro': 'O parâmetro data_referencia é obrigatório no formato YYYY-MM-DD.'}, status=400)
+
+        try:
+            # Converte a data de referência para o formato datetime
+            data_referencia = datetime.strptime(data_referencia, "%Y-%m-%d").date()
+
+            # Filtra as posições do estoque pela data de referência
+            posicoes = PosicaoEstoqueDia.objects.filter(dtref=data_referencia)
+
+            if not posicoes.exists():
+                return Response({'erro': 'Nenhuma posição de estoque encontrada para a data de referência fornecida.'}, status=404)
+
+            # Serializa os dados
+            serializer = PosicaoEstoqueDiaSerializer(posicoes, many=True)
+            return Response(serializer.data, status=200)
+
+        except ValueError:
+            return Response({'erro': 'O formato da data de referência é inválido. Use YYYY-MM-DD.'}, status=400)
