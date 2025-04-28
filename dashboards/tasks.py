@@ -12,8 +12,52 @@ from collections import defaultdict
 from datetime import datetime
 from .models import *
 
+from .models import *
+
 url = "https://api-zmartbi.teknisa.com"
 
+
+@shared_task(bind=True)
+def processar_planilha(self, importacao_id):
+    importacao = ImportacaoDados.objects.get(id=importacao_id)
+    importacao.status = 'processando'
+    importacao.save()
+
+    try:
+        ext = importacao.arquivo.name.split('.')[-1].lower()
+        if ext in ['xls', 'xlsx', 'ods']:
+            df = pd.read_excel(importacao.arquivo.path)
+        elif ext == 'csv':
+            df = pd.read_csv(importacao.arquivo.path)
+        else:
+            raise Exception("Formato não suportado")
+
+        total = len(df)
+        for index, row in df.iterrows():
+            LinhaPlanilha.objects.create(
+                importacao=importacao,
+                codigo_unidade=row['CODIGO DA UNIDADE'],
+                unidade=row['UNIDADE'],
+                codigo_centro_custo=row['CODIGO DO CENTRO DE CUSTO'],
+                centro_custo=row['CENTRO DE CUSTO'],
+                codigo_reduzido=row['CODIGO REDUSIDO'],
+                data=row['DATA'],
+                numero=row['NUMERO'],
+                conta=row['CONTA'],
+                historico=row['HISTÓRICO'],
+                debito=row['DÉBITO'],
+                credito=row['CRÉDITO'],
+                saldo=row['SALDO']
+            )
+            importacao.progresso = round((index + 1) / total * 100, 2)
+            importacao.save()
+
+        importacao.status = 'concluido'
+    except Exception as e:
+        importacao.status = 'erro'
+        print(f"[ERRO] {e}")
+    finally:
+        importacao.save()
 
 @shared_task(bind=True)
 def processar_planilha(self, importacao_id):
@@ -255,12 +299,13 @@ def envia_email_estoque(identificador, filiais=None):
                     "html_table": tabela_html
                 })
                 print('enviando e-mail {}'.format(nome_filial))
+
                 # Enviar e-mail
                 email = EmailMessage(
                     subject=f"Resumo de Estoque para a Filial {nome_filial}",
                     body=html_content,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    to=[user_email]
+                    to=[user_email,'charles@maissabor.ind.br']
                 )
                 email.content_subtype = "html"
                 try:
@@ -378,6 +423,70 @@ def gera_relatorio_pagamentos(identificador):
 
     print("Arquivo 'relatorio_pagamentos.html' gerado com sucesso!")
 
+
+
+
+
+#### TEKNISA REQUESTS ####
+
+
+@shared_task
+def carrega_posicao_estoque(identificador, filiais=None):
+    headers = {
+        'Webtoken': 'Njc5N2NmZThlYTJmMzg3ZDljN2RlNmRkXzQ4MjQ=',
+        'Cookie': 'PHPSESSID=1eodhb8grn23us5tq9jkfegg8f'
+    }
+
+    response = requests.get(url, headers=headers)
+    if response.status_code != 200:
+        return {"status_code": response.status_code, "status": "erro", "dados": f"Erro na requisição: {response.status_code}"}
+
+    data = json.loads(response.text)
+
+    # Iterar sobre os dados do JSON e salvar no model PosicaoEstoqueDia
+    for item in data:
+        # Filtrar apenas as filiais desejadas, se especificadas
+        if filiais and int(item["CDFILIAL"]) not in filiais:
+            continue
+
+        # Converter campos de data para o formato datetime.date
+        dtposiestq = datetime.strptime(item["DTPOSIESTQ"], "%d/%m/%Y").date()
+        dtref = datetime.strptime(item["DTREF"], "%d/%m/%Y").date()
+        dtimport = datetime.strptime(item["DTIMPORT"], "%d/%m/%Y").date()
+        # Salvar ou atualizar os dados no model
+        PosicaoEstoqueDia.objects.update_or_create(
+            id_teknisa=item["_id"],
+            nmorg=item["NRORG"],
+            nmorganizacao=item["NMORGANIZACAO"],
+            cdempresa=int(item["CDEMPRESA"]),
+            nmfilial=item["NMFILIAL"],
+            dtposiestq=dtposiestq,
+            dtref=dtref,
+            dtimport=dtimport,
+            nmgrupprodnivel=item["NMGRUPPRODNIVEL"],
+            nmsubprodnivel=item["NMSUBPRODNIVEL"],
+            nrloteesto=item["NRLOTEESTQ"].strip() or None,
+            cdlocalestoq=item["CDLOCALESTOQ"].strip() or None,
+            dslocalestoq=item["DSLOCALESTOQ"].strip() or None,
+            cdalmoxarife=item["CDALMOXARIFE"].strip() or None,
+            dsalmoxarife=item["DSALMOXARIFE"].strip() or None,
+            cdarvprod=item.get("CDARVPROD") or None,
+            nmprodnivel=item["NMPRODNIVEL"],
+            cdprodesto=item["CDPRODESTO"],
+            sgunidade=item["SGUNIDADE"],
+            qtestoquedia=item["QTESTOQDIA"],
+            vrmediobrut=item["VRMEDIOBRUT"],
+            vrestoqbrut=item["VRESTOQBRUT"],
+            vrmedio=item["VRMEDIO"],
+            vrestoqdia=item["VRESTOQDIA"],
+            vrcustoprod=item["VRCUSTOPROD"],
+            numdias=item["NUMDIAS"],
+            defaults={
+                "data_criacao": datetime.now().date()  # Campo gerado automaticamente
+            }
+        )
+
+    return {"status_code": 201, "status": "finalizado", "dados": "Dados inseridos no model PosicaoEstoqueDia com sucesso"}
 
 
 
