@@ -2,11 +2,6 @@ from django.db import models
 import uuid
 # Create your models here.
 
-TIPO_AUTOMACAO = [
-    ('E', 'E-MAIL'),
-    ('D', 'DASHBOARD')
-]
-
 METODO = [
     ('GET', 'GET'),
     ('POST', 'POST'),
@@ -20,21 +15,23 @@ TIPO_EXECUCAO = [
 
 class Automacao(models.Model):
     nome = models.CharField(max_length=255)
-    tipo = models.CharField(choices=TIPO_AUTOMACAO, max_length=2)
-    url = models.URLField()
-    token = models.CharField(max_length=255)
+    url = models.URLField(blank=True, null=True)
+    metodo = models.CharField(max_length=10, choices=METODO, default='GET')  # Novo campo para o método HTTP
+    parametros = models.JSONField(blank=True, null=True)  # Novo campo para parâmetros da requisição
+    token_param = models.CharField(max_length=255, blank=True, null=True)  # Novo campo para o token de autenticação
+    token = models.CharField(max_length=255, blank=True, null=True)
     ativo = models.BooleanField(default=True)
-    recorrencia = models.CharField()
-    dt_criacao = models.DateField()
+    recorrencia = models.CharField(max_length=255, blank=True, null=True)
+    dt_criacao = models.DateField(auto_created=True, auto_now=True)
 
 class LogAutomacao(models.Model):
     hash = models.CharField(max_length=255)
     automacao = models.ForeignKey(Automacao, on_delete=models.CASCADE)
-    data_hora = models.DateTimeField()
-    tipo_execucao = models.CharField(choices=TIPO_EXECUCAO)
+    data_hora = models.DateTimeField(auto_now_add=True)  # Alterado para auto_now_add
+    tipo_execucao = models.CharField(max_length=10, choices=TIPO_EXECUCAO)
     resposta = models.JSONField()
     status = models.IntegerField()
-
+    erro = models.TextField(blank=True, null=True)  # Novo campo para armazenar erros
 
 class DashboardPublico(models.Model):
     nome = models.CharField(max_length=255)
@@ -126,5 +123,5 @@ class PosicaoEstoqueDia(models.Model):
     vrestoqdia = models.DecimalField(max_digits=15, decimal_places=2)
     vrcustoprod = models.DecimalField(max_digits=15, decimal_places=2)
     numdias = models.IntegerField()
-    
+
 

@@ -8,9 +8,14 @@ app_name = 'users'
 urlpatterns = [
 
     ## AQUI SAO AS API PARA O VUE... FOCAR NISSO
+
     path("auth-login/", obtain_auth_token, name='auth-login'),
     path("api/usuarios/", user_list, name='user_list'),
     path("api/users/", UserListAPIGeneric.as_view(), name='users_list'),
+    path("api/users/<int:pk>/", UserCRUDViewAPI.as_view(), name='user_edit'),
+    path('api/permissions-groups/', AllPermissionsAndGroupsAPI.as_view(), name='all_permissions_groups'),
+    path('api/users/<int:user_id>/permissions-groups/', UserPermissionsAndGroupsAPI.as_view(), name='user_permissions_groups'),
+
 
     #path("create/", user_create, name='user_create'),
     #path("manage/<int:pk>/",user_crud,name="user_crud"),

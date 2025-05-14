@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, Group
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
 from .models import User
@@ -50,8 +50,12 @@ class AuthTokenSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    user_permissions = serializers.StringRelatedField(many=True)
-
+    user_permissions = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Permission.objects.all(), required=False
+    )
+    groups = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Group.objects.all(), required=False
+    )
     class Meta:
         model = User
         exclude = [
@@ -60,11 +64,34 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserModelSerializer(serializers.ModelSerializer):
+    user_permissions = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Permission.objects.all(), required=False
+    )
+    groups = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Group.objects.all(), required=False
+    )
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'cpf', 'telefone', 'data_nascimento', 'password', 'first_name',
                   'last_name', 'is_staff', 'is_superuser', 'is_active', 'user_permissions']
         extra_kwargs = {'password': {'write_only': True}}
+
+
+class UserEditSerializer(serializers.ModelSerializer):
+    user_permissions = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Permission.objects.all(), required=False
+    )
+    groups = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Group.objects.all(), required=False
+    )
+
+    class Meta:
+        model = User
+        fields = fields = [
+            'id', 'username', 'email', 'first_name', 'last_name', 'cpf', 'telefone',
+            'data_nascimento', 'is_admin', 'is_active', 'is_staff', 'is_superuser', 'user_permissions',
+            'groups'        ]
+        
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -77,6 +104,8 @@ class CreateUserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+    
+
 
 
 class UserPermissionSerializer(serializers.Serializer):

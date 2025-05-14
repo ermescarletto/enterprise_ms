@@ -48,6 +48,7 @@ INSTALLED_APPS = [
    # 'bootstrap_datepicker_plus',
     #main
     #'cms',
+    'django_celery_beat',
     'cadastros',
     'documentos',
     'users',
@@ -83,8 +84,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
+    "http://localhost:8000",
+
 
 ]
 

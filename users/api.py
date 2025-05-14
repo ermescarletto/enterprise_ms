@@ -1,7 +1,7 @@
 
 from rest_framework import parsers, renderers, generics, status
 from rest_framework.authtoken.models import Token
-from .serializers import AuthTokenSerializer, UserSerializer, UserModelSerializer, CreateUserSerializer, UserPermissionSerializer
+from .serializers import *
 from rest_framework.compat import coreapi, coreschema
 from rest_framework.response import Response
 from rest_framework.schemas import ManualSchema
@@ -9,6 +9,11 @@ from rest_framework.schemas import coreapi as coreapi_schema
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser
 from .models import *
+
+
+536716
+
+
 
 
 
@@ -76,18 +81,21 @@ class AuthToken(APIView):
 
 
 class UserListViewAPI(generics.ListCreateAPIView):
+    permission_classes = IsAdminUser
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
 
 
-class UserListAPIGeneric(generics.ListAPIView):
+class UserListAPIGeneric(generics.ListCreateAPIView):
+    permission_classes = [IsAdminUser]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 class UserCRUDViewAPI(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = IsAdminUser
+    permission_classes = [IsAdminUser]
     queryset = User.objects.all()
-    serializer_class = UserModelSerializer
+    serializer_class = UserEditSerializer
+
 
 
 class UserCreateView(generics.CreateAPIView):
@@ -124,6 +132,65 @@ class ManageUserPerms(APIView):
 
     class Meta:
         model = User
+
+
+class AllPermissionsAndGroupsAPI(generics.GenericAPIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request, *args, **kwargs):
+        permissions = Permission.objects.all()
+        groups = Group.objects.all()
+
+        data = {
+            "permissions": [
+                {
+                    "id": perm.id,
+                    "codename": perm.codename,
+                    "name": perm.name,
+                    "app_label": perm.content_type.app_label,
+                }
+                for perm in permissions
+            ],
+            "groups": [
+                {
+                    "id": group.id,
+                    "name": group.name,
+                }
+                for group in groups
+            ],
+        }
+        return Response(data, status=status.HTTP_200_OK)
+
+class UserPermissionsAndGroupsAPI(generics.GenericAPIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request, user_id, *args, **kwargs):
+        try:
+            user = User.objects.get(id=user_id)
+            user_permissions = user.user_permissions.all()
+            user_groups = user.groups.all()
+
+            data = {
+                "permissions": [
+                    {
+                        "id": perm.id,
+                        "codename": perm.codename,
+                        "name": perm.name,
+                        "app_label": perm.content_type.app_label,
+                    }
+                    for perm in user_permissions
+                ],
+                "groups": [
+                    {
+                        "id": group.id,
+                        "name": group.name,
+                    }
+                    for group in user_groups
+                ],
+            }
+            return Response(data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"error": "Usuário não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
 
 

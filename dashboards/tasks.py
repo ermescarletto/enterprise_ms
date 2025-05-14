@@ -423,15 +423,9 @@ def gera_relatorio_pagamentos(identificador):
 
     print("Arquivo 'relatorio_pagamentos.html' gerado com sucesso!")
 
-
-
-
-
-#### TEKNISA REQUESTS ####
-
-
 @shared_task
 def carrega_posicao_estoque(identificador, filiais=None):
+
     headers = {
         'Webtoken': 'Njc5N2NmZThlYTJmMzg3ZDljN2RlNmRkXzQ4MjQ=',
         'Cookie': 'PHPSESSID=1eodhb8grn23us5tq9jkfegg8f'
@@ -490,64 +484,54 @@ def carrega_posicao_estoque(identificador, filiais=None):
 
 
 
+import requests
+from celery import shared_task
+from .models import Automacao, LogAutomacao
+import uuid
 
-#### TEKNISA REQUESTS ####
+@shared_task
+def executar_automacao(automacao_id):
+    try:
+        automacao = Automacao.objects.get(id=automacao_id)
+        if not automacao.ativo:
+            return {"status": "Automação desativada"}
+        headers = {"Authorization": f"{automacao.token_param} {automacao.token}"} if automacao.token else {}
+        response = requests.request(
+            method=automacao.metodo,
+            url=automacao.url,
+            headers=headers,
+            json=automacao.parametros
+        )
+
+        log = LogAutomacao.objects.create(
+            hash=str(uuid.uuid4()),
+            automacao=automacao,
+            data_hora=datetime.now(),
+            tipo_execucao='AUTOMÁTICA',
+            resposta=response.json(),
+            status=response.status_code
+        )
+        return {"status": "Sucesso", "log_id": log.id}
+
+    except Exception as e:
+        LogAutomacao.objects.create(
+            hash=str(uuid.uuid4()),
+            automacao=automacao,
+            data_hora=datetime.now(),
+            tipo_execucao='AUTOMÁTICA',
+            resposta={},
+            status=500,
+            erro=str(e)
+        )
+        return {"status": "Erro", "mensagem": str(e)}
+
 
 
 @shared_task
-def carrega_posicao_estoque(identificador, filiais=None):
-    headers = {
-        'Webtoken': 'Njc5N2NmZThlYTJmMzg3ZDljN2RlNmRkXzQ4MjQ=',
-        'Cookie': 'PHPSESSID=1eodhb8grn23us5tq9jkfegg8f'
-    }
-
-    response = requests.get(url, headers=headers)
-    if response.status_code != 200:
-        return {"status_code": response.status_code, "status": "erro", "dados": f"Erro na requisição: {response.status_code}"}
-
-    data = json.loads(response.text)
-
-    # Iterar sobre os dados do JSON e salvar no model PosicaoEstoqueDia
-    for item in data:
-        # Filtrar apenas as filiais desejadas, se especificadas
-        if filiais and int(item["CDFILIAL"]) not in filiais:
-            continue
-
-        # Converter campos de data para o formato datetime.date
-        dtposiestq = datetime.strptime(item["DTPOSIESTQ"], "%d/%m/%Y").date()
-        dtref = datetime.strptime(item["DTREF"], "%d/%m/%Y").date()
-        dtimport = datetime.strptime(item["DTIMPORT"], "%d/%m/%Y").date()
-        # Salvar ou atualizar os dados no model
-        PosicaoEstoqueDia.objects.update_or_create(
-            id_teknisa=item["_id"],
-            nmorg=item["NRORG"],
-            nmorganizacao=item["NMORGANIZACAO"],
-            cdempresa=int(item["CDEMPRESA"]),
-            nmfilial=item["NMFILIAL"],
-            dtposiestq=dtposiestq,
-            dtref=dtref,
-            dtimport=dtimport,
-            nmgrupprodnivel=item["NMGRUPPRODNIVEL"],
-            nmsubprodnivel=item["NMSUBPRODNIVEL"],
-            nrloteesto=item["NRLOTEESTQ"].strip() or None,
-            cdlocalestoq=item["CDLOCALESTOQ"].strip() or None,
-            dslocalestoq=item["DSLOCALESTOQ"].strip() or None,
-            cdalmoxarife=item["CDALMOXARIFE"].strip() or None,
-            dsalmoxarife=item["DSALMOXARIFE"].strip() or None,
-            cdarvprod=item.get("CDARVPROD") or None,
-            nmprodnivel=item["NMPRODNIVEL"],
-            cdprodesto=item["CDPRODESTO"],
-            sgunidade=item["SGUNIDADE"],
-            qtestoquedia=item["QTESTOQDIA"],
-            vrmediobrut=item["VRMEDIOBRUT"],
-            vrestoqbrut=item["VRESTOQBRUT"],
-            vrmedio=item["VRMEDIO"],
-            vrestoqdia=item["VRESTOQDIA"],
-            vrcustoprod=item["VRCUSTOPROD"],
-            numdias=item["NUMDIAS"],
-            defaults={
-                "data_criacao": datetime.now().date()  # Campo gerado automaticamente
-            }
-        )
-
-    return {"status_code": 201, "status": "finalizado", "dados": "Dados inseridos no model PosicaoEstoqueDia com sucesso"}
+def executar_automacoes_ativas():
+    """
+    Executa todas as automações ativas.
+    """
+    automacoes = Automacao.objects.filter(ativo=True)
+    for automacao in automacoes:
+        executar_automacao.delay(automacao.id)

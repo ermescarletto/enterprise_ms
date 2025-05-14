@@ -8,3 +8,5 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class Dashboards(LoginRequiredMixin,TemplateView):
     template_name = "dashboards/dashboards.html"
     login_url = 'auth/login/'  # Defina a URL para onde os usuários não autenticados serão redirecionados
+
+

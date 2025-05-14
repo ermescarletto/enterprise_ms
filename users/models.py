@@ -12,11 +12,12 @@ class User(AbstractUser):
     cpf = models.CharField(max_length=11,verbose_name="CPF", blank=True, null=True)
     telefone = models.CharField(max_length=11,verbose_name="Telefone", blank=True, null=True)
     data_nascimento = models.DateField(blank=True, null=True,verbose_name="Data de Nascimento")
-    password_set = models.BooleanField(default=False,)
+    password_set = models.BooleanField(default=False,blank=True)
     groups = models.ManyToManyField(Group, related_name='custom_user_set',blank=True, null=True)
     user_permissions = models.ManyToManyField(Permission, related_name='custom_user_permissions_set',blank=True, null=True)
     is_admin = models.BooleanField(default=False,blank=True)
     is_staff = models.BooleanField(default=False,blank=True)
+    
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["cpf","data_nascimento","username"]

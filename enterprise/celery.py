@@ -10,6 +10,7 @@ app = Celery("enterprise")
 # Usando o arquivo de configurações do Django, com prefixo CELERY_
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
+app.conf.beat_scheduler = 'django_celery_beat.schedulers.DatabaseScheduler'
 # Carrega tarefas automaticamente de todas as apps registradas no Django
 app.autodiscover_tasks()
 
