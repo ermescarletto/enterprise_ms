@@ -1,9 +1,9 @@
 from django.contrib.auth.models import Permission, Group
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
-from .models import User
 from rest_framework import serializers
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class AuthTokenSerializer(serializers.Serializer):
     email = serializers.CharField(
@@ -89,26 +89,68 @@ class UserEditSerializer(serializers.ModelSerializer):
         model = User
         fields = fields = [
             'id', 'username', 'email', 'first_name', 'last_name', 'cpf', 'telefone',
-            'data_nascimento', 'is_admin', 'is_active', 'is_staff', 'is_superuser', 'user_permissions',
+            'data_nascimento', 'is_superuser', 'is_active', 'is_staff', 'is_superuser', 'user_permissions',
             'groups'        ]
         
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
+    user_permissions = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Permission.objects.all(), required=False
+    )
+    groups = serializers.PrimaryKeyRelatedField(
+        many=True, queryset=Group.objects.all(), required=False
+    )
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'cpf', 'telefone', 'data_nascimento', 'password', 'first_name',
-                  'last_name', 'is_staff', 'is_superuser', 'is_active']
+        fields = [
+            'id', 'username', 'email', 'cpf', 'telefone', 'data_nascimento', 'password', 'first_name',
+            'last_name', 'is_staff', 'is_superuser', 'is_active','user_permissions', 'groups'
+        ]
         extra_kwargs = {'password': {'write_only': True}}
-
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
-        return user
     
-
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
+        if password is None:
+            raise serializers.ValidationError("A senha é obrigatória.")
+        user_permissions = validated_data.pop('user_permissions', [])
+        groups = validated_data.pop('groups', [])
+        
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        
+        user.user_permissions.set(user_permissions)
+        user.groups.set(groups)
+        
+        return user
 
 
 class UserPermissionSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
     codename = serializers.CharField()
     action = serializers.ChoiceField(choices=['add', 'remove'])
+
+
+class SetPasswordSerializer(serializers.Serializer):
+    password = serializers.CharField(
+        trim_whitespace=False,
+        write_only=True,
+        error_messages= { 'required' : 'Senha não informada'}
+    )
+    def validate(self, data):
+        user = self.context['request'].user
+        if user.password_set:
+            msg = _('Senha já foi definida.')
+            raise serializers.ValidationError(msg, code='authorization')
+        return data
+
+    def save(self, **kwargs):
+        user = self.context['request'].user
+        password = self.validated_data['password']
+        user.set_password(password)
+        user.password_set = True
+        user.save()
+
+        return user
+    

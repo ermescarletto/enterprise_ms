@@ -6,7 +6,7 @@ class DashboardSerializer(serializers.ModelSerializer):
     class Meta:
         model = DashboardPublico
         fields = '__all__'
-
+    
 
 class DashboardUnidade(serializers.ModelSerializer):
     class Meta:

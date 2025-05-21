@@ -4,6 +4,7 @@ from .api import *
 from rest_framework.routers import DefaultRouter
 
 
+
 router = DefaultRouter()
 
 router.register(r'interval-schedules', IntervalScheduleViewSet, basename='interval-schedule')
@@ -17,6 +18,15 @@ app_name = 'dashboards'
 urlpatterns = [
     path("task/iniciar/", IniciarProcessoView.as_view(), name="iniciar_processo"),
     path("task/status/<str:task_id>/", VerificarStatusView.as_view(), name="verificar_status"),
+
     path('',include(router.urls)),
+
+
+
     path('api/powerbi-embed/', PowerBIEmbedView.as_view(), name='powerbi-embed'),
+    path('api/powerbi-financeiro/', PowerBIEmbedViewFinanceiro.as_view(), name='powerbi-financeiro'),
+
+    path('api/manage/', DashboardViewAPI.as_view(), name='dashboards'),
+
+
 ]

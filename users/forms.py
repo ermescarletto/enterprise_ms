@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
         model = User
         fields = [
             'first_name', 'last_name', 'username', 'email', 'cpf', 'telefone',
-            'data_nascimento', 'groups', 'user_permissions', 'is_admin', 'is_staff'
+            'data_nascimento', 'groups', 'user_permissions',  'is_staff'
         ]
         # Exclude 'password_set' if it’s not meant to be edited directly by users
 
@@ -55,7 +55,7 @@ class UserForm(forms.ModelForm):
         'user_permissions': forms.SelectMultiple(attrs={
             'class': 'form-control',
         }),
-        'is_admin': forms.CheckboxInput(attrs={
+        'is_superuser': forms.CheckboxInput(attrs={
             'class': 'form-check-input',
         }),
         'is_staff': forms.CheckboxInput(attrs={
@@ -127,7 +127,7 @@ class UserModalForm(BSModalModelForm):
             'data_nascimento',
             'groups',
             'user_permissions',
-            'is_admin',
+            'is_superuser',
             'is_staff'
         ]
         widgets = {
@@ -158,7 +158,7 @@ class UserModalForm(BSModalModelForm):
             'user_permissions': DualListWidget(attrs={
                 'class': 'form-control',
             }),
-            'is_admin': forms.CheckboxInput(attrs={
+            'is_superuser': forms.CheckboxInput(attrs={
                 'class': 'form-check-input form-control',
             }),
             'is_staff': forms.CheckboxInput(attrs={

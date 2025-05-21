@@ -186,6 +186,52 @@ class PowerBIEmbedView(APIView):
             'reportId': REPORT_ID
         })
     
+##### FINANCEIRO ##### 
+
+class PowerBIEmbedViewFinanceiro(APIView):
+    permission_classes = [IsAuthenticated]
+    REPORT_ID = "99c418b4-21dd-49bb-be84-de7f519e36d6"
+    def get(self, request):
+        # 1. Obter token de acesso (client credentials flow)
+        token_url = f"https://login.microsoftonline.com/{TENANT_ID}/oauth2/v2.0/token"
+        token_data = {
+            'grant_type': 'client_credentials',
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET,
+            'scope': 'https://analysis.windows.net/powerbi/api/.default'
+        }
+        token_response = requests.post(token_url, data=token_data)
+        
+        if token_response.status_code != 200:
+            return Response({'error': 'Falha ao obter token de acesso'}, status=status.HTTP_400_BAD_REQUEST)
+
+        access_token = token_response.json().get('access_token')
+
+        # 2. Gerar token de incorporação
+        embed_url = f"https://api.powerbi.com/v1.0/myorg/groups/{WORKSPACE_ID}/reports/{self.REPORT_ID}/GenerateToken"
+        embed_headers = {
+            'Authorization': f'Bearer {access_token}',
+            'Content-Type': 'application/json'
+        }
+        embed_body = {
+            'accessLevel': 'View'
+        }
+
+        embed_response = requests.post(embed_url, headers=embed_headers, json=embed_body)
+        if embed_response.status_code != 200:
+            return Response({'error': 'Falha ao gerar embed token'}, status=status.HTTP_400_BAD_REQUEST)
+
+        embed_data = embed_response.json()
+
+        return Response({
+            'embedToken': embed_data.get('token'),
+            'embedUrl': f"https://app.powerbi.com/reportEmbed?reportId={self.REPORT_ID}&groupId={WORKSPACE_ID}",
+            'reportId': self.REPORT_ID
+        })
+
+
+
+
 class IntervalScheduleViewSet(viewsets.ModelViewSet):
     queryset = IntervalSchedule.objects.all()
     serializer_class = IntervalScheduleSerializer
@@ -214,3 +260,19 @@ class AutomacaoViewSet(viewsets.ModelViewSet):
 class LogAutomacaoViewSet(viewsets.ModelViewSet):
     queryset = LogAutomacao.objects.all()
     serializer_class = LogAutomacaoSerializer
+
+from rest_framework import generics
+from .models import DashboardPublico
+from .serializers import DashboardSerializer
+
+class DashboardViewAPI(generics.ListAPIView):
+    """
+    API para retornar dados do dashboard.
+    """
+    permission_classes = [IsAuthenticated]  # Requer autenticação
+    serializer_class = DashboardSerializer
+
+    def get_queryset(self):
+        # Aqui você pode filtrar os dados que deseja retornar
+        return DashboardPublico.objects.all()  # Retorna todos os dashboards
+    

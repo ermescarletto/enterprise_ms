@@ -8,11 +8,11 @@ from rest_framework.schemas import ManualSchema
 from rest_framework.schemas import coreapi as coreapi_schema
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser
-from .models import *
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
-
-536716
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 
@@ -80,10 +80,31 @@ class AuthToken(APIView):
         return Response({'token': token.key, 'user': user_serializer.data})
 
 
-class UserListViewAPI(generics.ListCreateAPIView):
+
+class LogoutAPI(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        try:
+            # Delete the token for the authenticated user
+            request.user.auth_token.delete()
+            return Response({"message": "Logout successful."}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": "An error occurred during logout."}, status=status.HTTP_400_BAD_REQUEST)
+
+class UserListViewAPI(generics.ListAPIView):
     permission_classes = IsAdminUser
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
+
+
+
+class UserCreateViewAPI(generics.CreateAPIView):
+    permission_classes = [IsAdminUser]
+    queryset = User.objects.all()
+    serializer_class = CreateUserSerializer
+
 
 
 class UserListAPIGeneric(generics.ListCreateAPIView):
@@ -102,6 +123,7 @@ class UserCreateView(generics.CreateAPIView):
     permission_classes = IsAdminUser
     queryset = User.objects.all()
     serializer_class = CreateUserSerializer
+    
 
 
 class ManageUserPerms(APIView):

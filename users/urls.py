@@ -12,9 +12,11 @@ urlpatterns = [
     path("auth-login/", obtain_auth_token, name='auth-login'),
     path("api/usuarios/", user_list, name='user_list'),
     path("api/users/", UserListAPIGeneric.as_view(), name='users_list'),
+    path("api/users/create/", UserCreateViewAPI.as_view(), name='users_create'),
     path("api/users/<int:pk>/", UserCRUDViewAPI.as_view(), name='user_edit'),
     path('api/permissions-groups/', AllPermissionsAndGroupsAPI.as_view(), name='all_permissions_groups'),
     path('api/users/<int:user_id>/permissions-groups/', UserPermissionsAndGroupsAPI.as_view(), name='user_permissions_groups'),
+    path('api/logout/', LogoutAPI.as_view(), name='logout'),
 
 
     #path("create/", user_create, name='user_create'),
@@ -23,14 +25,14 @@ urlpatterns = [
 
 ### DAQUI PRA BAIXO SAO AS DO DJANGO
 
-    path("login/", CustomLoginView.as_view(), name='login'),
-    path('logout/', logout_view, name='logout'),
-    path('users/', UserListView.as_view(), name='list'),
-    path('users/list/', GetUsersView.as_view(), name='user-list'),
-    path('users/create/', UserCreateView.as_view(), name='create'),
-    path('users/<int:pk>/edit/', UserUpdateView.as_view(), name='edit'),
-    path('users/<int:pk>/delete/', UserDeleteView.as_view(), name='delete'),
-    path('users/<int:user_id>/toggle_active/', ToggleActiveStatusView.as_view(), name='toggle_active'),
+    #path("login/", CustomLoginView.as_view(), name='login'),
+    #path('logout/', logout_view, name='logout'),
+    #path('users/', UserListView.as_view(), name='list'),
+    #path('users/list/', GetUsersView.as_view(), name='user-list'),
+   # path('users/create/', UserCreateView.as_view(), name='create'),
+    #path('users/<int:pk>/edit/', UserUpdateView.as_view(), name='edit'),
+    #path('users/<int:pk>/delete/', UserDeleteView.as_view(), name='delete'),
+    #path('users/<int:user_id>/toggle_active/', ToggleActiveStatusView.as_view(), name='toggle_active'),
     path('groups/', GroupListView.as_view(), name='groups'),
     path('groups/create/' , GroupCreateView.as_view(), name='create_group'),
     path('groups/<int:pk>/edit/', GroupEditView.as_view(), name='edit_groups'),
