@@ -30,13 +30,10 @@ class RegistroFinanceiroViewSet(viewsets.ModelViewSet):
     parser_classes = [MultiPartParser]
 
     def create(self, request, *args, **kwargs):
-        print("Iniciando importação CSV")
         RegistroFinanceiro.objects.all().delete()
-        print("Tabela limpa")
 
         csv_file = request.FILES.get('file')
         if not csv_file:
-            print("Arquivo não enviado")
             return Response({'error': 'Arquivo CSV não enviado.'}, status=status.HTTP_400_BAD_REQUEST)
 
         field_map = {
@@ -50,10 +47,8 @@ class RegistroFinanceiroViewSet(viewsets.ModelViewSet):
 
         data_list = []
         try:
-            print("Tentando ler como UTF-8")
             csv_reader = csv.DictReader(TextIOWrapper(csv_file, encoding='utf-8'), delimiter=';')
             for row in csv_reader:
-                print("Linha lida:", row)
                 mapped_row = {field_map.get(k.strip(), k.strip()): v.strip() for k, v in row.items()}
                 # Ajusta os campos problemáticos
                 if 'competencia' in mapped_row:
@@ -65,11 +60,9 @@ class RegistroFinanceiroViewSet(viewsets.ModelViewSet):
                 serializer.save()
                 data_list.append(serializer.data)
         except UnicodeDecodeError:
-            print("UnicodeDecodeError, tentando latin1")
             csv_file.seek(0)
             csv_reader = csv.DictReader(TextIOWrapper(csv_file, encoding='latin1'), delimiter=';')
             for row in csv_reader:
-                print("Linha lida:", row)
                 mapped_row = {field_map.get(k.strip(), k.strip()): v.strip() for k, v in row.items()}
                 if 'competencia' in mapped_row:
                     mapped_row['competencia'] = parse_competencia(mapped_row['competencia'])
@@ -80,14 +73,11 @@ class RegistroFinanceiroViewSet(viewsets.ModelViewSet):
                 serializer.save()
                 data_list.append(serializer.data)
         except Exception as e:
-            print("Erro inesperado:", e)
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         if not data_list:
-            print("Nenhum registro importado")
             return Response({'warning': 'Nenhum registro foi importado.'}, status=status.HTTP_200_OK)
 
-        print("Importação concluída")
         return Response(data_list, status=status.HTTP_201_CREATED)
 
     def list(self, request, *args, **kwargs):
