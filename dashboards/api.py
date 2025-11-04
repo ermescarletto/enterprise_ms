@@ -13,7 +13,6 @@ from .serializers import (
     AutomacaoSerializer,
     LogAutomacaoSerializer,
 )
-from .tasks import executar_automacao
 
 import requests
 from celery.result import AsyncResult
@@ -23,7 +22,6 @@ from rest_framework.decorators import action
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from .serializers import *
 from .tasks import *
@@ -34,29 +32,6 @@ CLIENT_ID = config('CLIENT_ID')
 CLIENT_SECRET = config('CLIENT_SECRET')
 WORKSPACE_ID = config('WORKSPACE_ID')
 REPORT_ID = config('REPORT_ID')
-
-class IniciarProcessoView(APIView):
-    permission_classes = [IsAuthenticated]  # Requer autenticação
-
-    def post(self, request):
-        identificador = str(uuid.uuid4())  # Gera um ID único
-        try:
-            tarefa = envia_email_estoque.apply_async(args=[identificador])  # Dispara a tarefa
-            tarefa = envia_email_estoque.apply_async(args=[identificador])  # Dispara a tarefa
-        except Exception as e:
-            print(f"Erro ao iniciar a tarefa: {e}")
-            print(traceback.format_exc())
-            return Response({"status": "erro", "mensagem": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        return Response({"task_id": tarefa.id, "status": "processando"}, status=status.HTTP_202_ACCEPTED)
-
-class VerificarStatusView(APIView):
-    permission_classes = [IsAuthenticated]  # Requer autenticação
-
-    def get(self, request, task_id):
-        resultado = AsyncResult(task_id)
-        if resultado.ready():
-            return Response({"status": "finalizado", "dados": resultado.result}, status=status.HTTP_200_OK)
-        return Response({"status": "processando"}, status=status.HTTP_200_OK)
 
 class ImportacaoViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminUser]  # Requer admin user.
@@ -145,134 +120,3 @@ class ImportacaoViewSet(viewsets.ModelViewSet):
         except Exception as e:
             return Response({'erro': str(e)}, status=400)
         
-class PowerBIEmbedView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        # 1. Obter token de acesso (client credentials flow)
-        token_url = f"https://login.microsoftonline.com/{TENANT_ID}/oauth2/v2.0/token"
-        token_data = {
-            'grant_type': 'client_credentials',
-            'client_id': CLIENT_ID,
-            'client_secret': CLIENT_SECRET,
-            'scope': 'https://analysis.windows.net/powerbi/api/.default'
-        }
-        token_response = requests.post(token_url, data=token_data)
-        
-        if token_response.status_code != 200:
-            return Response({'error': 'Falha ao obter token de acesso'}, status=status.HTTP_400_BAD_REQUEST)
-
-        access_token = token_response.json().get('access_token')
-
-        # 2. Gerar token de incorporação
-        embed_url = f"https://api.powerbi.com/v1.0/myorg/groups/{WORKSPACE_ID}/reports/{REPORT_ID}/GenerateToken"
-        embed_headers = {
-            'Authorization': f'Bearer {access_token}',
-            'Content-Type': 'application/json'
-        }
-        embed_body = {
-            'accessLevel': 'View'
-        }
-
-        embed_response = requests.post(embed_url, headers=embed_headers, json=embed_body)
-        if embed_response.status_code != 200:
-            return Response({'error': 'Falha ao gerar embed token'}, status=status.HTTP_400_BAD_REQUEST)
-
-        embed_data = embed_response.json()
-
-        return Response({
-            'embedToken': embed_data.get('token'),
-            'embedUrl': f"https://app.powerbi.com/reportEmbed?reportId={REPORT_ID}&groupId={WORKSPACE_ID}",
-            'reportId': REPORT_ID
-        })
-    
-##### FINANCEIRO ##### 
-
-class PowerBIEmbedViewFinanceiro(APIView):
-    permission_classes = [IsAuthenticated]
-    REPORT_ID = "99c418b4-21dd-49bb-be84-de7f519e36d6"
-    def get(self, request):
-        # 1. Obter token de acesso (client credentials flow)
-        token_url = f"https://login.microsoftonline.com/{TENANT_ID}/oauth2/v2.0/token"
-        token_data = {
-            'grant_type': 'client_credentials',
-            'client_id': CLIENT_ID,
-            'client_secret': CLIENT_SECRET,
-            'scope': 'https://analysis.windows.net/powerbi/api/.default'
-        }
-        token_response = requests.post(token_url, data=token_data)
-        
-        if token_response.status_code != 200:
-            return Response({'error': 'Falha ao obter token de acesso'}, status=status.HTTP_400_BAD_REQUEST)
-
-        access_token = token_response.json().get('access_token')
-
-        # 2. Gerar token de incorporação
-        embed_url = f"https://api.powerbi.com/v1.0/myorg/groups/{WORKSPACE_ID}/reports/{self.REPORT_ID}/GenerateToken"
-        embed_headers = {
-            'Authorization': f'Bearer {access_token}',
-            'Content-Type': 'application/json'
-        }
-        embed_body = {
-            'accessLevel': 'View'
-        }
-
-        embed_response = requests.post(embed_url, headers=embed_headers, json=embed_body)
-        if embed_response.status_code != 200:
-            return Response({'error': 'Falha ao gerar embed token'}, status=status.HTTP_400_BAD_REQUEST)
-
-        embed_data = embed_response.json()
-
-        return Response({
-            'embedToken': embed_data.get('token'),
-            'embedUrl': f"https://app.powerbi.com/reportEmbed?reportId={self.REPORT_ID}&groupId={WORKSPACE_ID}",
-            'reportId': self.REPORT_ID
-        })
-
-
-
-
-class IntervalScheduleViewSet(viewsets.ModelViewSet):
-    queryset = IntervalSchedule.objects.all()
-    serializer_class = IntervalScheduleSerializer
-
-class CrontabScheduleViewSet(viewsets.ModelViewSet):
-    queryset = CrontabSchedule.objects.all()
-    serializer_class = CrontabScheduleSerializer
-
-class PeriodicTaskViewSet(viewsets.ModelViewSet):
-    queryset = PeriodicTask.objects.all()
-    serializer_class = PeriodicTaskSerializer
-
-class AutomacaoViewSet(viewsets.ModelViewSet):
-    queryset = Automacao.objects.all()
-    serializer_class = AutomacaoSerializer
-
-    @action(detail=True, methods=['post'])
-    def executar(self, request, pk=None):
-        """
-        Executa uma automação manualmente.
-        """
-        automacao = self.get_object()
-        executar_automacao.delay(automacao.id)
-        return Response({"status": "Automação iniciada"}, status=status.HTTP_202_ACCEPTED)
-
-class LogAutomacaoViewSet(viewsets.ModelViewSet):
-    queryset = LogAutomacao.objects.all()
-    serializer_class = LogAutomacaoSerializer
-
-from rest_framework import generics
-from .models import DashboardPublico
-from .serializers import DashboardSerializer
-
-class DashboardViewAPI(generics.ListAPIView):
-    """
-    API para retornar dados do dashboard.
-    """
-    permission_classes = [IsAuthenticated]  # Requer autenticação
-    serializer_class = DashboardSerializer
-
-    def get_queryset(self):
-        # Aqui você pode filtrar os dados que deseja retornar
-        return DashboardPublico.objects.all()  # Retorna todos os dashboards
-    
